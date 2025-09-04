@@ -154,20 +154,29 @@ $\mathbb{E}\left[ v(w') \right] = \int_{0}^B v(w') dF(w')$ denotes the expected 
 \textbf{A McCall Model with two offers per period.}
 Since $F(x) = \text{Pr}(z \leq x)$,  
 the cumulative distribution function of the maximum of two random variables i.i.d. drawn from $F(x)$ is  
-$F_{\max}(x) = \text{Pr}(x_1 < x) \cdot \text{Pr}(x_2 < x) = [F(x)]^2$.  
+$F_{\max}(x_m) = \text{Pr}(x < x_m) \cdot \text{Pr}(x < x_m) = [F(x_m)]^2$.  
 
 \begin{equation}
-    v(w) = \max_{a \in \{\text{Accept, Reject\}}}  
-    \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_{\max}[v(w')] \bigg)
+    v(w_m) = \max_{a \in \{\text{Accept, Reject} \}}  
+    \bigg( \frac{w_m}{1 - \beta}, c + \beta \mathbb{E}_{\max w}[v(w_m')] \bigg)
 \end{equation}
+where $\mathbb{E}_{\max w}[v(w_m')] = \int_0^{B} v(w_m') \, d[F(w_m')]^2$.  
+Since $\mathbb{E}_{\max w}[v(w_m')] = 2 \int_0^{B} v(w_m') f(w_m') F(w_m') dw' > \int_0^{B} v(w_m') f(w_m') dw'$,%
+\footnote{
+We apply the monotonicity of $v(x)$ and $2F(x)-1$ to finish the proof:
+\begin{align*}
+  & 2 \int_0^{B} v(w_m') f(w_m') F(w_m') dw' - \int_0^{B} v(w_m') f(w_m') dw' \\
+  = & \int_0^{B} v(w_m') (2F(w_m') - 1) dF(w') \\
+  = & \mathbb{E}\left[ v(w_m') (2F(w_m') - 1) \right] \\
+  = & \underbrace{\text{Cov}\left[ v(w_m'), 2F(w_m') - 1 \right]}_{> 0} + \underbrace{\mathbb{E}[v(w_m')] \mathbb{E}[2F(w_m') - 1]}_{>0}
+\end{align*}
 
-where $\mathbb{E}_{\max}[v(w')] = \int_0^{B} v(w') \, d[F(w')]^2$.  
-Since $\mathbb{E}_{\max}[v(w')] = \int_0^{B} v(w') \, d[F(w')]^2  
-= 2 \int_0^{B} v(w') f(w') \, dw' = 2 \mathbb{E}[v(w')]$,  
+
+}  
 we have  
 \[
-\bar{w}_{\max} = (1 - \beta) \big(c + \beta \mathbb{E}_{\max}[v(w')]\big)  
-> (1 - \beta) \big(c + \beta \mathbb{E}[v(w')]\big) = \bar{w}.
+\bar{w}_{\max} = (1 - \beta) \big(c + \beta \mathbb{E}_{\max w}[v(w_m')]\big)  
+> (1 - \beta) \big(c + \beta \mathbb{E}[v(w_m')]\big) = \bar{w}.
 \]  
 \(\blacksquare\)
 
@@ -175,10 +184,10 @@ we have
 \textbf{A McCall Model with $n$ iid offers per period.}
 Generalize the formulation in Exercise 7.2, we have
 \begin{equation}
-    v(w) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_\max [v(w')] \bigg)
+    v(w) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_{\max w} [v(w')] \bigg)
 \end{equation}
-where $\mathbb{E}[v(w')] = \int_0^{B} \underbrace{\int_0^{w'} \dots \int_0^{w'}}_{n-1} v(w') \underbrace{dF(w') \dots dF(w')}_{n}$
-$\mathbb{E}_\max [v(w')] = n \int_{0}^B v(w') f(w') dw'$.
+where $\mathbb{E}_{\max w} [v(w')] = n \int_{0}^B v(w') F^{n-1}(w')f(w') dw'$.
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/notes.bib}

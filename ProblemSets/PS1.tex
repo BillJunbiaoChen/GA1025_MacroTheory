@@ -152,27 +152,24 @@ $\mathbb{E}\left[ v(w') \right] = \int_{0}^B v(w') dF(w')$ denotes the expected 
 
 \subsection{Exercise 7.2}
 \textbf{A McCall Model with two offers per period.}
-% Define the best offer $w = \max \{w_1, w_2 \}$.%
-% \footnote{
-%     We can also Bellmanize the problem using two variables.
-%     Denote the wages of the first and second offer per period by $w_1$, and $w_2$, respectively.
-%     We can obtain the Value Function as follows.
-%     \begin{equation}
-%         v(w_1, w_2) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{\max \{w_1, w_2\} }{1 - \beta}, \beta (c + \mathbb{E}[v(w'_1, w'_2)]) \bigg)
-%     \end{equation}
-%     where $\mathbb{E}[v(w'_1, w'_2)] = \int_{0}^B \int_{0}^B v(w'_1, w'_2) dF(w'_1) dF(w'_2)$.
-%     Note that $F(w'_1) = F(w'_2) = F(w)$ because $w'_1$ and $w'_2$ are drawn from the same distribution.
-% }
-Since $F(x) = \text{Pr}( z \leq x)$,
-the cummulative distribution function of the maximum of two random variables iid drawn from $F(x)$ is 
-$F_\max (x) = \text{Pr}(x_1 < x) \text{Pr}(x_2 < x ) = [F(x)]^2$ 
-\begin{equation}
-    v(w) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{w}{1 - \beta}, c +  \beta \mathbb{E}_\max[v(w')] \bigg)
-\end{equation}
-where $\mathbb{E}_\max [v(w')] = \int_0^{B} v(w') d[F(w')]^2$
-Since $\mathbb{E}_\max [v(w')] = \int_0^{B} v(w') d[F(w')]^2 = 2 \int_0^{B} v(w') f(w') dw' = 2 \mathbb{E}[v(w')]$,
-we have $\bar{w}_\max = (1 -\beta) (c + \beta \mathbb{E}_\max[v(w')]) > (1 -\beta) (c + \beta \mathbb{E}[v(w')]) = \bar{w}$. \( \blacksquare\)
+Since $F(x) = \text{Pr}(z \leq x)$,  
+the cumulative distribution function of the maximum of two random variables i.i.d. drawn from $F(x)$ is  
+$F_{\max}(x) = \text{Pr}(x_1 < x) \cdot \text{Pr}(x_2 < x) = [F(x)]^2$.  
 
+\begin{equation}
+    v(w) = \max_{a \in \{\text{Accept, Reject\}}}  
+    \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_{\max}[v(w')] \bigg)
+\end{equation}
+
+where $\mathbb{E}_{\max}[v(w')] = \int_0^{B} v(w') \, d[F(w')]^2$.  
+Since $\mathbb{E}_{\max}[v(w')] = \int_0^{B} v(w') \, d[F(w')]^2  
+= 2 \int_0^{B} v(w') f(w') \, dw' = 2 \mathbb{E}[v(w')]$,  
+we have  
+\[
+\bar{w}_{\max} = (1 - \beta) \big(c + \beta \mathbb{E}_{\max}[v(w')]\big)  
+> (1 - \beta) \big(c + \beta \mathbb{E}[v(w')]\big) = \bar{w}.
+\]  
+\(\blacksquare\)
 
 \subsection{Exercise 7.3}
 \textbf{A McCall Model with $n$ iid offers per period.}

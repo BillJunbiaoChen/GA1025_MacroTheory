@@ -1,4 +1,4 @@
-# This script implements the McCall job search model in Julia.
+# This script implements an extended McCall job search model with endogenous job offers.
 
 
 using Random, Distributions, Plots
@@ -22,11 +22,6 @@ probabilities = [cdf(truncated_normal, x) - cdf(truncated_normal, x-1) for x in 
 
 # Normalize probabilities to ensure they sum to 1
 probabilities ./= sum(probabilities)
-
-# fig = bar(values, probabilities, xlabel="Discrete Values", ylabel="Probability", 
-#     title="Discrete Truncated Normal Distribution", legend=false, color=:blue)
-
-# savefig(fig, "discrete_truncated_normal_pmf.png") 
 
 
 # ------------

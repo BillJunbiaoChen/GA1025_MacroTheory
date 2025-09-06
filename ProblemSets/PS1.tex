@@ -138,14 +138,17 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \begin{document}
 \section{Search Models}
 \subsection{Exercise 7.1}
-The Bellman equation for a McCall-model with a chance of unemployment is as follows
+\textbf{A McCall Model with a chance of unemployment.}
+The Bellman equation is as follows
 \begin{equation}
-    \begin{aligned}
-    \bar{V} & = c + \beta \bigg( \phi \bar{V} + (1 - \phi) \mathbb{E} \left[ v(w')\right]  \bigg) \\
     v(w) & = \max_{a \in \{ \text{Accept, Reject} \}} \{ \frac{w}{1 - \beta}, \beta (\phi (c + \bar{V}) + (1 - \phi) \mathbb{E} \left[ v(w') \right]  ) \}
-    \end{aligned}
 \end{equation}
-where $\bar{V}$ denotes the continuation value of being unemployed.
+where $\bar{V} = \frac{(1 + \beta \phi) c + \beta (1 - \phi) \mathbb{E} \left[ v(w') \right]}{1 - \beta \phi }$ 
+denotes the continuation value of being unemployed.%
+\footnote{
+  I obtain $\bar{V}$ by solving the following Bellman equation:
+  $\bar{V}  = c + \beta \bigg( \phi (c + \bar{V}) + (1 - \phi) \mathbb{E} \left[ v(w')\right]  \bigg)$
+}
 $v(w)$ denotes the value function conditional on receiving an offer.
 $\mathbb{E}\left[ v(w') \right] = \int_{0}^B v(w') dF(w')$ denotes the expected value conditional on receiving an offer.
 
@@ -154,14 +157,14 @@ $\mathbb{E}\left[ v(w') \right] = \int_{0}^B v(w') dF(w')$ denotes the expected 
 \textbf{A McCall Model with two offers per period.}
 Since $F(x) = \text{Pr}(z \leq x)$,  
 the cumulative distribution function of the maximum of two random variables i.i.d. drawn from $F(x)$ is  
-$F_{\max}(x_m) = \text{Pr}(x < x_m) \cdot \text{Pr}(x < x_m) = [F(x_m)]^2$.  
+$G(x_m) = \text{Pr}(x < x_m) \cdot \text{Pr}(x < x_m) = [F(x_m)]^2$.  
 
 \begin{equation}
     v(w_m) = \max_{a \in \{\text{Accept, Reject} \}}  
-    \bigg( \frac{w_m}{1 - \beta}, c + \beta \mathbb{E}_{\max w}[v(w_m')] \bigg)
+    \bigg( \frac{w_m}{1 - \beta}, c + \beta \mathbb{E}_{\max}[v(w_m')] \bigg)
 \end{equation}
-where $\mathbb{E}_{\max w}[v(w_m')] = \int_0^{B} v(w_m') \, d[F(w_m')]^2$.  
-Since $\mathbb{E}_{\max w}[v(w_m')] = 2 \int_0^{B} v(w_m') f(w_m') F(w_m') dw' > \int_0^{B} v(w_m') f(w_m') dw'$,%
+where $\mathbb{E}_{\max}[v(w_m')] = \int_0^{B} v(w_m') \, d[F(w_m')]^2$.  
+Since $\mathbb{E}_{\max}[v(w_m')] = 2 \int_0^{B} v(w_m') f(w_m') F(w_m') dw' > \int_0^{B} v(w_m') f(w_m') dw'$,%
 \footnote{
 We apply the monotonicity of $v(x)$ and $2F(x)-1$ to finish the proof:
 \begin{align*}
@@ -175,7 +178,7 @@ We apply the monotonicity of $v(x)$ and $2F(x)-1$ to finish the proof:
 }  
 we have  
 \[
-\bar{w}_{\max} = (1 - \beta) \big(c + \beta \mathbb{E}_{\max w}[v(w_m')]\big)  
+\bar{w}_{\max} = (1 - \beta) \big(c + \beta \mathbb{E}_{\max}[v(w_m')]\big)  
 > (1 - \beta) \big(c + \beta \mathbb{E}[v(w_m')]\big) = \bar{w}.
 \]  
 \(\blacksquare\)
@@ -184,10 +187,106 @@ we have
 \textbf{A McCall Model with $n$ iid offers per period.}
 Generalize the formulation in Exercise 7.2, we have
 \begin{equation}
-    v(w) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_{\max w} [v(w')] \bigg)
+    v(w) = \max_{a \in \{\text{Accept, Reject} \} }  \bigg( \frac{w}{1 - \beta}, c + \beta \mathbb{E}_{\max} [v(w')] \bigg)
 \end{equation}
-where $\mathbb{E}_{\max w} [v(w')] = n \int_{0}^B v(w') F^{n-1}(w')f(w') dw'$.
+where $\mathbb{E}_{\max} [v(w')] = n \int_{0}^B v(w') F^{n-1}(w')f(w') dw'$.
 
+
+\subsection{Exercise 7.4}
+\textbf{A McCall Model with a random number of offers per period.}
+Denote the probability of $n$ in this period but $m$ in the next period as $\pi_{mn}$.
+
+\paragraph{Part a.} The Bellman Equation is given as follows.
+\begin{equation}
+  v(w,n) = \max_{\text{\{Accept, Reject\}}} \bigg(\frac{w}{1 - \beta}, c + \beta(\mathbb{E}[v(w',n')]) \bigg)
+\end{equation}
+where $w$ is the best offer.
+$\mathbb{E}[v(w',n')] = \sum_{m=1}^N \pi_{mn} \int_{0}^{B} m F(w')^{m-1}v(w', n' = m) dw'$ with $\sum_m \pi_{mn} = 1$.
+
+\paragraph{Part b.} We characterize the reservation wage $\bar{w}(n)$ as follows.
+\begin{equation}
+  \bar{w}(n) = (1 - \beta)\beta \bigg[ \sum_{m=1}^N \pi_{mn} \int_{0}^{B} v(w', n'=m) dF(w')\bigg] + c(1-\beta)
+\end{equation}
+where $\sum_{m=1}^N \pi_{mn} \int_{0}^{B} v(w', n'=m) dF(w') \equiv \mathbb{E}[v(w', m)]$ is the marginal expected value function given the number of offers arrived.
+
+Note that $\sum_m \pi_{mn} \mathbb{E}[v(w', m)]$ is a function of $n$, it follows that $\bar{w}(n)$ is also a function of $n$.
+
+\subsection{Exercise 7.5}
+\textbf{A McCall Model with an endogenous number of offers per period.}
+In this exercise we consider a case where the worker endogenously choose the number of offers $n \in 1, 2, \dots, N$
+before the wages are drawn.
+Formally, the Bellman Equation is given by:
+\begin{align}
+  % Q & = \max_{n \in \{1, \dots, N \}} \bigg(-k(n) + \int_0^B v(w_m) d[F(w_m)]^n \bigg) \\ 
+  v(w_m) & = \max_{a \in \{\text{Accept, Reject} \} } \bigg( \frac{w_m}{1 - \beta}, c + \beta  \max_{n \in \{1, \dots, N \}} \left[ -k(n) + \int_0^B v(w_m') d[F(w_m')]^n \right] \bigg)
+\end{align}
+
+\subsection{Exercise 7.7}
+\textbf{A McCall Model with variable labor supply.}
+We first show that the optimal labor supply is a time invariant policy function, which solely depends on $w$.
+Let $\tilde{v}(w)$ be the value function of accepting an offer at wage $w$.
+Since the state variable $w$ does not change across periods, the Bellman equation that characterize the optimal labor supply is given by:
+\begin{equation}
+  \tilde{v}(w) = \max_{l \in [0, 1]} [ u(w(1-l), l) + \beta \tilde{v}(w)]
+\end{equation}
+Denote the optimal labor supply given wage $w$ by $l^*(w)$, we have 
+\[
+u(w(1-l^*), l^*) = (1 - \beta) \tilde{v}^*(w)
+\]
+Therefore, the optimal labor supply $l^*(w)$ does not depend on time (because $\tilde{v}^*(w)$ is time-invariant.)%
+\footnote{
+  Here I assume that the worker will stick to one optimal labor supply level under multiple equilibria. 
+}
+
+Finally, we can specify the Bellman equation using the optimal labor supply policy $l^*(w)$ as follows.
+\begin{equation}
+  v(w) = \max_{\text{\{Accept, Reject\}}} \Bigg\{\frac{u \bigg(w(1-l^*(w)), l^*(w)\bigg)}{1 - \beta}, u(c, 1) + \beta \int_{0}^B v(w') dF(w') \bigg\}
+\end{equation}
+Note that the preservation wage structure in the Bellman equation above is given by following equation.
+\begin{equation}
+  u \bigg(w(1-l^*(w)), l^*(w)\bigg) = (1-\beta)(u(c,1) + \beta \mathbb{E}[v(w')])
+\end{equation}
+
+
+\subsection{Exercise 7.8}
+\textbf{Wage growth rate and the reservation wage}
+The Bellman Equation is given by 
+\begin{equation}
+  v(w) = \max_{\text{\{Accept, Reject\}}} \Bigg\{\frac{w}{1 - \beta \phi}, c + \beta \int_{0}^B v(w') dF(w') \Bigg\}
+\end{equation}
+
+Denote the reservation wage by $\bar{w}$, we have 
+\begin{equation}
+  \begin{aligned}
+      \frac{\bar{w}}{1 - \beta \phi} & = c + \beta \bigg[\int_{0}^{\bar{w}} \frac{\bar{w}}{1 - \beta \phi} dF(w') + \int_{\bar{w}}^B \frac{w'}{1 - \beta \phi} dF(w') \bigg] \\
+      & = c + \beta \bigg[\frac{\bar{w}}{1 - \beta \phi}  \int_{0}^{B} dF(w') + \int_{\bar{w}}^B \frac{w' - \bar{w}}{1 - \beta \phi} dF(w') \bigg]
+  \end{aligned}
+\end{equation}
+$\Rightarrow$
+\begin{equation}
+  \begin{aligned}
+      \underbrace{\frac{(1 - \beta) \bar{w}}{1 - \beta \phi}}_{g(\bar{w})} & = \underbrace{c + \beta \int_{\bar{w}}^B \frac{w' - \bar{w}}{1 - \beta \phi} dF(w')}_{h(\bar{w})}
+  \end{aligned}
+\end{equation}
+
+Define a function $G(\bar{w}) = g(\bar{w}) - h(\bar{w}) = \frac{(1 - \beta) \bar{w}}{1 - \beta \phi} - c - \frac{\beta}{1 - \beta \phi} \int_{\bar{w}}^B (w' - \bar{w}) dF(w')$. 
+It follows that $G'(\bar{w}) = \frac{1 - \beta F(\bar{w})}{1 - \beta \phi} > 0$.
+Suppose $\phi_2 = \kappa \phi_1$ with $\kappa > 1$, 
+and $G(\bar{w}_1; \phi = \phi_1) = 0$.
+In order to show $\bar{w}_2 < \bar{w}_1$, we need to show that $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ because $G(w)$ is increasing.
+
+Therefore, given the $\bar{w}_1$ corresponding to $\phi_1$, if $\beta < \frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']}$,
+then $\bar{w}_2 < \bar{w}_1$.
+\begin{equation}
+  \begin{aligned}
+    G(\bar{w}_1; \phi = \phi_1) - G(\bar{w}_1; \phi = \kappa \phi_1) & = \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right]
+    \underbrace{\left(\frac{1 - \beta}{1 -\beta \phi} - \frac{1 - \beta}{1 - \beta \kappa \phi} \right)}_{\Delta \phi < 0} \\
+    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right] \\
+    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \int_{\bar{w}_1}^B  \bar{w}_1 dF(w')\right] \\
+    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \bar{w}_1 (1 - F(\bar{w}_1))\right] \\
+    & = \Delta \phi \left[\bar{w}_1 - \beta \underbrace{\int_{\bar{w}_1}^B w' dF(w')}_{\equiv \mathbb{E}_{w' > \bar{w}_1}[w']}  - \beta \bar{w}_1 F(\bar{w}_1)\right]
+  \end{aligned}
+\end{equation}
 
 %% =========== %% ========= %%
 \bibliography{../bib/notes.bib}

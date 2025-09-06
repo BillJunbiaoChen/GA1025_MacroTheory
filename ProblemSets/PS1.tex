@@ -269,14 +269,24 @@ $\Rightarrow$
   \end{aligned}
 \end{equation}
 
+
+We can use a graph to visually show that $\frac{\partial \bar{w}}{\partial \phi} < 0$. 
+Here, I finish the proof in a more rigorous way which requires additional condtion for $\beta$.
+
 Define a function $G(\bar{w}) = g(\bar{w}) - h(\bar{w}) = \frac{(1 - \beta) \bar{w}}{1 - \beta \phi} - c - \frac{\beta}{1 - \beta \phi} \int_{\bar{w}}^B (w' - \bar{w}) dF(w')$. 
 It follows that $G'(\bar{w}) = \frac{1 - \beta F(\bar{w})}{1 - \beta \phi} > 0$.
 Suppose $\phi_2 = \kappa \phi_1$ with $\kappa > 1$, 
 and $G(\bar{w}_1; \phi = \phi_1) = 0$.
 In order to show $\bar{w}_2 < \bar{w}_1$, we need to show that $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ because $G(w)$ is increasing.
 
-Therefore, given the $\bar{w}_1$ corresponding to $\phi_1$, if $\beta < \frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']}$,
-then $\bar{w}_2 < \bar{w}_1$.
+However, the condition for $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ is that $\bar{w}_1$ must be sufficiently high.
+The following derivation will show that if $\bar{w}_1 = B$, then $\bar{w}_2 < \bar{w}_1$ without additional condition.
+Contrarily, if $\bar{w}_1 \rightarrow 0$, we will require $\beta \rightarrow 0$ to ensure $\bar{w}_2 < \bar{w}_1$.
+In particular, the condition is given by $\beta < \frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']}$.%
+\footnote{
+  When $\bar{w}_1 = B$, the condition is automatically satisfied because $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} = 1$.
+  When $\bar{w}_1 \rightarrow 0$, we have $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} \rightarrow 0$.
+}
 \begin{equation}
   \begin{aligned}
     G(\bar{w}_1; \phi = \phi_1) - G(\bar{w}_1; \phi = \kappa \phi_1) & = \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right]
@@ -287,6 +297,86 @@ then $\bar{w}_2 < \bar{w}_1$.
     & = \Delta \phi \left[\bar{w}_1 - \beta \underbrace{\int_{\bar{w}_1}^B w' dF(w')}_{\equiv \mathbb{E}_{w' > \bar{w}_1}[w']}  - \beta \bar{w}_1 F(\bar{w}_1)\right]
   \end{aligned}
 \end{equation}
+
+\subsection{Exercise 7.10}
+\textbf{Finite horizon and mean-preserving spread.}
+First, we consider a situation where there is no unemployment compensation.
+
+
+
+
+\section{Numerical implementation of the finite-horizon search problem}
+\subsection*{Answer to Question 3.1}
+The Bellman equation is given by 
+\begin{equation}
+  \begin{aligned}
+  v_t(w) & = \max_{\text{\{Accept, Reject\}}} \Bigg\{ \frac{w (1 - \beta^{T-t+1})}{1 - \beta}, c + \beta \int_{0}^B v_{t+1}(w')dF(w') \Bigg\}, \quad \forall t = 0, 1, \dots, T \\
+  v_{T+1}(w) & = 0
+  \end{aligned}
+\end{equation}
+
+\subsection*{Answer to Question 3.2}
+Since $v_{T+1}(w) = 0$, the maximization problem is given by 
+\[
+v_T(w) = \max_{\text{\{Accept, Reject\}}} \{w, c \}
+\]
+Therefore, 
+\[
+v_T(w) = \max \{w, c \}
+\]
+% \[
+% v_T(w) = \begin{cases}
+% w &  \text{if } w \geq c,\\
+% c & \text{if }  w < c
+% \end{cases}
+% \]
+
+\subsection*{Answer to Question 3.3}
+We use induction to prove that the optimal policy is a reservation wage.
+When $t = T$, $\bar{w}_T = c$.
+When $t = T-1$, the Bellman Equation is:
+\[
+v_{T-1}(w) = \max_{\text{\{Accept, Reject\}}} \{w + \beta w, c + \beta(F(c)c + \int_{c}^B w' dF(w')) \}
+\]
+Therefore, $\bar{w}_{T-1} = \frac{c + \beta(F(c)c + \int_{c}^B w' dF(w'))}{1 + \beta}$, which is a constant.
+
+
+\subsection*{Answer to Question 3.4}
+Inspired by the answers above,
+we can characterize the indifference condition as follows. 
+\[
+\frac{\bar{w}_t (1 - \beta^{T-t+1})}{1 - \beta} = c + \beta \bigg(F(\bar{w}_{t+1}) c + \int_{\bar{w}_{t+1}}^B w' dF(w') \bigg)
+\]
+
+
+\subsection*{Answer to Question 3.5}
+Yes, this problem has well-defined solution even if $\beta > 1$ as we can solve it using backward induction.
+
+
+\subsection*{Answer to Question 3.6}
+See my iPad.
+
+
+\subsection*{Answer to Question 3.7}
+See my iPad.
+
+
+We now solve the model numerically in two different ways. 
+In what follows, use the 
+following benchmark parameter values: \( T = 50 \), \( \beta = 0.97 \), \( B = 1 \), \( c = 0.3 \). 
+For the distribution \( F(w) \) of wage offers, start with \( w \sim \text{Beta}(\alpha, \beta) \), 
+with parameters \( \alpha = 2, \beta = 2 \). 
+Recall that the Beta \((\alpha, \beta)\) distribution 
+has the density
+\[
+f(w) = \frac{w^{\alpha - 1} (1 - w)^{\beta - 1}}{\text{B}(\alpha, \beta)},
+\]
+where \(\text{B}(\alpha, \beta)\) is the Beta function.
+
+
+\subsection*{Answer to Question 3.8}
+\textbf{My code is available at:} \url{https://github.com/BillJunbiaoChen/GA1025_MacroTheory}
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/notes.bib}

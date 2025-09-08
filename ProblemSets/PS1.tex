@@ -464,6 +464,47 @@ E[v_{t+1}(w')] = \sum_{\{i: w_i < \bar{w}_{t+1} \}}\bar{w}_{t+1} f_i + \sum_{\{i
   \caption{Value functions and reservation wages}
 \end{figure}
 
+
+
+\subsection*{Answer to Question 3.12}
+Recall that the indifference condition for the reservation wage in the infinite horizon is given by
+\begin{align*}
+  \frac{\bar{w}}{1 - \beta} & = c + \beta \bigg[\int_{0}^{\bar{w}} \frac{\bar{w}}{1 - \beta} dF(w') + \int_{\bar{w}}^B \frac{w'}{1 - \beta} dF(w') \bigg] \\
+  & = c + \beta \bigg[\frac{\bar{w}}{1 - \beta} + \int_{\bar{w}}^B \frac{w' - \bar{w}}{1 - \beta} dF(w') \bigg] \\
+\end{align*}
+$\Rightarrow$
+\begin{align*}
+  \bar{w} - c = \frac{\beta}{1 - \beta}  \int_{\bar{w}}^B (w' - \bar{w}) dF(w') \\
+\end{align*}
+Define a function $g(w) = w - c - \frac{\beta}{1 - \beta}  \int_{w}^B (w' - w) dF(w')$, and then 
+apply discretization listed above, we have
+\begin{equation}
+  \label{eqn:discretized_g}
+  \tilde{g}(w) = w - c - \frac{\beta}{1 - \beta} \sum_{\{i: w_i > w \}} (w_i - w) f_i
+\end{equation}
+To solve the equation above, I apply \texttt{Roots} package in \texttt{Julia}.
+The table compares the reservation wages (i.e., the root in equation~\ref{eqn:discretized_g}) obtained via different algorithms and box constraints.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{cccc}
+\hline
+\textbf{Interval} & \textbf{Algorithm} & \textbf{Time (s)} & \textbf{Root} \\
+\hline
+$[0,1]$ & Secant & 0.020007 & 0.74870  \\
+$[0,1]$ & Bisection & 0.029884 & 0.74870  \\
+$[0,1]$ & A42 & 0.027841 & 0.74870  \\
+\hline
+$[0.3,1]$ & Secant & 0.006241 & 0.74870  \\
+$[0.3,1]$ & Bisection & 0.008908 & 0.74870  \\
+$[0.3,1]$ & A42 & 0.009308 & 0.74870  \\
+\hline
+\end{tabular}
+\caption{Reservation wage in infinite horizon computed by root-finding algorithms}
+\label{tab:root_finding_results}
+\end{table}
+
+
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}
 

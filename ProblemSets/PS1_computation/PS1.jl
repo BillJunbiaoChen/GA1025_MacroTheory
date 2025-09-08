@@ -1,4 +1,5 @@
-using Distributions, Plots, Random, Parameters, LinearAlgebra
+using Distributions, Plots, Random, Parameters, LinearAlgebra, Roots, ForwardDiff
+using BenchmarkTools # for timing
 
 
 T = 50
@@ -119,3 +120,51 @@ y_anno = v_w̄[1]
 annotate!(x_anno, y_anno, text("Reservation Wage at t = 1", 8, :blue, :left))
 
 savefig("value_functions_over_time_w_reservation_wage.png")
+
+
+# Use Roots.jl to find reservation wage
+g(x) = x - c - (β / (1 - β)) * sum(f_vec[w_vec .> x] .* (w_vec[w_vec .> x] .- x))
+
+
+println("Using Secant:")
+@time begin
+    x = find_zero(g, (0, 1), Secant())
+end
+println(x)
+
+println("Using Bisection:")
+@time begin
+    x = find_zero(g, (0, 1), Bisection())
+end
+println(x)
+
+println("Using A42:")
+@time begin
+    x = find_zero(g, (0, 1), A42())
+end
+println(x)
+
+
+
+println("Using Secant:")
+@time begin
+    x = find_zero(g, (0.3, 1), Secant())
+end
+println(x)
+
+println("Using Bisection:")
+@time begin
+    x = find_zero(g, (0.3, 1), Bisection())
+end
+println(x)
+
+println("Using A42:")
+@time begin
+    x = find_zero(g, (0.3, 1), A42())
+end
+println(x)
+
+
+
+
+

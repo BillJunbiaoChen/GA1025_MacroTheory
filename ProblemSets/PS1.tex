@@ -143,11 +143,11 @@ The Bellman equation is as follows
 \begin{equation}
     v(w) & = \max_{a \in \{ \text{Accept, Reject} \}} \{ \frac{w}{1 - \beta}, \beta (\phi (c + \bar{V}) + (1 - \phi) \mathbb{E} \left[ v(w') \right]  ) \}
 \end{equation}
-where $\bar{V} = \frac{(1 + \beta \phi) c + \beta (1 - \phi) \mathbb{E} \left[ v(w') \right]}{1 - \beta \phi }$ 
+where $\bar{V} = \frac{c + \beta (1 - \phi) \mathbb{E} \left[ v(w') \right]}{1 - \beta \phi }$ 
 denotes the continuation value of being unemployed.%
 \footnote{
   I obtain $\bar{V}$ by solving the following Bellman equation:
-  $\bar{V}  = c + \beta \bigg( \phi (c + \bar{V}) + (1 - \phi) \mathbb{E} \left[ v(w')\right]  \bigg)$
+  $\bar{V}  = c + \beta \bigg( \phi \bar{V} + (1 - \phi) \mathbb{E} \left[ v(w')\right]  \bigg)$
 }
 $v(w)$ denotes the value function conditional on receiving an offer.
 $\mathbb{E}\left[ v(w') \right] = \int_{0}^B v(w') dF(w')$ denotes the expected value conditional on receiving an offer.
@@ -171,7 +171,7 @@ We apply the monotonicity of $v(x)$ and $2F(x)-1$ to finish the proof:
   & 2 \int_0^{B} v(w_m') f(w_m') F(w_m') dw' - \int_0^{B} v(w_m') f(w_m') dw' \\
   = & \int_0^{B} v(w_m') (2F(w_m') - 1) dF(w') \\
   = & \mathbb{E}\left[ v(w_m') (2F(w_m') - 1) \right] \\
-  = & \underbrace{\text{Cov}\left[ v(w_m'), 2F(w_m') - 1 \right]}_{> 0} + \underbrace{\mathbb{E}[v(w_m')] \mathbb{E}[2F(w_m') - 1]}_{>0}
+  = & \underbrace{\text{Cov}\left[ v(w_m'), 2F(w_m') - 1 \right]}_{> 0} + \underbrace{\mathbb{E}[v(w_m')] \mathbb{E}[2F(w_m') - 1]}_{>0} > 0
 \end{align*}
 
 
@@ -265,46 +265,51 @@ Denote the reservation wage by $\bar{w}$, we have
 $\Rightarrow$
 \begin{equation}
   \begin{aligned}
-      \underbrace{\frac{(1 - \beta) \bar{w}}{1 - \beta \phi} - c}_{g(\bar{w})} & = \underbrace{ \beta \int_{\bar{w}}^B \frac{w' - \bar{w}}{1 - \beta \phi} dF(w')}_{h(\bar{w})}
+      \underbrace{\frac{(1 - \beta) \bar{w}}{\beta} - \frac{c (1 - \beta \phi)}{\beta}}_{g(\bar{w})} & = \underbrace{ \int_{\bar{w}}^B w' - \bar{w} dF(w')}_{h(\bar{w})}
   \end{aligned}
 \end{equation}
 
 
 We can use the graph below to visually show that $\frac{\partial \bar{w}}{\partial \phi} < 0$. 
-\begin{figure}
+(Because $g(w)$ shifts upward as $\phi$ increases, the intersection point moves leftward.)
+\begin{figure}[htbp]
   \centering
-  \includegraphics[width=0.8\textwidth]{wage_growth_proof.jpg}
+  \includegraphics[width=0.8\textwidth]{McCall_w_wage_growth.png}
   \caption{Wage growth and reservation wage}
+  \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
+   The blue line and the red line represent functions $g(w)$ with $\phi_1$ and $\phi_2$, respectively,
+   where $\phi_1 < \phi_2$.
+  \par}\end{minipage}
 \end{figure}
 
 
-\clearpage
-Here, I finish the proof in a more rigorous way which requires additional condtion for $\beta$.
+% \clearpage
+% Here, I finish the proof in a more rigorous way which requires additional condtion for $\beta$.
 
-Define a function $G(\bar{w}) = g(\bar{w}) - h(\bar{w}) = \frac{(1 - \beta) \bar{w}}{1 - \beta \phi} - c - \frac{\beta}{1 - \beta \phi} \int_{\bar{w}}^B (w' - \bar{w}) dF(w')$. 
-It follows that $G'(\bar{w}) = \frac{1 - \beta F(\bar{w})}{1 - \beta \phi} > 0$.
-Suppose $\phi_2 = \kappa \phi_1$ with $\kappa > 1$, 
-and $G(\bar{w}_1; \phi = \phi_1) = 0$.
-In order to show $\bar{w}_2 < \bar{w}_1$, we need to show that $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ because $G(w)$ is increasing.
+% Define a function $G(\bar{w}) = g(\bar{w}) - h(\bar{w}) = \frac{(1 - \beta) \bar{w}}{1 - \beta \phi} - c - \frac{\beta}{1 - \beta \phi} \int_{\bar{w}}^B (w' - \bar{w}) dF(w')$. 
+% It follows that $G'(\bar{w}) = \frac{1 - \beta F(\bar{w})}{1 - \beta \phi} > 0$.
+% Suppose $\phi_2 = \kappa \phi_1$ with $\kappa > 1$, 
+% and $G(\bar{w}_1; \phi = \phi_1) = 0$.
+% In order to show $\bar{w}_2 < \bar{w}_1$, we need to show that $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ because $G(w)$ is increasing.
 
-However, the condition for $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ is that $\bar{w}_1$ must be sufficiently high.
-The following derivation will show that if $\bar{w}_1 = B$, then $\bar{w}_2 < \bar{w}_1$ without additional condition.
-Contrarily, if $\bar{w}_1 \rightarrow 0$, we will require $\beta \rightarrow 0$ to ensure $\bar{w}_2 < \bar{w}_1$.
-In particular, the condition is given by $\beta < \frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']}$.%
-\footnote{
-  When $\bar{w}_1 = B$, the condition is automatically satisfied because $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} = 1$.
-  When $\bar{w}_1 \rightarrow 0$, we have $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} \rightarrow 0$.
-}
-\begin{equation}
-  \begin{aligned}
-    G(\bar{w}_1; \phi = \phi_1) - G(\bar{w}_1; \phi = \kappa \phi_1) & = \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right]
-    \underbrace{\left(\frac{1 - \beta}{1 -\beta \phi} - \frac{1 - \beta}{1 - \beta \kappa \phi} \right)}_{\Delta \phi < 0} \\
-    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right] \\
-    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \int_{\bar{w}_1}^B  \bar{w}_1 dF(w')\right] \\
-    & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \bar{w}_1 (1 - F(\bar{w}_1))\right] \\
-    & = \Delta \phi \left[\bar{w}_1 - \beta \underbrace{\int_{\bar{w}_1}^B w' dF(w')}_{\equiv \mathbb{E}_{w' > \bar{w}_1}[w']}  - \beta \bar{w}_1 F(\bar{w}_1)\right]
-  \end{aligned}
-\end{equation}
+% However, the condition for $G(\bar{w}_1; \phi = \kappa \phi_1) > 0$ is that $\bar{w}_1$ must be sufficiently high.
+% The following derivation will show that if $\bar{w}_1 = B$, then $\bar{w}_2 < \bar{w}_1$ without additional condition.
+% Contrarily, if $\bar{w}_1 \rightarrow 0$, we will require $\beta \rightarrow 0$ to ensure $\bar{w}_2 < \bar{w}_1$.
+% In particular, the condition is given by $\beta < \frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']}$.%
+% \footnote{
+%   When $\bar{w}_1 = B$, the condition is automatically satisfied because $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} = 1$.
+%   When $\bar{w}_1 \rightarrow 0$, we have $\frac{\bar{w}_1}{\bar{w}_1 F(\bar{w}_1) + \mathbb{E}_{w' > \bar{w}_1}[w']} \rightarrow 0$.
+% }
+% \begin{equation}
+%   \begin{aligned}
+%     G(\bar{w}_1; \phi = \phi_1) - G(\bar{w}_1; \phi = \kappa \phi_1) & = \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right]
+%     \underbrace{\left(\frac{1 - \beta}{1 -\beta \phi} - \frac{1 - \beta}{1 - \beta \kappa \phi} \right)}_{\Delta \phi < 0} \\
+%     & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B (w' - \bar{w}_1) dF(w') \right] \\
+%     & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \int_{\bar{w}_1}^B  \bar{w}_1 dF(w')\right] \\
+%     & = \Delta \phi \left[\bar{w}_1 (1 - \beta) - \beta \int_{\bar{w}_1}^B w' dF(w') + \beta \bar{w}_1 (1 - F(\bar{w}_1))\right] \\
+%     & = \Delta \phi \left[\bar{w}_1 - \beta \underbrace{\int_{\bar{w}_1}^B w' dF(w')}_{\equiv \mathbb{E}_{w' > \bar{w}_1}[w']}  - \beta \bar{w}_1 F(\bar{w}_1)\right]
+%   \end{aligned}
+% \end{equation}
 
 \subsection{Exercise 7.10}
 \textbf{Finite horizon and mean-preserving spread.}
@@ -426,7 +431,43 @@ Yes, this problem has well-defined solution even if $\beta > 1$ as we can solve 
 
 
 \subsection*{Answer to Question 3.6}
-See my iPad.
+Recall that the indifference condition for reservation wage is given by 
+\begin{equation}
+  \frac{\bar{w}_t (1 - \beta^{T-t+1} )}{1 - \beta} = c + \beta \int_{0}^B v_{t+1}(w')dF(w')
+\end{equation}
+Multiplying both sides with $1 - \beta$ and subtracting $(1 - \beta^{T-t+1}) c$, we have 
+\begin{align*}
+  (\bar{w}_t - c) (1 - \beta^{T-t+1}) = (\beta^{T-t+1} - \beta ) c + \beta (1 - \beta) \int_{0}^B v_{t+1}(w')dF(w')
+\end{align*}
+Recall that 
+\[
+  v_{t+1}(w') = \begin{cases}
+  \frac{\bar{w}_{t+1} (1 - \beta^{T-t})}{1 - \beta} &  \text{if } w' \leq \bar{w}_{t+1},\\
+  \frac{w' (1 - \beta^{T-t})}{1 - \beta}  & \text{if }  w' > \bar{w}_{t+1}
+\end{cases}
+\]
+
+Therefore, we have 
+\begin{align*}
+  (\bar{w}_t - c) (1 - \beta^{T-t+1}) & = - \beta (1 - \beta^{T-t}) c + \beta (1 - \beta^{T-t}) \bar{w}_{t+1} \int_{0}^{\bar{w}_{t+1}}dF(w') + \beta (1 - \beta^{T-t}) \int_{\bar{w}_{t+1}}^B w' dF(w') \\ 
+  & = - \beta (1 - \beta^{T-t}) c + \beta (1 - \beta^{T-t})  \int_{0}^{\bar{w}_{t+1}} (\bar{w}_{t+1} - w') dF(w') + \beta (1 - \beta^{T-t}) \mathbb{E}[w'] \\
+  & = \beta (1 - \beta^{T-t}) [\mathbb{E}[w'] - c + \int_{0}^{\bar{w}_{t+1}} (\bar{w}_{t+1} - w') dF(w')]
+\end{align*}
+Applying Integral by Part, $\int_{0}^{\bar{w}_{t+1}} (\bar{w}_{t+1} - w') dF(w') = \int_0^{\bar{w}_{t+1}} F(w')dw'$.
+Therefore, we have
+\[
+\bar{w}_t = c + \frac{\beta (1 -\beta^{T-t})}{1 - \beta^{T-t+1}} \bigg[ \mathbb{E}[w'] - c + \int_{0}^{\bar{w}_{t+1}}F(w')dw' \bigg]
+\]
+Now denote $\frac{\beta (1 -\beta^{T-t})}{1 - \beta^{T-t+1}} = \tilde{\beta}_t$, then 
+$g_{t+1}(w) = c + \tilde{\beta}_t \bigg[ \mathbb{E}[w'] - c + \int_{0}^{\bar{w}_{t+1}}F(w')dw' \bigg]$.
+It follows that 
+\begin{itemize}
+  \item $g_{t+1}'(w) = \tilde{\beta}_{t+1} F(w) > 0$
+  \item $g_{t+1}'(w) = \tilde{\beta}_{t+1} f(w) > 0$
+  \item Fix $w_o$, $g_{t+1}(w_o) - g_{t}(w_o) = \bigg[\frac{(1 - \beta^{T-t-1})\beta}{1 - \beta^{T-t}} - \frac{(1 - \beta^{T-t})\beta}{1 - \beta^{T-t+1}} \bigg] \bigg[ \mathbb{E}[w'] - c + \int_{0}^{w_o} F(w')dw' \bigg] < 0$.
+\end{itemize}
+
+To complete the proof
 
 
 \subsection*{Answer to Question 3.7}
@@ -462,8 +503,27 @@ E[v_{t+1}(w')] = \sum_{\{i: w_i < \bar{w}_{t+1} \}}\bar{w}_{t+1} f_i + \sum_{\{i
   \centering
   \includegraphics[width=0.5\textwidth]{value_functions_over_time_w_reservation_wage.png}
   \caption{Value functions and reservation wages}
+  \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
+   Value functions from $t = 1,\dots, T$ are depicted from up to down.
+   \textbf{Reservation wage} at $T$ is $0.72724$.
+  \par}\end{minipage}
 \end{figure}
 
+
+\subsection*{Answer to Question 3.11}
+Using the specification with \( w \sim \text{Beta}(1.5, 1.5) \),
+we obtain the reservation wage and value functions as follows.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{value_functions_over_time_w_reservation_wage_MSP.png}
+  \caption{Value functions and reservation wages}
+  \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
+   Value functions from $t = 1,\dots, T$ are depicted from up to down.
+   \textbf{Reservation wage} at $T$ is $0.75689$.
+   The original reservation wage curve is depicted in red, while the one with MSP is depicted in blue.
+  \par}\end{minipage}
+\end{figure}
+As predicted by the model, the reservation wage increases after MSP as the continuation value for waiting for better offers increases.
 
 
 \subsection*{Answer to Question 3.12}

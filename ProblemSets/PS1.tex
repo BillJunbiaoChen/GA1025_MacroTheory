@@ -519,7 +519,7 @@ we obtain the reservation wage and value functions as follows.
   \caption{Value functions and reservation wages}
   \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
    Value functions from $t = 1,\dots, T$ are depicted from up to down.
-   \textbf{Reservation wage} at $T$ is $0.75689$.
+   \textbf{Reservation wage} at $T$ after MSP is $0.75689$.
    The original reservation wage curve is depicted in red, while the one with MSP is depicted in blue.
   \par}\end{minipage}
 \end{figure}
@@ -564,6 +564,17 @@ $[0.3,1]$ & A42 & 0.009308 & 0.74870  \\
 \label{tab:root_finding_results}
 \end{table}
 
+Next I apply numerical experiments to show that the 
+reservation wage in infite horizon equals to $\lim_{T \rightarrow \infty} \bar{w}_1$.
+Concretely, I experiment with $T=50, 51, 52, 53, 54, 55, 60, 65, 75, 100, 200, 300$, and plot 
+the reservation wages at $t=1$ across different $T$.
+The figure indicates that $\lim_{T \rightarrow \infty} \bar{w}_1 = \bar{w}$.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{convergence_of_reservation_wage.png}
+  \caption{The convergence of reservation wages}
+\end{figure}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

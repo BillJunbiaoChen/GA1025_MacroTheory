@@ -1,7 +1,7 @@
-using Distributions, Plots, Random, Parameters, LinearAlgebra
+using Distributions, Plots, Random, Parameters, LinearAlgebra, Roots
 
 
-T_vec = [50, 100, 200, 500, 1000]
+T_vec = [50, 51, 52, 53, 54, 55, 60, 65, 75, 100, 200, 300]
 β = 0.97
 B = 1
 c = 0.3
@@ -27,54 +27,49 @@ end
 f_vec[J] = 1 - cdf(beta_dist, 0.5* (w_vec[J] + w_vec[J-1]))
 Ew = sum(w_vec .* f_vec)
 
-# Question 3.8 Compute reservation wages 
-w̄_vec = zeros((T+1))
-w̄_vec[T+1] = c # w̄_T = c 
+# use root-finding algorithm to obtain w̄ in infinite horizon.
+g(x) = x - c - (β / (1 - β)) * sum(f_vec[w_vec .> x] .* (w_vec[w_vec .> x] .- x))
+w_bar_infinite = find_zero(g, (0, 1), A42())
 
 
-for t in T:-1:1
-    reject_idx = w_vec .< w̄_vec[t+1]
-    p_rej = sum(f_vec[reject_idx])
-    term1 = w̄_vec[t+1] * p_rej
-    term2 = sum(f_vec[reject_idx] .* w_vec[reject_idx])
-    w̄_vec[t] = (c * (1 - β) / (1 - β^(T-t+2))) +
-               (β * (1 - β^(T-t+1)) / (1 - β^(T-t+2)) * (Ew + term1 - term2))
+
+# Examine w̄ in finite periods with increasing T
+w̄T_vec = zeros(length(T_vec))
+
+tt = 1
+
+for T in T_vec
+    w̄_vec = zeros((T+1))
+    w̄_vec[T+1] = c # w̄_T = c 
+    for t in T:-1:1
+        reject_idx = w_vec .< w̄_vec[t+1]
+        p_rej = sum(f_vec[reject_idx])
+        term1 = w̄_vec[t+1] * p_rej
+        term2 = sum(f_vec[reject_idx] .* w_vec[reject_idx])
+        w̄_vec[t] = (c * (1 - β) / (1 - β^(T-t+2))) +
+                (β * (1 - β^(T-t+1)) / (1 - β^(T-t+2)) * (Ew + term1 - term2))
+    end
+    w̄T_vec[tt] = w̄_vec[1]
+    tt = tt + 1
 end
 
-
-# Visualize reservation wages
-plot((1:(T+1)), w̄_vec, xlabel="Time", ylabel="Reservation wage", legend=false)
-savefig("reservation_wages_over_time.png")
-
-
-# Combine Value Functions with Reservation Wages
-colors = [color for color in cgrad(:viridis, size(v_mat, 2)).colors]
-
-# Base plot
 plot(
-    w_vec,
-    v_mat[:, 1],
-    color=colors[1],
-    xlabel="Wage",
-    # ylabel="Value Function",
-    title="The Convergence of Reservation Wage",
-    legend=false,
-    titlefont=10, guidefont=8, tickfont=6
+    T_vec,
+    w̄T_vec,
+    color=:blue,
+    ylabel="Reservation Wage",
+    xlabel="Number of periods",
+    label="Finite Horizon"
 )
 
 
-for t in 2:size(v_mat, 2)
-    plot!(w_vec, v_mat[:, t], color=colors[t], label=false)
-end
+plot!(
+    T_vec, 
+    ones(length(T_vec)) .* w_bar_infinite, 
+    color=:black, 
+    lw=2,
+    label="Infinite Horizon"
+)
 
 
-plot!(w̄_vec, v_w̄, color=:blue, lw=2)
-x_anno = w̄_vec[end]
-y_anno = v_w̄[end]
-annotate!(x_anno, y_anno, text("Reservation Wage at t = T", 8, :blue, :left))
-
-x_anno = w̄_vec[1]
-y_anno = v_w̄[1]
-annotate!(x_anno, y_anno, text("Reservation Wage at t = 1", 8, :blue, :left))
-
-savefig("value_functions_over_time_w_reservation_wage.png")
+savefig("convergence_of_reservation_wage.png")

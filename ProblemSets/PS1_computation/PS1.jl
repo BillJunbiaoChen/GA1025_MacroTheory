@@ -44,7 +44,7 @@ end
 
 
 # Visualize reservation wages
-plot((1:(T+1)), w̄_vec, xlabel="Time", ylabel="Reservation wage", legend=false)
+plot((0:1:T), w̄_vec, xlabel="Time", linewidth=3, ylabel="Reservation wage", legend=false)
 savefig("reservation_wages_over_time.png")
 
 

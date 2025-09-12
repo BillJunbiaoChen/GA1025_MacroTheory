@@ -136,6 +136,9 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 
 %main text
 \begin{document}
+
+\maketitle
+
 \section{Search Models}
 \subsection{Exercise 7.1}
 \textbf{A McCall Model with a chance of unemployment.}
@@ -352,30 +355,38 @@ $\text{Var}(X) = \text{Var}(Y)$ as follows.
 \textbf{Remark}: The process above is not a MSP because $\mathbb{E}[Z|X] \neq 0$.
 
 \subsection*{Transitivity of mean-preserving spreads.}
-\paragraph{(a)} Suppose $X2$ is contructed from $X1$ by MSP, and $X3$ is contructed from $X2$ by MSP.
-Then we have
-\begin{align*}
-X2 &= X1 + Z1 \\
-X3 &= X2 + Z2
-\end{align*}
-where $\mathbb{E}[Z1|X1] = 0$, and $\mathbb{E}[Z2|X2] = 0$.
-Therefore, 
-\[
-X3 = X1 + Z1 + Z2
-\]
-Now if follows that 
-\begin{align*}
-\mathbb{E}[(Z1 + Z2)|X1] & = \mathbb{E}[(Z1 + Z2)|X1]  \\
-& = \mathbb{E}[Z2|X1] \\
-& = \mathbb{E}[Z2|X2, Z1] \\
-& = \mathbb{E}[Z2|X2] (\text{because } Z1 \text{ is independent of } Z2) \\
-& = 0
-\end{align*}
+% \paragraph{(a)} Suppose $X2$ is contructed from $X1$ by MSP, and $X3$ is contructed from $X2$ by MSP.
+% Then we have
+% \begin{align*}
+% X2 &= X1 + Z1 \\
+% X3 &= X2 + Z2
+% \end{align*}
+% where $\mathbb{E}[Z1|X1] = 0$, and $\mathbb{E}[Z2|X2] = 0$.
+% Therefore, 
+% \[
+% X3 = X1 + Z1 + Z2
+% \]
+% Now if follows that 
+% \begin{align*}
+% \mathbb{E}[(Z1 + Z2)|X1] & = \mathbb{E}[(Z1 + Z2)|X1]  \\
+% & = \mathbb{E}[Z2|X1] \\
+% & = \mathbb{E}[Z2|X2, Z1] \\
+% & = \mathbb{E}[Z2|X2] (\text{because } Z1 \text{ is independent of } Z2) \\
+% & = 0
+% \end{align*}
+% \(\blacksquare\)
+Note that $\mathbb{E}[u(X)] \geq \mathbb{E}[u(Y)]$ if $Y$ is a MSP from $X$ for any concave utility function $u(\cdot)$. 
+Suppose $Y$ is a MSP from $X$, and $Z$ is a MSP from $Y$.
+Then we have $\mathbb{E}[u(X)] \geq \mathbb{E}[u(Y)] \geq \mathbb{E}[u(Z)]$.
+Therefore $Z$ is a MSP from $X$, thus MSP is transitive.
 \(\blacksquare\)
 
+
 \paragraph{(b)}
-Denote $(F, G) \in S$ if distribution functions $F$ and $G$ satisfy single-crossing property.
+Denote $(F, G) \in S$ if distribution functions $F$ and $G$ satisfy the single-crossing property.
 The figure below shows that $(F1, F2) \in S$ and $(F2, F3) \in S$, but $(F1, F3) \notin S$.
+Visually, $F1$, and $F3$ cross twice.
+
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{single_crossing_is_not_transitive.png}
@@ -410,7 +421,7 @@ v_T(w) = \max \{w, c \}
 
 \subsection*{Answer to Question 3.3}
 We use induction to prove that the optimal policy is a reservation wage.
-When $t = T$, $\bar{w}_T = c$.
+\textcolor{blue}{When $t = T$, $\bar{w}_T = c$}.
 When $t = T-1$, the Bellman Equation is:
 \[
 v_{T-1}(w) = \max_{\text{\{Accept, Reject\}}} \{w + \beta w, c + \beta(F(c)c + \int_{c}^B w' dF(w')) \}
@@ -424,6 +435,7 @@ we can characterize the indifference condition as follows.
 \[
 \frac{\bar{w}_t (1 - \beta^{T-t+1})}{1 - \beta} = c + \beta \bigg(F(\bar{w}_{t+1}) c + \int_{\bar{w}_{t+1}}^B w' dF(w') \bigg)
 \]
+
 
 
 \subsection*{Answer to Question 3.5}
@@ -471,8 +483,32 @@ To complete the proof
 
 
 \subsection*{Answer to Question 3.7}
-See my iPad.
+Fix $t$, we have
+\begin{align*}
+v_{t}(w') =
+\begin{cases} 
+  \frac{\bar{w}_t}{1 - \beta} & \text{ if } w' \leq \bar{w}_t \\[10pt]
+  \frac{w'}{1 - \beta} & \text{ if } w' > \bar{w}_t \\[10pt]
+\end{cases}
+\end{align*}
+as $T \rightarrow \infty$.
+In follows that, the indifference condition for reservation wage is given by
+\[
+\bar{w}_t - c = \beta \bigg[ \mathbb{E}[w'] - c + \int_0^{\bar{w}_{t+1}} F(w') dw'\bigg]
+\]
+We can guess and verify that $\bar{w}_t = \bar{w}_{t+1} = \bar{w}$ and 
+\begin{align*}
+v_{t}(w) =
+\begin{cases} 
+  \frac{\bar{w}}{1 - \beta} & \text{ if } w \leq \bar{w} \\[10pt]
+  \frac{w}{1 - \beta} & \text{ if } w > \bar{w} \\[10pt]
+\end{cases}
+\end{align*}
+as $T\rightarrow \infty$.
 
+
+
+\subsection*{Quantitative Exercise}
 
 We now solve the model numerically in two different ways. 
 In what follows, use the 
@@ -487,39 +523,68 @@ f(w) = \frac{w^{\alpha - 1} (1 - w)^{\beta - 1}}{\text{B}(\alpha, \beta)},
 where \(\text{B}(\alpha, \beta)\) is the Beta function.
 
 
-\subsection*{Answer to Question 3.8}
 \textbf{My code is available at:} \\
 \url{https://github.com/BillJunbiaoChen/GA1025_MacroTheory/tree/main/ProblemSets/PS1_computation}
 
-
-
-The expected value function at $t+1$ is given by
+\subsection*{Answer to Question 3.8}
+I discretize $w$ using 101 evenly spaced grids $\{w^j\}_{j=1}^{101}$ on $[0, B]$, 
+and apply the following scheme to obtain probabilities $\{\tilde{f}_j\}_{j=1}^{101}$:
+\begin{align*}
+\tilde{f}^j =
+\begin{cases} 
+F\left(\frac{1}{2} \left(\tilde{w}^2 + \tilde{w}^1\right)\right), & j = 1 \\[10pt]
+F\left(\frac{1}{2} \left(\tilde{w}^{j+1} + \tilde{w}^j\right)\right) - F\left(\frac{1}{2} \left(\tilde{w}^j + \tilde{w}^{j-1}\right)\right), & 1 < j < J \\[10pt]
+1 - F\left(\frac{1}{2} \left(\tilde{w}^J + \tilde{w}^{J-1}\right)\right), & j = J
+\end{cases}
+\end{align*}
+Thus, the discretized version of the Bellman equation is given by
 \[
-E[v_{t+1}(w')] = \sum_{\{i: w_i < \bar{w}_{t+1} \}}\bar{w}_{t+1} f_i + \sum_{\{i: w_i \geq \bar{w}_{t+1} \}} w_i f_i
+\hat{V}_t^j = \max_{\text{\{Accept, Reject\}}} \Bigg\{\frac{w^j (1 - \beta^{T-t+1})}{1 - \beta} + \beta E[\hat{V}_{t+1}^j] \Bigg\}, \quad \forall t = 0, 1, \dots, T
+\]
+where expected value function at $t+1$ is given by
+\[
+E[\hat{V}_{t+1}^j]  = \sum_{\{i: w_i < \bar{w}_{t+1} \}}\bar{w}_{t+1} f_i + \sum_{\{i: w^i \geq \bar{w}_{t+1} \}} w^i f_i
 \]
 
 
+
+\subsection*{Answer to Question 3.9}
+The figure below plots the reservation wages against time.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.5\textwidth]{reservation_wages_over_time.png}
+  \caption{Value functions and reservation wages}
+  \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
+   Value functions from $t = 1,\dots, T$ are depicted from up to down.
+  \par}\end{minipage}
+\end{figure}
+
+\subsection*{Answer to Question 3.10}
+By iterating on the indifference condition, I obtain the same reservation wages as above.
+The figure below plots the value functions against time.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{value_functions_over_time_w_reservation_wage.png}
   \caption{Value functions and reservation wages}
   \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
    Value functions from $t = 1,\dots, T$ are depicted from up to down.
-   \textbf{Reservation wage} at $T$ is $0.72724$.
   \par}\end{minipage}
 \end{figure}
 
 
 \subsection*{Answer to Question 3.11}
 Using the specification with \( w \sim \text{Beta}(1.5, 1.5) \),
-we obtain the reservation wage and value functions as follows.
+I obtain the reservation wage and value functions as follows.
+Intuitively, the reservation wage increases after MSP as the continuation value for waiting for better offers increases.
+Note that the realization below the observation wage doesn't affect the value function.
+Therefore, after MSP, the worker can expect better offers.
 \begin{figure}[htbp]
   \centering
   \includegraphics[width=0.5\textwidth]{value_functions_over_time_w_reservation_wage_MSP.png}
   \caption{Value functions and reservation wages}
   \begin{minipage}{0.95\textwidth}{\footnotesize \textsc{Notes}:
    Value functions from $t = 1,\dots, T$ are depicted from up to down.
-   \textbf{Reservation wage} at $T$ after MSP is $0.75689$.
+   \textbf{Reservation wage} at $t=1$ after MSP is $0.75689$.
    The original reservation wage curve is depicted in red, while the one with MSP is depicted in blue.
   \par}\end{minipage}
 \end{figure}
@@ -544,23 +609,34 @@ apply discretization listed above, we have
 \end{equation}
 To solve the equation above, I apply \texttt{Roots} package in \texttt{Julia}.
 The table compares the reservation wages (i.e., the root in equation~\ref{eqn:discretized_g}) obtained via different algorithms and box constraints.
-
 \begin{table}[h!]
 \centering
 \begin{tabular}{cccc}
 \hline
 \textbf{Interval} & \textbf{Algorithm} & \textbf{Time (s)} & \textbf{Root} \\
 \hline
-$[0,1]$ & Secant & 0.020007 & 0.74870  \\
-$[0,1]$ & Bisection & 0.029884 & 0.74870  \\
-$[0,1]$ & A42 & 0.027841 & 0.74870  \\
+\multicolumn{4}{c}{\textbf{Parameterization:} $\beta = \alpha = 2$} \\
 \hline
-$[0.3,1]$ & Secant & 0.006241 & 0.74870  \\
-$[0.3,1]$ & Bisection & 0.008908 & 0.74870  \\
-$[0.3,1]$ & A42 & 0.009308 & 0.74870  \\
+$[0,1]$     & Secant    & 0.020007 & 0.74870 \\
+$[0,1]$     & Bisection & 0.029884 & 0.74870 \\
+$[0,1]$     & A42       & 0.027841 & 0.74870 \\
+\hline
+$[0.3,1]$   & Secant    & 0.006241 & 0.74870 \\
+$[0.3,1]$   & Bisection & 0.008908 & 0.74870 \\
+$[0.3,1]$   & A42       & 0.009308 & 0.74870 \\
+\hline
+\multicolumn{4}{c}{\textbf{Parameterization:} $\beta = \alpha = 1.5$} \\
+\hline
+$[0,1]$     & Secant    & 0.225221 & 0.77908 \\
+$[0,1]$     & Bisection & 0.095937 & 0.77908 \\
+$[0,1]$     & A42       & 0.310508 & 0.77908 \\
+\hline
+$[0.3,1]$   & Secant    & 0.014162 & 0.77908 \\
+$[0.3,1]$   & Bisection & 0.016413 & 0.77908 \\
+$[0.3,1]$   & A42       & 0.015981 & 0.77908 \\
 \hline
 \end{tabular}
-\caption{Reservation wage in infinite horizon computed by root-finding algorithms}
+\caption{Reservation wage in infinite horizon computed by root-finding algorithms.}
 \label{tab:root_finding_results}
 \end{table}
 

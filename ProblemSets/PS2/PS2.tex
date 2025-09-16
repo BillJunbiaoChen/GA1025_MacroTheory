@@ -1,0 +1,253 @@
+\documentclass[11pt]{article}
+
+%%METADATA
+\title{GA1025 Macro Theory \\Solution to Problem Set 2}
+\author{
+Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
+}
+\date{\today}
+
+
+%%PACKAGES
+\usepackage{mdframed} % For boxed environments
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[hyphens]{url}
+\usepackage{natbib}
+\usepackage[font=normalsize,labelfont=bf]{caption}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue}
+\usepackage{stmaryrd}  %Package with \boxast command
+\usepackage{enumerate}% http://ctan.org/pkg/enumerate %Supports lowercase Roman-letter enumeration
+\usepackage{verbatim} %Package with \begin{comment} environment
+%\usepackage{enumitem}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage{booktabs} %Package with \toprule and \bottomrule
+\usepackage{etoc}     %Package with \localtableofcontents
+\usepackage{placeins}    %Package that prevent repositioning the tables
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{subfig}
+\usepackage{csquotes}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{language=bash,
+  frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=3
+}
+
+\lstset{language=C,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=4
+}
+
+\definecolor{lightblue}{rgb}{0.68, 0.85, 0.9} %
+
+%CUSTOM DEFINITIONS
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{remark}{Remark}
+\setcounter{secnumdepth}{3}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{automata, positioning, arrows, calc}
+
+\tikzset{
+	->,  % makes the edges directed
+	>=stealth, % makes the arrow heads bold
+	shorten >=2pt, shorten <=2pt, % shorten the arrow
+	node distance=3cm, % specifies the minimum distance between two nodes. Change if n
+	every state/.style={draw=blue!55,very thick,fill=blue!20}, % sets the properties for each ’state’ n
+	initial text=$ $, % sets the text that appears on the start arrow
+ }
+
+%% PROPOSITION
+% Define the Proposition environment
+\newmdenv[
+  innerleftmargin=10pt, 
+  innerrightmargin=10pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  linecolor=black, 
+  linewidth=1pt,
+  backgroundcolor=white, 
+  roundcorner=5pt
+]{propositionbox}
+
+\newtheoremstyle{boldtitle} % Define a new theorem style
+  {10pt} % Space above
+  {10pt} % Space below
+  {\itshape} % Body font
+  {} % Indent amount
+  {\bfseries} % Theorem head font
+  {.} % Punctuation after theorem head
+  { } % Space after theorem head
+  {} % Theorem head spec
+
+\theoremstyle{boldtitle} % Use the custom style
+\newtheorem{proposition}{Proposition} % Define the proposition environment
+
+% Redefine the proposition environment to use the box
+\newenvironment{boxedproposition}[1][]
+{\begin{propositionbox}\begin{proposition}[#1]}
+{\end{proposition}\end{propositionbox}}
+
+%%FORMATTING
+\usepackage[bottom]{footmisc}
+\onehalfspacing
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\bibliographystyle{../bib/aeanobold-oxford}
+
+
+%main text
+\begin{document}
+\maketitle
+
+\section*{Pissarides’ analysis of taxation and variable search intensity}
+\paragraph{a.} According to the setting, the timing protocol of the model is:
+at the beginning of the period, the worker chooses the level of effort, 
+then she instantaneously observes the probability of receiving an offer.
+If the offer comes, she also needs to decide whether to accept the offer at the beginning of this period.
+Therefore, the worker's problem can be characterized by the following value function.
+\begin{align*}
+    U = \max_{e} \left( 1 - \pi(e) \right) (1 - e + z + \beta U) + 
+    \pi (e) \int_{0}^B \max_{\{\text{Accept, Reject}\}} \bigg\{& w - e - T(w) + \beta (\alpha U + (1 - \alpha) (w - T(w))), \\
+    & 1 - e + z + \beta U \bigg\} dF(w)
+\end{align*}
+where $U$ denotes the value of unemployment.
+%
+%
+
+The optimal strategy is given by the independent choices of optimal level and a reservation wages. 
+In particular, 
+at the reservation wage $\bar{w}$,
+the indifference condition of accepting/rejecting an offer is 
+\[
+\bar{w} - e - T(\bar{w}) + \beta \bigg[\alpha U + (1 - \alpha)\left[\bar{w} - T(\bar{w}) \right] \bigg] = 1 - e + z + \beta U
+\]
+Rearranging terms, we have 
+\[
+\left[1 + \beta  (1 - \alpha)\right] \left[\bar{w} - T(\bar{w}) \right]  = 1 + z + \beta(1- \alpha) U
+\]
+Since $U$ is a constant, we can conclude that $\bar{w}$ does NOT depend on the optimal effort.
+\\
+\textbf{Remark:} Intuitively, the choice of $e$ is a \textbf{sunk cost}, which won't affect the subsequent decisions.
+%
+
+To characterize the optimal choice of $e$, I first simplify the equation of $U$:
+\begin{align*}
+    U = \max_{e} 1 - e + z + \beta U - \pi(e) (1 + z + \beta U) + 
+    \pi (e) \int_{0}^B \max_{\{\text{Accept, Reject}\}} \bigg\{& w - T(w) + \beta (\alpha U + (1 - \alpha) (w - T(w))), \\
+    & 1 + z + \beta U \bigg\} dF(w)
+\end{align*}
+
+Next, I denote the objective function by $g(e)$, and denote 
+$\int_{0}^B \max_{\{\text{Accept, Reject}\}} \bigg\{ w - T(w) + \beta (\alpha U + (1 - \alpha) (w - T(w))), 1 + z + \beta U \bigg\} dF(w)$ by $\Omega$.
+I compute the derivative of $g(e)$ w.r.t. $e$ and obtain 
+\[
+\pi'(e) = \frac{1}{\Omega - (1 + z + \beta U)}
+\]
+
+
+\paragraph{b.}
+Assume that $T(w) = t(w -a)$, then the indifference condition becomes 
+\[
+\left[1 + \beta  (1 - \alpha)\right] \left[(1-t) \bar{w} + ta \right]  = 1 + z + \beta(1- \alpha) U
+\].
+It follows that 
+\[
+\bar{w} = - \frac{t}{1 - t} a + \frac{1 + z + \beta (1 - \alpha )U}{1 + \beta (1 - \alpha) (1 - t)}
+\].
+Thus, we have $\frac{\partial \bar{w}}{\partial a} = - \frac{t}{1 - t} < 0$.
+
+To examine the effect of increasing $a$ on the effort, 
+I consider the function $h(e) = \pi'(e) - \frac{1}{\Omega - (1 + z + \beta U)}$.
+Also note that $\frac{\partial \Omega}{\partial a} = \left( 1 - F(\bar{w})\right)(1 + \beta (1 - \alpha)t) > 0$.
+Applying the implicit differenetial equation, I have 
+\begin{align*}
+\frac{\partial e^*}{\partial a} & = -\frac{\partial h/ \partial a}{\partial h/ \partial e^*} \\ 
+& = - \frac{\frac{\frac{\partial \Omega}{\partial a}}{(\Omega - (1 + z + \beta U))^2}}{\pi''(e)} > 0
+\end{align*}
+This concludes that increasing $a$ increases the optimal level of search effort.
+As the distribution of wage $F(w)$ is fixed, and the reservation wage decreases,
+it immediately follows that the probability of accepting a job increases.
+
+\paragraph{c.} 
+The derivative of $\bar{w}$ with respect to $t$ is 
+\[
+\frac{\partial \bar{w}}{\partial t} = - \frac{a}{(1 - t)^2},
+\]
+which is positive if $a < 0$.
+
+The derivative of $e^*$ with respect to $t$ is 
+\begin{align*}
+    \frac{\partial e^*}{\partial t} & = -\frac{\partial h/ \partial t}{\partial h/ \partial e^*} \\  
+    & = - \frac{\beta (1 - \alpha)(a - \mathbb{E}_+[w]) + a - F(\bar{w}) [a + \beta a (1 - \alpha)] }{\pi''(e)}
+\end{align*}
+If the derivative is negative, we need 
+\[
+\frac{\beta (1 - \alpha)(a - \mathbb{E}_+[w]) + a - F(\bar{w}) [a + \beta a (1 - \alpha)] }{\pi''(e)} > 0
+\]
+That is, we need 
+\[
+\beta (1 - a) (a - \mathbb{E}_+[w]) + a < F(\bar{w})[a + \beta a (1 - \alpha)]
+\]
+
+\section*{4. Contraction Mapping in the Search Model}
+The Bellman Equation of the search model is given by 
+\begin{align*}
+(Tf)(w) = \max_{\text{Accept, Reject}} (\frac{w}{1 - \beta}, c + \beta \int_{0}^B f(w') dF(w'))
+\end{align*}
+\begin{itemize}
+    \item ``Monotonicity'': Suppose $f1 > f2$, then $\int_{0}^B f1(w') dF(w') > \int_{0}^B f2(w') dF(w')$.
+    % It follows that the reservation wage $\bar{w}_1 > \bar{w}_2$. 
+    % Therefore, if $w \in [0, \bar{w}_2)$, $(Tf2)(w) = \frac{\bar{w}_2}{1 - \beta} < \frac{\bar{w}_1}{1 - \beta} = (Tf1)(w)$.
+    % If $w \in [\bar{w}_2, \bar{w}_1)$, $(Tf1)(w) = \frac{\bar{w}_1}{1 - \beta} > \frac{\bar{w}_2}{1 - \beta} = (Tf2)(w)$.
+    Suppose the optimal policy under $f2$ is 
+    \item ``Discounting'': 
+    \begin{align*} 
+        (T(f+a))(w) & = \max_{\text{Accept, Reject}} (\frac{w}{1 - \beta}, c + \beta \int_{0}^B (f+a)(w') dF(w')) \\
+        & = \max_{\text{Accept, Reject}} (\frac{w}{1 - \beta}, c + \beta \int_{0}^B f(w') dF(w')+ \beta a) \\
+        & = \beta a + \max_{\text{Accept, Reject}} (\frac{w}{1 - \beta}, c + \beta \int_{0}^B f(w') dF(w')) \\
+        & = \beta a + (Tf)(w)
+    \end{align*}
+\end{itemize}
+%% =========== %% ========= %%
+\bibliography{../bib/references.bib}
+
+\end{document}

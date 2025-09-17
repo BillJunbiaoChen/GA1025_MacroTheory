@@ -228,6 +228,86 @@ That is, we need
 \beta (1 - a) (a - \mathbb{E}_+[w]) + a < F(\bar{w})[a + \beta a (1 - \alpha)]
 \]
 
+
+
+\section*{2. Convergence results and contraction mapping}
+\paragraph{a.} To show that the limit is unique, one can apply the Triangle Inequality. 
+
+Concretely, for any positive $\epsilon$, there exists $N$, such that 
+\[
+\rho(x, y) \leq \rho(x_n, x) + \rho(x_n, y) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+\]
+Since $\epsilon$ can be arbitrary small, we conclude that $\rho(x, y) \rightarrow 0$.
+Therefore, the limit is unique. \(\blacksquare \)
+
+\paragraph{b.} To show that convergence implies Cauchy, one can apply the Triangle Inequality. 
+Concretely, denote the limit by $x$, for any $m, k \in \mathbb{N}$, and any positive $\epsilon$, 
+there exists an integer $N$, s.t.
+\[
+\rho(x_m, x_k) \leq \rho(x_m, x) + \rho(x_k, x) < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+\]
+for any $m, k > N$.
+Therefore, convergence implies Cauchy. \(\blacksquare \)
+
+
+\paragraph{c.} Note that if $(x_n)$ is a Cauchy sequence,
+then for any positive $\epsilon$, there exists $N$, such that 
+$\rho(x_m, x_k) < \epsilon$ for any $m, k \geq N$.
+Now take $k = N$,
+we have $\rho(x_m, x_N) < \epsilon$ for any $m > N$.
+By the inverse Triangle Inequality, we have 
+\[
+\rho(x_m, 0) < \rho(x_N, 0) + \epsilon
+\]
+Therefore, we bound the sequence by 
+\[
+\max\{ \max\{|x_1|, \ldots, |x_{N-1}|\}, |x_N| + \epsilon\}
+\]
+
+\paragraph{d.} We can prove the counter-positive statement, i.e., 
+\[
+\exists \text{ a subseq of } x_n \text{ does not converge to } x \Leftrightarrow x_n \text{does not converge to } x
+\]
+\paragraph{Proof}
+``$\Rightarrow$''
+Let $(x_{m_k})$ be a subsequence that does not converge to $x$.
+This implies that, there exists a positive $\epsilon$, for any $M \in \mathbb{N}$, there exist some $m_k > M$, 
+such that $|x_{m_k} - x| > \epsilon $. 
+Since $m \rightarrow \infty$ as $m_k \rightarrow \infty$, we conclude that $x_n$ does not converge to $x$ as well. 
+
+``$\Leftarrow$''
+Let $x_n$ be a sequence that does not converge to $x$.
+For a given $\epsion > 0$,
+there exists infinitely many $x_n$ such that $|x_n - x| > \epsilon$.
+Therefore, one can construct a subsequence $(X_{m_k})$ by select elements from the set $\{x: |x_n - x| > \epsilon \}$.
+\(\blacksquare\)
+
+\section*{3. Linear contraction mapping}
+\paragraph{a.} ``Monotonicity'' requires that for $x1 > x2$, $g(x1) > g(x2)$,
+which implies $b > 0$.
+``Discounting'' requires that $\exists \beta \in (0, 1)$, such that,
+$g(x+c) \leq g(x) + \beta c$, that is, 
+\begin{align*}
+& a + bx + bc \leq a + bx + \beta c \\
+\Rightarrow & b \leq \beta
+\end{align*}
+In summary, $g(x)$ requires $b \in (0,1)$ to be a Contraction Mapping. 
+
+\paragraph{b.} Since $g(x)$ will intersect $f(x) = x$ only once for any values of $a$ and $b$, 
+we don't need to restrict $a$ and $b$ to guarantee the existance and uniqueness of the fixed point. 
+This answer differs in that in \textbf{a.} because contraction is not a necessary and sufficient condition of getting a unique fixed point. 
+
+\paragraph{c.} 
+If $\mathcal{S} = [0, 1]$, the condition for a unqiue fixed point is given by 
+\[
+\frac{a}{1 - b} \in [0, 1]
+\]
+To show that the condition in \textbf{a.} won't guarantee a unique fixed piont if $\mathcal{S} = [0, 1]$,
+we can consider cases where the fixed point is outside $[0, 1]$.
+
+
+
+
 \section*{4. Contraction Mapping in the Search Model}
 The Bellman Equation of the search model is given by 
 \begin{align*}

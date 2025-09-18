@@ -138,7 +138,7 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \begin{document}
 \maketitle
 
-\section*{Pissarides’ analysis of taxation and variable search intensity}
+\section{Pissarides’ analysis of taxation and variable search intensity}
 \paragraph{a.} According to the setting, the timing protocol of the model is:
 at the beginning of the period, the worker chooses the level of effort, 
 then she instantaneously observes the probability of receiving an offer.
@@ -230,7 +230,74 @@ That is, we need
 
 
 
-\section*{2. Convergence results and contraction mapping}
+
+\section{Jovanovic's model}
+\paragraph{a.} The value function is given by 
+\begin{align*}
+v(x_t) = \max_{s_t \geq 0, \phi_t \geq 0} \bigg\{
+w_t(1 - s_t - \phi_t) + \beta \bigg[
+& (1 - \pi(s_t)) v(x_{t+1}) + \\
+& \pi (s_t) \int_0^B \max_{\text{Accept, Reject}} (v(\mu'), v(x_{t+1})) dF(\mu')    
+\bigg]
+\bigg\}
+\end{align*}
+\[
+x_{t+1} = g(x_t \phi_t) - \delta x_t
+\]
+
+
+\paragraph{b.}
+The decision rule to accept or reject an offer is given by a cutoff condition.
+In particular, 
+the worker will accept the offer if
+\[
+v(\mu) > v( g(x_t \phi_t) - \delta x_t)
+\]
+and will reject the offer if 
+\[
+v(\mu) < v( g(x_t \phi_t) - \delta x_t)
+\]
+
+\paragraph{c.}
+I formulate the model using discretized $x_t$, $\phi$ and $s$.
+Concretely, I formulate the quantitative model as follows:
+\begin{table}[h!]
+\centering
+\caption{Parameterization and Variables of the Model}
+\label{tab:parameterization}
+\begin{tabular}{lll}
+\hline
+\textbf{Parameter}         & \textbf{Description}                            & \textbf{Value / Range}                     \\ \hline
+$\beta$                    & Discount factor                                & 0.97                                       \\  
+$\delta$                   & Depreciation rate                              & 0.1                                        \\  
+$A$                        & Productivity of learning                       & 1.2                                        \\  
+$\alpha$                   & Human capital investment elasticity            & 0.9                                        \\
+$N$                        & Number of grid points                          & 100                                        \\
+$f_i$           & Distribution weights                           & $\frac{1}{N}$                              \\
+$\mu_{\text{max}}$         & Maximum human capital                          & 1.978                                      \\
+$\phi_{\text{max}}$        & Maximum human capital investment               & 0.99                                       \\
+$\mu_i$         & Grid for human capital                         & $[0.002, \mu_{\text{max}}]$ evenly spaced  \\
+$\phi_i$        & Grid for human capital investment              & $[0.01, 1]$ with step size 0.02            \\
+$s_i$           & Grid for search effort                         & $[0.01, 1]$ with step size 0.01            \\ \hline
+\end{tabular}
+\end{table}
+
+For each current human capital $x_{t}$ and guess of the VF, 
+I search for the optimal $\phi$ and $s$.
+Note that $g(x_t \phi_t) - \delta x_t$ might generate values that falls in between discretized grids of $x$.
+To resolve this ``overfloat'' problem, 
+I use \texttt{Interpolations.linear\_interpolation} to approximate the value function at these points.
+The results are presented in the figures below.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.46\textwidth]{value_function.png}
+  \includegraphics[width=0.46\textwidth]{serach_policy_function.png}
+  \caption{Value function and search policy}
+\end{figure}
+
+\clearpage
+\section{2. Convergence results and contraction mapping}
 \paragraph{a.} To show that the limit is unique, one can apply the Triangle Inequality. 
 
 Concretely, for any positive $\epsilon$, there exists $N$, such that 
@@ -277,12 +344,17 @@ Since $m \rightarrow \infty$ as $m_k \rightarrow \infty$, we conclude that $x_n$
 
 ``$\Leftarrow$''
 Let $x_n$ be a sequence that does not converge to $x$.
-For a given $\epsion > 0$,
+For a given $\epsilon > 0$,
 there exists infinitely many $x_n$ such that $|x_n - x| > \epsilon$.
 Therefore, one can construct a subsequence $(X_{m_k})$ by select elements from the set $\{x: |x_n - x| > \epsilon \}$.
 \(\blacksquare\)
 
-\section*{3. Linear contraction mapping}
+
+
+\subsection{A Pseudo-Cauchy Criterion}
+For example, $S_m = \sum_{i=1}^m \frac{1}{i}$ is a Pseudo-Cauchy sequence, however, it does not converge.
+
+\section{3. Linear contraction mapping}
 \paragraph{a.} ``Monotonicity'' requires that for $x1 > x2$, $g(x1) > g(x2)$,
 which implies $b > 0$.
 ``Discounting'' requires that $\exists \beta \in (0, 1)$, such that,
@@ -308,7 +380,7 @@ we can consider cases where the fixed point is outside $[0, 1]$.
 
 
 
-\section*{4. Contraction Mapping in the Search Model}
+\section{4. Contraction Mapping in the Search Model}
 The Bellman Equation of the search model is given by 
 \begin{align*}
 (Tf)(w) = \max_{\text{Accept, Reject}} (\frac{w}{1 - \beta}, c + \beta \int_{0}^B f(w') dF(w'))
@@ -327,6 +399,121 @@ The Bellman Equation of the search model is given by
         & = \beta a + (Tf)(w)
     \end{align*}
 \end{itemize}
+
+
+
+\section{5. Raising cattle}
+\subsection*{Answer to Question 5.1}
+Note that the law of motion for the herd size is given by $x_{t+1} = a (x_t - y_t), \forall t = 1,2, \ldots, (T-1)$ given $x_1 = h$.
+Therefore, the sequence problem is given by 
+\begin{align*}
+& \max_{\{y_{t}\}_{t=1}^T} \bigg[\sum_{t=1}^T \beta^t \phi(y_t) \bigg] \\ 
+& \text{s.t.  } \quad x_{t+1} = a(x_t - y_t)
+\end{align*}
+where the state variable is $x_{t+1}$ and the control variable is $y_t$.
+In fact, we can consolidate the intertemporal constraints and rewrite the model as follows:
+\begin{align*}
+& \max_{\{y_{t}\}_{t=1}^T} \bigg[\sum_{t=1}^T \beta^t \phi(y_t) \bigg] \\ 
+& \text{s.t.  } \sum_{t=1}^T \quad \frac{y_t}{a^t} = h
+\end{align*}
+
+
+\subsection*{Answer to Question 5.2}
+The Bellman equation is given by
+\[
+V_t(x) = \max_{x'} \phi(y) + \beta V_{t+1}(x')
+\]
+
+
+\subsection*{Answer to Question 5.3}
+To examine the solution to this problem, I formulate the Lagragean as follows:
+\[
+\mathcal{L} = \bigg[\sum_{t=1}^T \beta^t \phi(y_t) \bigg] + \lambda \bigg(h - \sum_{t=1}^T \quad \frac{y_t}{a^t} \bigg)
+\]
+Then, the F.O.C for $y_t$ and $y_{t+1}$  implies that 
+\[
+\beta^t \phi'(y_t) = \lambda \frac{1}{a^t}
+\]
+
+\[
+\beta^{t+1} \phi'(y_{t+1}) = \lambda \frac{1}{a^{t+1}}
+\]
+
+Combine these conditions together, we have 
+\[
+\frac{\beta \phi'(y_{t+1})}{\phi'(y_t)} = \frac{1}{a} \Rightarrow \phi'(y_t) = a \beta \phi'(y_{t+1})
+\]
+
+Applying the resource constraint iteratively, we have 
+\begin{align*}
+x_{2} & = ah - ay_1 \\
+x_{3} & = a(x_2) - ay_2 = a^2 h - a^2 y_1 - a y_2 \\
+\dots \\
+x_t &= a^{t-1} h - \sum_{\tau = 1}^{t-1} {a^\tau y_{t-\tau}}
+\end{align*}
+
+Now we discuss the law of motion of $y_t$ by different combinations of $a$ and $\beta$.
+
+If $a \beta < 1$, then $\phi'(y_{t+1}) > \phi'(y_t)$, and $y_{t+1} < y_t$. Therefore, $\phi(y)$ decreases overtime.
+Under this condition, the size of cattles fall over times.
+
+% Therefore, $\frac{x_{t+2}}{a} + y_{t+1} = a(x_t - y_t)$.
+If $a \beta > 1$, then $\phi'(y_{t+1}) < \phi'(y_t)$, and $y_{t+1} > y_t$. Therefore, $\phi(y)$ increases overtime.
+Under this condition, however, $x_{t}$ has two possible evolution paths.
+The first one is that $x_{t}$ keeps decreasing till $T$.
+The second one is that $x_{t}$ first increases and then decreases.
+Note that, in both cases, $x_{t}$ is a concave function.
+
+
+\subsection*{Answer to Question 5.4}
+Consider a knife-edge case where the increase in $a$ changes $a \beta < 1$ to $a \beta > 1$ (with fixed $\beta$).
+As such, $\Delta y_t = y_{t+1} - y_{t}$ increases.
+
+
+\subsection*{Answer to Question 5.5}
+Note that $\beta$ descreases as $r$ increases.
+Consider a knife-edge case where a decrease in $\beta$ 
+changes $a \beta > 1$ to $a \beta < 1$ (with fixed $a$).
+As such, $\Delta y_t = y_{t+1} - y_{t}$ decreases.
+
+
+\subsection*{Answer to Question 5.6}
+If the revenue function is given by $\phi(y) = \phi_0 y^\alpha$, then the euler equation becomes 
+\[
+y_t = (a \beta)^{\frac{1}{\alpha - 1}} y_{t+1}
+\]
+Substitute all $y_{t}$ with $y_1$, we have $y_t = (a \beta)^{-\frac{t-1}{\alpha - 1}} y_1$.
+Pluging them into the aggregate resource constraint, we have 
+\begin{align*}
+    & \frac{y_1}{a} + \frac{(\alpha \beta)^{-\frac{1}{\alpha -1}}}{a^2}y_1 + \ldots + \frac{(\alpha \beta)^{-\frac{T-1}{\alpha -1}}}{a^T}y_1 = h \\
+\Rightarrow \quad & y_1^* = h a \left[ \frac{1 - a^{-1}(\alpha \beta )^{-\frac{1}{\alpha - 1}}
+    }{
+        1 - a^{-T} (\alpha \beta)^{-\frac{T}{\alpha - 1}}
+    }\right]
+\end{align*}
+It follows that 
+\[
+y_t^* =  h a \left[ \frac{(a \beta)^{-\frac{t-1}{\alpha - 1}} - a^{-1}(\alpha \beta )^{-\frac{t}{\alpha - 1}} 
+    }{
+        1 - a^{-T} (\alpha \beta)^{-\frac{T}{\alpha - 1}}
+    }\right]
+\]
+
+Since $y_t^*$ does NOT depend on $\phi_0$, the $\phi_0$ won't affect 
+the optimal sold cattles and stocks across times, but simply changes the level of sales.
+Meanwhile, the effect of $\alpha$ on $y_t^*$ is characterized by the following FOC:
+\[
+\frac{\partial y_t^*}{\partial \alpha} = 
+\]
+
+
+\subsection*{Answer to Question 5.7}
+
+
+\subsection*{Answer to Question 5.8}
+
+
+
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}
 

@@ -3,17 +3,23 @@ using Interpolations
 
 cd("/Users/junbiao/Dropbox/PhD_lectures/GA1025_MacroTheory/ProblemSets/PS2/PS2_computation/")
 
-β = 0.97
-δ = 0.1
+β = 0.98
+δ = 0.05
 A = 1.7 # Productivity of learning
 α = 0.9 # Human capital investment elasticity
 
 N = 100
 f_vec = fill(1/N, N)
 
-μ_max = 1.978
+μ_max = 2.998
+μ_min = 0.002
+
+# Create a dense lower tail and sparse upper tail
+μ_dense = range(μ_min, 1.0, length=80)  # Dense grid in [μ_min, 1.0]
+μ_sparse = range(1.002, μ_max, length=20)  # Sparse grid in [1.0, μ_max]
+μ_vec = vcat(μ_dense, μ_sparse)
+
 ϕ_max = 0.99
-μ_vec = 0.002: (μ_max - 0.002) / (N-1): μ_max # Human capital value
 ϕ_vec = 0.01:0.02:1 # Human capital investment
 s_vec = 0.01:0.01:1 # On-the job search effort
 
@@ -33,7 +39,7 @@ damp = 0.5
 
 # Value Function Iteration
 diff = 10 
-tol = 5e-5
+tol = 8e-5
 
 iter = 0 
 max_iter = 2000

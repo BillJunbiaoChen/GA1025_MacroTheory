@@ -1,3 +1,5 @@
+cd("/Users/junbiao/Dropbox/PhD_lectures/GA1025_MacroTheory/ProblemSets/PS3/PS3_computation")
+
 using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 
 γ = 2 
@@ -6,6 +8,30 @@ using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 α = 1/3
 A = 1 
 
+
+# Helper functions 
+
+# Function to plot k_vec (entire time horizon)
+function plot_k_vec(k_vec_list, colors, alphas)
+    for (i, k_vec) in enumerate(k_vec_list)
+        plot!(1:length(k_vec), k_vec,
+            xlabel = "Time", ylabel = "Capital Stock",
+            legend = false, lw = 2, color = colors[i], alpha = alphas[i])
+    end
+end
+
+# Function to plot tvc_vec (last 50 periods with adjusted x-ticks)
+function plot_tvc_vec(tvc_vec_list, colors, alphas, total_time)
+    for (i, tvc_vec) in enumerate(tvc_vec_list)
+        # Generate x-ticks for the last 50 periods
+        x_ticks = (total_time - 49):total_time
+        plot!(x_ticks, tvc_vec[end-49:end],  # Only last 50 periods
+            xlabel = "Time", ylabel = "TVC",
+            legend = false, lw = 2, color = colors[i], alpha = alphas[i])
+    end
+end
+
+# Computation Functions
 function tvc_compute(kt, ktp, t)
     tvc_term1 = ((1 - δ) * kt + A * (kt ^ α) - ktp) ^ (-γ)
     tvc_term2 = 1 - δ + A * α * (kt ^ (α - 1))
@@ -50,7 +76,7 @@ end
 
 # Use a solver to find optimal k1 given k0 
 k0 = 1
-T = 300
+T = 250
 
 function wrapper(k1)
     k_vec_guess, tvc_vec = k_end(k0, k1, T)
@@ -59,110 +85,41 @@ end
 
 # undershoot:
 k_vec_us_1, tvc_vec_us_1 = k_end(k0, 1.292, T)
-k_vec_us_2, tvc_vec_us_2 = k_end(k0, 1.2921, T)
-k_vec_us_3, tvc_vec_us_3 = k_end(k0, 1.2922, T)
-k_vec_us_4, tvc_vec_us_4 = k_end(k0, 1.29221, T)
+k_vec_us_2, tvc_vec_us_2 = k_end(k0, 1.2932, T)
+k_vec_us_3, tvc_vec_us_3 = k_end(k0, 1.2934, T)
+k_vec_us_4, tvc_vec_us_4 = k_end(k0, 1.2936, T)
+
+
 
 # overshoot:
-k_vec_os_1, tvc_vec_os_1= k_end(k0, 1.295, T)
-k_vec_us_2, tvc_vec_us_2 = k_end(k0, 1.296, T)
-k_vec_os_3, tvc_vec_os_3  = k_end(k0, 1.298, T)
+k_vec_os_1, tvc_vec_os_1 = k_end(k0, 1.295, T)
+k_vec_os_2, tvc_vec_os_2 = k_end(k0, 1.296, T)
+k_vec_os_3, tvc_vec_os_3 = k_end(k0, 1.298, T)
 
+# overshoot:
+k_vec_optim, tvc_vec_optim = k_end(k0, 1.2938943267, T)
+
+# Plotting k_vec
 plot(1:length(k_vec_us_1), k_vec_us_1, 
     xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :blue,
-    alpha = 0.9)
+    legend = false, lw = 2, color = :blue, alpha = 0.9)
 
-plot!(1:length(k_vec_us_2), k_vec_us_2, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :blue,
-    alpha = 0.8) 
-
-plot!(1:length(k_vec_us_3), k_vec_us_3, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :blue,
-    alpha = 0.6) 
-
-plot!(1:length(k_vec_us_4), k_vec_us_4, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :blue,
-    alpha = 0.5) 
-
-plot!(1:length(k_vec_os_1), k_vec_os_1, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :red,
-    alpha = 0.5)
-
-plot!(1:length(k_vec_os_2), k_vec_os_2, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :orange,
-    alpha = 1.0)
-
-plot!(1:length(k_vec_os_3), k_vec_os_3, 
-    xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false,
-    lw = 2,
-    color = :orange,
-    alpha = 0.8)
-
-
-
-
-
-
+plot_k_vec([k_vec_us_2, k_vec_us_3, k_vec_us_4], [:blue, :blue, :blue], [0.8, 0.6, 0.5])
+plot_k_vec([k_vec_os_1, k_vec_os_2, k_vec_os_3], [:red, :orange, :orange], [0.5, 1.0, 0.8])
+plot_k_vec([k_vec_optim], [:green], [1.0])
 
 savefig("k_overtime.png")
 
+# Plotting tvc_vec with adjusted x-ticks
+plot((T - 49):T, tvc_vec_us_1[end-49:end],  # Adjust x-ticks
+    xlabel = "The Last 50 Periods", ylabel = "Transversality conditions", 
+    legend = false, lw = 2, color = :blue, alpha = 0.9)
 
-
-
-
-plot(1:length(tvc_vec_us_1), tvc_vec_us_1, 
-    xlabel = "Time", ylabel = "Transversality Condition", 
-    legend = false,
-    lw = 3,
-    color = :blue,
-    alpha = 1.0)
-
-plot!(1:length(tvc_vec_us_2), tvc_vec_us_2, 
-    xlabel = "Time", ylabel = "Transversality Condition", 
-    legend = false,
-    lw = 3,
-    color = :blue,
-    alpha = 0.6)
-
-plot!(1:length(tvc_vec_os_1), tvc_vec_os_1, 
-    xlabel = "Time", ylabel = "Transversality Condition", 
-    legend = false,
-    lw = 3,
-    color = :orange,
-    alpha = 1.0)
-
-plot!(1:length(tvc_vec_os_2), tvc_vec_os_2, 
-    xlabel = "Time", ylabel = "Transversality Condition", 
-    legend = false,
-    lw = 3,
-    color = :orange,
-    alpha = 0.6)
+plot_tvc_vec([tvc_vec_us_2, tvc_vec_us_3, tvc_vec_us_4], [:blue, :blue, :blue], [0.8, 0.6, 0.5], T)
+plot_tvc_vec([tvc_vec_os_1, tvc_vec_os_2, tvc_vec_os_3], [:red, :orange, :orange], [0.5, 1.0, 0.8], T)
+plot_tvc_vec([tvc_vec_optim], [:green], [1.0], T)
 
 savefig("tvc_overtime.png")
-
-
-
-
-
 
 
 
@@ -180,13 +137,4 @@ savefig("tvc_overtime.png")
 #     term2 = (β^(1/γ)) * (1 - δ + A * α * k^(α-1))^(1/γ) * ((1-δ) * k + A * (k^α) -k)
 #     k_imp = term1 - term2
 #     return k_imp
-# end
-
-# k_old = 2
-
-# for i in 1:100 
-
-#     k_imp = k_update(k_old)
-#     k_new = 0.1 * k_imp + 0.9 * k_old
-#     k_old = copy(k_new)
 # end

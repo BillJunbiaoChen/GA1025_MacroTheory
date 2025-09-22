@@ -8,6 +8,8 @@ using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 α = 1/3
 A = 1 
 
+# compute the capital level in ss
+k̄ = ((1 - β) + (β * δ)/(β * A * α))^(1/(α - 1))
 
 # Helper functions 
 

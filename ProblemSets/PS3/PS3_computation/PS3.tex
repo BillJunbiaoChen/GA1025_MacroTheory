@@ -183,6 +183,10 @@ The FE formulation of the Cass-Koopmans model is given by
 \end{align*}
 
 
+\section*{Shooting Algorithm}
+
+
+
 \subsection*{Problem 1.10}
 The objective function for the sequence problem in the adjustment model is given by
 \begin{align*}
@@ -324,10 +328,19 @@ The figures below display the comparisons.
 \subsection*{Exercise 2.1}
 In a stochastic environment of a fair dice, the filtered probability space is given by 
 \begin{itemize}
-    \item $\Omega := \{1, 2, 3, 4, 5, 6 \}^\infty $
+    \item $\Omega := \{1, 2, 3, 4, 5, 6 \}^\infty$ denotes the sample space.
     \item $\mathcal{F} := 2^\Omega$
-    \item $\{F_t\}_t^\infty$
-    \item $P = |w|/6$
+    \item $\{\mathcal{F}_t\}_t^\infty$ is defined as follows:
+    \begin{align*}
+        \mathcal{F}_1 & = 2^{\{1, 2, 3, 4, 5, 6\}} \\
+        \dots \\
+        \mathcal{F}_t & = 2^{\{1, 2, 3, 4, 5, 6\}^t} \\
+        \dots \\ 
+        \mathcal{F}_\infty & = 2^{\{1, 2, 3, 4, 5, 6\}^\infty} \\
+    \end{align*}
+    with $\mathcal{F}_{t} \subseteq \mathcal{F}_{t+s}$ for any $s \geq 0$. 
+    Economically, $\mathcal{F}_{t}$ contains the information up to time $t$.
+    \item $P = \frac{1}{2^\infty}$
 \end{itemize}
 
 \subsection*{Exercise 2.2}
@@ -347,6 +360,77 @@ $\mathcal{F} = \{\emptyset, \{H\}, \{T\}, \{H, T\} \}^T$.
 
 
 \paragraph{Q4.}
+Note that for a fixed partial path $s^t$, there are $2^{T-t}$ possibilities.
+Therefore,
+the probability measure $P$ representing fair iid coin flips is given by
+\begin{align*}
+    P(s^T) & = \frac{1}{2^T} \\ 
+    P(F(s^t)) & = \frac{2^{T-t}}{2^T} = \frac{1}{2^{t}}
+\end{align*}
+
+\paragraph{Q5.} For $T=3$, 
+\begin{align*}
+    \mathcal{F}_0 & = \{\emptyset, \{H\}, \{T\}, \{H, T \} \} 
+\end{align*}
+
+\begin{align*}
+    \mathcal{F}_1 = \{ & \emptyset, \\
+        & \{(H, H)\}, \\
+        & \{(H, T)\}, \\
+        & \{(T, H)\}, \\
+        & \{(T, T)\}, \\
+        & \{(H, H), (H, T) \}, \\
+        & \{(H, H), (T, H) \}, \\
+        & \{(H, H), (T, T) \}, \\
+        & \{(H, T), (T, H) \}, \\
+        & \{(H, T), (T, T) \}, \\
+        & \{(T, H), (T, T) \}, \\
+        & \{(H, H), (H, T), (T, H) \}, \\
+        & \{(H, H), (H, T), (T, T) \}, \\
+        & \{(H, H), (T, H), (T, T) \}, \\
+        & \{(H, T), (T, H), (T, T) \}, \\
+        & \{(H, H), (H, T), (T, H), (T, T) \} \}
+\end{align*}
+
+
+\paragraph{Q6.}
+Consider two paths that share the same partial histories up to time $t$.
+Intuitively, their information overlap with each other. 
+Therefore, we cannot assign probability to only one of them,
+instead, we need to partition the $s^\infty$ based on their partial histories $F_t$, and assign probilities according to $F_t$.
+
+
+\paragraph{Q7.}
+\begin{enumerate}
+    \item The smallest $\sigma$-algebra $\mathcal{F}$ is $\{\emptyset, \Omega, \{s_0, s_1, H, s_3, \dots \}, \{s_0, s_1, T, s_3, \dots \} \}$
+    \item Denote $G_t := \{s_0, s_1, \dots : \sum_{i=1}^{10} s_i 1(s_i = H) = t\}$. Then 
+    \[
+        \mathcal{F} = \bigcup_{t=1}^{10} \{\emptyset, \Omega, 2^{G_t} \}
+    \]
+    \item Denote $G'_t := \{s_0, s_1, \dots : \sum_{i < t} s_i 1(s_i = H) = 0 \}$. Then 
+    \[
+        \mathcal{F} = \bigcup_{t} \{\emptyset, \Omega, 2^{G'_t} \}
+    \]
+\end{enumerate}
+
+\textbf{Remark:} The answers above does not depend on whether $T$ is finite or infinite as long as $T > 10$ for the second question.
+
+
+\paragraph{Q8.}
+\begin{enumerate}
+    \item $\mathbb{E}[x] = 1/2$. $\mathbb{E}[x| \mathcal{F}_1] = 1/2$. $\mathbb{E}[x| \mathcal{F}_2] = x$.
+    \item \begin{align*}
+        \mathbb{E}[x] & = \sum_{t=1}^{10} t \frac{\binom{10}{t} }{2^{10}} \\
+        \mathbb{E}[x | \mathcal{F}_1 ] & = \sum_{t=1}^{10} t \frac{\binom{9}{t-1} }{2^{9}} \text{ if }s_1 = H. \\
+        \mathbb{E}[x | \mathcal{F}_1 ] & = \sum_{t=1}^{9} t \frac{\binom{9}{t-1} }{2^{9}} \text{ if }s_1 = T. \\ 
+        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=2}^{10} t \frac{\binom{8}{t-2} }{2^8} \text{ if } (s_1, s_2 = H, H). \\
+        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = H, T). \\
+        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = T, H). \\
+        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{8} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = T, T).
+    \end{align*}
+    \item 
+\end{enumerate}
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

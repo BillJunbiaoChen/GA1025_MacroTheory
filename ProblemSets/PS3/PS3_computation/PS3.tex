@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 %%METADATA
-\title{GA1025 Macro Theory \\Solution to Problem Set 1}
+\title{GA1025 Macro Theory \\Solution to Problem Set 3}
 \author{
 Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 }
@@ -139,7 +139,7 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 
 \maketitle
 
-\section*{Problem 1.1}
+\subsection*{Problem 1.1}
 The sequence problem of the Cass-Koopmans model is given by 
 \begin{align*}
     & V^*(k_0) = \max_{\{k_{t+1}\}_0^\infty} \sum_{t=0}^\infty \beta^t \frac{c_t^{1 - \gamma} - 1}{1 - \gamma} \\
@@ -175,18 +175,178 @@ where the agent equalizes the marginal utility of spending today (LHS) and
 the marginal utility of spending tomorrow (RHS).
 
 
-\section*{Problem 1.2}
+\subsection*{Problem 1.2}
 The FE formulation of the Cass-Koopmans model is given by 
 \begin{align*}
     & V(k) = \max_{k' \in \Gamma(k)} \frac{c^{1- \gamma} - 1}{1 - \gamma} + \beta V(k') \\
     \text{subject to } \quad & k' = (1 - \delta) k + A k^\alpha - c
 \end{align*}
 
+
+\subsection*{Problem 1.10}
+The objective function for the sequence problem in the adjustment model is given by
+\begin{align*}
+    & V^*(x_0) = \max_{\{x_{t+1}\}_0^\infty \in \mathbb{R} } \sum_{t=0}^\infty \beta^t \bigg[- \frac{\phi}{2} x_{t+1}^2 - \frac{\kappa}{2}(x_{t+1} -  x_t)^2 \bigg]
+\end{align*}
+Take the first-order condition with respect to $x_{t+1}$, we have 
+\[
+\beta^t \left[-\phi x_{t+1} - \kappa (x_{t+1} - x_t)\right] + \beta^{t+1} \kappa(x_{t+2} - x_{t+1}) = 0
+\]
+
+After simplication, we have 
+\begin{equation}
+\label{eqn:adjustment_costs_model}
+\beta \kappa(x_{t+2} - x_{t+1}) =\phi x_{t+1} + \kappa (x_{t+1} - x_t) 
+\end{equation}
+
+According to the Definition, the transversality condition is given by 
+\[
+\lim_{t \rightarrow \infty}  \beta^t \kappa \left( x_{t+1} - x_t \right) x_t = 0 
+\]
+
 % \begin{figure}[htbp]
 %   \centering
 %   \includegraphics[width=0.5\textwidth]{convergence_of_reservation_wage.png}
 %   \caption{The convergence of reservation wages}
 % \end{figure}
+
+
+\subsection*{Answer to Question 1.11}
+From equation~(\ref{eqn:adjustment_costs_model}), the characteristic function is tiven by 
+% \[
+% x_{t+2} + \left( 1 + \frac{\phi + \kappa }{\beta \kappa } \right) x_{t+1} - \frac{1}{\beta} x_t = 0
+% \]
+\[
+m^2 -  \left( \frac{\phi + \kappa }{\beta \kappa } + 1\right) m + \frac{1}{\beta} = 0
+\]
+It follows that the roots are 
+\[
+m_{1,2} = \frac{\left( \frac{\phi + \kappa }{\beta \kappa } + 1 \right) \pm  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} }{2}
+\]
+As a result, $m_1 \cdot m_2 = \frac{1}{\beta}$.
+
+\subsection*{Answer to Question 1.12}
+Therefore, the general solution to the problem is given by 
+\[
+x_t = A \bigg(\frac{\left( \frac{\phi + \kappa }{\beta \kappa } + 1 \right) -  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} }{2} \bigg)^t + B \bigg(\frac{\left( \frac{\phi + \kappa }{\beta \kappa } + 1 \right) +  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} }{2} \bigg)^t 
+\]
+
+
+\noindent Let $m_1 < m_2$, since $m_1 \cdot m_2 = \frac{1}{\beta}$, we have
+\begin{align*}
+& m_1 < \frac{1}{\beta m_1} \\
+\Rightarrow & \quad m_1 < \beta^{-1/2} \quad \text{ and } \quad m_2 > \beta^{-1/2}
+\end{align*}
+Then, we can express $m_1$ and $m_2$ as 
+\begin{align*}
+    m_1 & = \beta^{-1/2} \epsilon, \quad \epsilon \in (0,1) \\ 
+    m_2 & = \beta^{-1/2} \delta, \quad \delta > 1)  \\ 
+\end{align*}
+Substituting $x_t$ with $A ( \beta^{-1/2} \epsilon)^t + B (\beta^{-1/2} \delta)^t$, 
+the Transversality condition becomes 
+\begin{align*}
+    & \lim_{t \rightarrow \infty} \beta^t \left[  A ( \beta^{-1/2} \epsilon)^{t+1} + B (\beta^{-1/2} \delta)^{t+1} - A ( \beta^{-1/2} \epsilon)^t - B (\beta^{-1/2} \delta)^t\right] \cdot \left[  A ( \beta^{-1/2} \epsilon)^t + B (\beta^{-1/2} \delta)^t \right] = \\ 
+& \lim_{t \rightarrow \infty} \beta^t \left[  A ( \beta^{-1/2} \epsilon)^{t}\left( \beta^{-1/2} \epsilon - 1 \right) + B (\beta^{-1/2} \delta)^{t} \left(\beta^{-1/2} \delta - 1 \right) \right] \cdot \left[  A ( \beta^{-1/2} \epsilon)^t + B (\beta^{-1/2} \delta)^t \right]  \leq \\ 
+& \lim_{t \rightarrow \infty} A^2 \epsilon^{2t} \left( \beta^{-1/2} \epsilon - 1 \right) + B^2 \delta^{2t} \left(\beta^{-1/2} \delta - 1 \right) 
+\end{align*}
+Because $\delta > 1$, $\delta^{2t} \rightarrow \infty$, therefore, this equation converges to zero if $B = 0$,
+where $B$ is the coefficient of the larger root.
+
+
+\subsection*{Answer to Question 1.13}
+
+
+
+\subsection*{Answer to Question 1.14}
+Take the first-order condition with respect to $\kappa$ for $x_t$, we have 
+\[
+\frac{\partial x_t}{\partial \kappa} = 
+\]
+
+and
+\[
+\frac{\partial x_t}{\partial \phi} = 
+\]
+
+
+\section*{Guess and Verify}
+\subsection*{Answer to Question 1.15}
+Incorporting the budget constraint, we can rewrite the model as follows.
+
+\begin{align*}
+& \max_{k_{t+1} \in \Gamma(k_t) } \sum_{t=0}^\infty \beta^t U(G(k_t) + (1 - \delta) k_t - k_{t+1}) \\ 
+\text {where } & \Gamma(k_t) = [0, G(k_t) + (1 - \delta) k_t]
+\end{align*}
+Therefore, the Bellman equation is given by 
+\[
+V(k) = \max_{k'} \quad  U(G(k) + (1 - \delta) k - k') + \beta V(k')
+\]
+
+
+\subsection*{Answer to Question 1.16}
+If $U(c) = \log (c)$, $G(k) = k^\alpha$, and $\delta = 1$, and 
+we ``guess'' the value function is $V(k) = a + b \log k$, 
+the Bellman equation formulated above becomes 
+\[
+a + b \log k = \max_{k'} \quad \log(k^\alpha - k') + \beta (a + b \log k')
+\]
+Then,
+\[
+[k'] = - \frac{1}{k^\alpha - k'} + \beta \frac{b}{k'} = 0
+\]
+As a result, the policy function is 
+\[
+k' = \frac{\beta b k^\alpha}{1 + \beta b}
+\]
+
+Substituting $k' = \frac{\beta b k^\alpha}{1 + \beta b}$ back to the Bellman equation, we have 
+\[
+a + b \log k = \log \left(k^\alpha -  \frac{\beta b k^\alpha}{1 + \beta b} \right) + \beta a + \beta \log \left( \frac{\beta b k^\alpha}{1 + \beta b} \right)
+\]
+By comparing coefficients, we have 
+\begin{align*}
+    b & = \frac{\alpha}{1 - \alpha \beta} \\ 
+    a & = \frac{1}{1 - \beta} \bigg[ \frac{1}{1 - \alpha \beta} \log (1 - \alpha \beta) + \frac{\alpha \beta}{1 - \alpha \beta} \log \frac{\alpha \beta}{1 - \alpha \beta} \bigg]
+\end{align*}
+
+
+\subsection*{Answer to Question 1.17}
+I verify the analytical solutions above by comparing them to the numerical solutions obtained from the VFI.
+The figures below display the comparisons.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_policy_func_simplified.png}
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_value_func_simplified.png}
+  \caption{Guess-and-Verify}
+\end{figure}
+
+\section*{2. Probability Theory}
+\subsection*{Exercise 2.1}
+In a stochastic environment of a fair dice, the filtered probability space is given by 
+\begin{itemize}
+    \item $\Omega := \{1, 2, 3, 4, 5, 6 \}^\infty $
+    \item $\mathcal{F} := 2^\Omega$
+    \item $\{F_t\}_t^\infty$
+    \item $P = |w|/6$
+\end{itemize}
+
+\subsection*{Exercise 2.2}
+\paragraph{Q1.} The sample space is given by $\Omega = \{H, T\}^T$.
+The sample space contains $2^T$ elements.
+
+\paragraph{Q2.} The sigma-algebra is given by 
+$\mathcal{F} = \{\emptyset, \{H\}, \{T\}, \{H, T\} \}^T$.
+
+\paragraph{Q3.} Take $T=4$, and $s^2 = \{ H,T \}$, $F(s^t)$ includes the following 
+\begin{enumerate}
+    \item $(H, T, H, H)$
+    \item $(H, T, H, T)$
+    \item $(H, T, T, T)$
+    \item $(H, T, T, H)$
+\end{enumerate}
+
+
+\paragraph{Q4.}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

@@ -9,7 +9,7 @@ using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 A = 1 
 
 # compute the capital level in ss
-k̄ = ((1 - β) + (β * δ)/(β * A * α))^(1/(α - 1))
+k_ss = ((1 - β + β * δ)/(β * A * α))^(1/(α - 1))
 
 # Helper functions 
 
@@ -77,7 +77,7 @@ function k_end(k0, k1, T)
 end
 
 # Use a solver to find optimal k1 given k0 
-k0 = 1
+k0 = k_ss / 4
 T = 250
 
 function wrapper(k1)
@@ -86,7 +86,8 @@ function wrapper(k1)
 end
 
 # undershoot:
-k_vec_us_1, tvc_vec_us_1 = k_end(k0, 1.292, T)
+k_vec_us_1, tvc_vec_us_1 = k_end(k0, 3, T)
+
 k_vec_us_2, tvc_vec_us_2 = k_end(k0, 1.2932, T)
 k_vec_us_3, tvc_vec_us_3 = k_end(k0, 1.2934, T)
 k_vec_us_4, tvc_vec_us_4 = k_end(k0, 1.2936, T)

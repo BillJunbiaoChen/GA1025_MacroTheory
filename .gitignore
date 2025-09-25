@@ -4,3 +4,9 @@ macroeconomic_theory_I_lecture_notes_complete.pdf
 Macro 2.pdf
 Macro.pdf
 ProblemSets/*/*.pdf
+ProblemSets/*/*/*.out
+ProblemSets/*/*/*.aux
+ProblemSets/*/*/*.log
+ProblemSets/*/*/PS3.*.gz
+.DS_Store
+ProblemSets/.DS_Store

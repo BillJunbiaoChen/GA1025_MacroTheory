@@ -441,6 +441,41 @@ instead, we need to partition the $s^\infty$ based on their partial histories $F
         \end{align*}
 \end{enumerate}
 
+\paragraph{Q9.}
+The Radon-Nikodym derivative of $\tilde{P}$ with respect to $P$ for any partial history $s^t$ is given by 
+\begin{align*}
+h(s^t) & = \frac{\sum_{s^{t+j}| s^t} \tilde{P}(s^{t+j})}{P(s^{t})} \\ 
+    & = \frac{\prod_{i=1}^{t} p^{(\#\text{heads in }s^t)} (1 - p)^{(\#\text{tails in }s^t)}}{(1/2)^t}
+\end{align*}
+
+
+\paragraph{Q10.}
+Under the fair specification, $(\mathcal{F}, P)$,
+w.l.o.g, consider $s = t+1$
+\begin{align*}
+    \mathbb{E}[x_{t+1} | \mathcal{F}_t] = x_t + p + (1 - p) (-1)
+\end{align*}
+which is equal to $x_t$ iff $p = 1- p$.
+Therefore, $x_t$ is a martingale with respect to the filtration $\{\mathcal{F}_t \}_{t \geq 0}$ and $P$,
+but not with respect to $\{\mathcal{F}_t \}_{t \geq 0}$ and $\tilde{P}$,
+
+
+\paragraph{Q11.}
+The stochastic process in Q10 is time-invariant because 
+\begin{align*}
+    \mathbb{E}[x_{t+1} | x] = x + p + (1 - p) (-1)
+\end{align*}
+which only depends on $x$ not $t$.
+
+
+\paragraph{Q12.}
+If $\hat{P}(s_t = H | s_{t-1} = H) = \hat{P}(s_t = T | s_{t-1} = T) = p$,
+then 
+\begin{align*}
+    \mathbb{E}[x_{t+1}|x_t] & = x_t + p + (1-p)(-1) \text{ if } s_t = H \\
+    \mathbb{E}[x_{t+1}|x_t] & = x_t + (1 - p) + p(-1) \text{ if } s_t = T \\
+\end{align*}
+Therefore, $\mathbb{E}[x_{t+1}|x_t] = x_t$ if $p = 1/2$.
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

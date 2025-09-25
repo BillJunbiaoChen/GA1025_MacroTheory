@@ -375,10 +375,10 @@ the probability measure $P$ representing fair iid coin flips is given by
 
 \begin{align*}
     \mathcal{F}_1 = \{ & \emptyset, \\
-        & \{(H, H)\}, \\
-        & \{(H, T)\}, \\
-        & \{(T, H)\}, \\
-        & \{(T, T)\}, \\
+        & \{(H, H)\},
+        \{(H, T)\},
+        \{(T, H)\},
+        \{(T, T)\}, \\
         & \{(H, H), (H, T) \}, \\
         & \{(H, H), (T, H) \}, \\
         & \{(H, H), (T, T) \}, \\
@@ -419,16 +419,26 @@ instead, we need to partition the $s^\infty$ based on their partial histories $F
 \paragraph{Q8.}
 \begin{enumerate}
     \item $\mathbb{E}[x] = 1/2$. $\mathbb{E}[x| \mathcal{F}_1] = 1/2$. $\mathbb{E}[x| \mathcal{F}_2] = x$.
-    \item \begin{align*}
+    \item The unconditional and conditional expectations are given by 
+    \begin{align*}
         \mathbb{E}[x] & = \sum_{t=1}^{10} t \frac{\binom{10}{t} }{2^{10}} \\
-        \mathbb{E}[x | \mathcal{F}_1 ] & = \sum_{t=1}^{10} t \frac{\binom{9}{t-1} }{2^{9}} \text{ if }s_1 = H. \\
-        \mathbb{E}[x | \mathcal{F}_1 ] & = \sum_{t=1}^{9} t \frac{\binom{9}{t-1} }{2^{9}} \text{ if }s_1 = T. \\ 
-        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=2}^{10} t \frac{\binom{8}{t-2} }{2^8} \text{ if } (s_1, s_2 = H, H). \\
-        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = H, T). \\
-        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = T, H). \\
-        \mathbb{E}[x | \mathcal{F}_2 ] & = \sum_{t=1}^{8} t \frac{\binom{8}{t-1} }{2^8} \text{ if } (s_1, s_2 = T, T).
+        \mathbb{E}[x | s_1 = H ] & = \sum_{t=1}^{10} t \frac{\binom{9}{t-1} }{2^{9}}  \\
+        \mathbb{E}[x | s_1 = T ] & = \sum_{t=1}^{9} t \frac{\binom{9}{t-1} }{2^{9}}  \\ 
+        \mathbb{E}[x | s_1, s_2 = H, H] & = \sum_{t=2}^{10} t \frac{\binom{8}{t-2} }{2^8}  \\
+        \mathbb{E}[x | s_1, s_2 = H, T ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8}   \\
+        \mathbb{E}[x | s_1, s_2 = T, H ] & = \sum_{t=1}^{9} t \frac{\binom{8}{t-1} }{2^8}   \\
+        \mathbb{E}[x | s_1, s_2 = T, T ] & = \sum_{t=1}^{8} t \frac{\binom{8}{t-1} }{2^8}  
     \end{align*}
-    \item 
+    \item The unconditional and conditional expectations are given by 
+    \begin{align*}
+        \mathbb{E}[x] & = \sum_{t=1}^{\infty} t \left(\frac{1}{2}\right)^t = 2 \\
+        \mathbb{E}[x | s_1 = H ] & = 0  \\
+        \mathbb{E}[x | s_1 = T ] & = \sum_{t=2}^{\infty} t \left(\frac{1}{2}\right)^{t-1} = 3   \\ 
+        \mathbb{E}[x | s_1, s_2 = H, H ] & = 0 \\
+        \mathbb{E}[x | s_1, s_2 = H, T ] & = 0 \\
+        \mathbb{E}[x | s_1, s_2 = T, H] & = 0 \\
+        \mathbb{E}[x | s_1, s_2 = T, T] & = 4
+        \end{align*}
 \end{enumerate}
 
 

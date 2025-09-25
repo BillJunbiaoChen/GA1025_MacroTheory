@@ -183,6 +183,43 @@ The FE formulation of the Cass-Koopmans model is given by
 \end{align*}
 
 
+\subsection*{Problem 1.3}
+I implemented VFI with the following computational parameters:
+
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{ll}
+        \toprule
+        \textbf{Computational parameters} & \textbf{Values} \\ \midrule
+        \( k_{min} \) & \( 0.95 \cdot k_{ss} \) \\
+        \( k_{max} \) & \( 1.05 \cdot k_{ss} \) \\
+        \( k_{vec} \) & \( k_{min} : \frac{k_{max} - k_{min}}{I-1} : k_{max} \) \\
+        \( \text{max\_iter} \) & \( 1000 \) (maximum number of iterations) \\
+        \( \text{tol} \) & \( 10^{-8} \) (tolerance for convergence) \\ \bottomrule
+    \end{tabular}
+    \caption{Summary of Parameters}
+\end{table}
+
+The figures below display the policy function and value function. 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_policy_func.png}
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_value_func.png}
+  \caption{Value Function Iteration}
+\end{figure}
+
+
+\subsection*{Problem 1.4}
+After adjusting the grid, I obtain the same results as 1.3 (shown as follows).
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_policy_func_robust.png}
+  \includegraphics[width=0.45\textwidth]{Cass_Koopman_VFI_value_func_robust.png}
+  \caption{Value Function Iteration}
+\end{figure}
+
+
 \section*{Shooting Algorithm}
 
 

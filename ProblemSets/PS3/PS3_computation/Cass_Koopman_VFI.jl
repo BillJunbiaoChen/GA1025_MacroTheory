@@ -7,11 +7,23 @@ using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 β = 0.98
 α = 1/3
 A = 1 
-I = 500
 
-k_min = 0.04 
-k_max = 20
+
+k_ss = ((1 - β + β * δ)/(β * A * α))^(1/(α - 1))
+
+# Question 1.3
+k_min = 0.95 * round(k_ss, digits = 8)
+k_max = 1.05 * round(k_ss, digits = 8)
+I = 500
 k_vec = k_min:(k_max - k_min)/(I-1) :k_max
+
+
+# Question 1.4
+# I = 800 
+# k_min = 0.1 * round(k_ss, digits = 8)
+# k_max = 2 * round(k_ss, digits = 8)
+# k_vec = k_min:(k_max - k_min)/(I-1) :k_max
+
 
 v_old = zeros(I)
 k_policy = zeros(I)
@@ -46,14 +58,21 @@ while diff > tol && iter < max_iter
     end
 end
 
-# Compute k-bar, s.t. g(k̄) = k̄
-k_ss = k_vec[argmin(abs.(k_vec .-  k_policy))]
-
 # Plotting k_vec
 plot(k_vec, v_old, 
     xlabel = "Current capital", ylabel = "Value function", 
     legend = false, lw = 2, color = :blue, alpha = 0.9)
-savefig("Cass_Koopman_VFI_value_func.png")
+
+
+if k_min == 0.1 * round(k_ss, digits = 8)
+    savefig("Cass_Koopman_VFI_value_func_robust.png")
+end
+
+if k_min == 0.95 * round(k_ss, digits = 8)
+    savefig("Cass_Koopman_VFI_value_func.png")
+end
+
+
 
 plot(k_vec, k_policy, 
     xlabel = "Current capital", ylabel = "Next period capital", 
@@ -63,5 +82,11 @@ plot!(k_vec, k_vec,
 plot!([k_ss], [k_ss], seriestype = :scatter,
     label = "Steady-State Capital", marker = (:circle, 8), color = :red)
 
-savefig("Cass_Koopman_VFI_policy_func.png")
+if k_min == 0.1 * round(k_ss, digits = 8)
+    savefig("Cass_Koopman_VFI_policy_func_robust.png")
+end
+
+if k_min == 0.95 * round(k_ss, digits = 8)
+    savefig("Cass_Koopman_VFI_policy_func.png")
+end
 

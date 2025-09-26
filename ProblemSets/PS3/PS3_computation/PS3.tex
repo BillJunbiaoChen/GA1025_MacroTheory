@@ -220,7 +220,7 @@ After adjusting the grid, I obtain the same results as 1.3 (shown as follows).
 \end{figure}
 
 
-\subsection*{Problem 1.4}
+\subsection*{Problem 1.5}
 
 \paragraph{Increased depreciation}
 
@@ -277,10 +277,55 @@ For the same reason, higher MPK also incentivices more savings.
 
 
 \section*{Shooting Algorithm}
+\subsection*{Problem 1.6}
+The reward function is given by
+\[
+F(x, y) = \frac{((1 - \delta) x + A x^\alpha - y)^{1 - \gamma} - 1}{1 - \gamma}
+\]
+Therefore, the Bellman Equation is 
+\[
+V(k) = \max_{k' \in \Gamma(k)} \quad F(k, k') + \beta V(k')
+\]
+It follows that the Euler equation (using $k_t, k_{t+1}, k_{t+2}$) is 
+\[
+\left( (1 - \delta)k_t + A k_t^\alpha - k_{t+1} \right)^{-\gamma} = \beta \left( (1 - \delta)k_{t+1} + A k_{t+1}^\alpha - k_{t+2} \right)^{-\gamma} \left( 1 - \delta + A \alpha k_{t+1}^{\alpha - 1} \right)
+\]
+and the transversality condition is
+\[
+\lim_{t \rightarrow \infty} \beta^t \left( (1 - \delta)k_t + A k_t^\alpha - k_{t+1} \right)^{-\gamma} k_{t+1} = 0
+\]
+
+\subsection*{Problem 1.7}
+Based on the Euler equation, we can express $k_{t+2}$ as a function of $k_t$ and $k_{t+1}$ as follows.  
+\begin{align*}
+    k_{t+2} & = (1 - \delta)k_{t+1} + A k_{t+1}^\alpha - \left[ \beta \left( 1 - \delta + A \alpha k_{t+1}^{\alpha - 1} \right) \right]^{1/\gamma} \left( (1 - \delta)k_t + A k_t^\alpha - k_{t+1} \right) \\
+\end{align*}
+
+
+\subsection*{Problem 1.8}
+Starting with $k_0 = 0.25 k_{ss}$ and a search range between $2.8$ and $3.0$, 
+I use the shooting algorithm to find the optimal $k_1$.
+The trajectories of capital stocks and the transversality condition (in logarithm) are shown below.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{k_overtime.png}
+  \includegraphics[width=0.45\textwidth]{tvc_overtime.png}
+  \caption{Trajectories of $k_t$ and $TVC$}
+\end{figure}
 
 
 
+\subsection*{Problem 1.9}
+The figure below compares the $k_t$ trajectory derived from the Shooting algorithm to the VFI result.
+The figure shows that these paths align almost perfectly.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.7\textwidth]{k_vec_paths_comparison.png}
+  \caption{Comparison of $k_t$}
+\end{figure}
 
+
+\clearpage
 \section*{Second Order Difference Equation}
 \subsection*{Problem 1.10}
 The objective function for the sequence problem in the adjustment model is given by
@@ -311,7 +356,7 @@ According to the Definition, the transversality condition is given by
 
 
 \subsection*{Answer to Question 1.11}
-From equation~(\ref{eqn:adjustment_costs_model}), the characteristic function is tiven by 
+The characteristic function is given by 
 % \[
 % x_{t+2} + \left( 1 + \frac{\phi + \kappa }{\beta \kappa } \right) x_{t+1} - \frac{1}{\beta} x_t = 0
 % \]
@@ -353,19 +398,27 @@ where $B$ is the coefficient of the larger root.
 
 
 \subsection*{Answer to Question 1.13}
-
+Since the initial condition is $x_0 = A m^0 =A$, we have $A = x_0$.
 
 
 \subsection*{Answer to Question 1.14}
-Take the first-order condition with respect to $\kappa$ for $x_t$, we have 
+From 1.13, we have
 \[
-\frac{\partial x_t}{\partial \kappa} = 
+x_t = x_0 \bigg(\frac{\left( \frac{\phi + \kappa }{\beta \kappa } + 1 \right) -  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} }{2} \bigg)^t 
 \]
+
+Take the first-order condition with respect to $\kappa$ for $\phi$, 
+\begin{align*}
+\frac{\partial x_t}{\partial \kappa} = \frac{x_0}{2^t} t \left(\frac{\phi + \kappa }{\beta \kappa } + 1 -  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} \right)^{t-1} \frac{\phi}{\beta \kappa^2} \left(\frac{1}{\sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}}} - 1\right)
+\end{align*}
 
 and
 \[
-\frac{\partial x_t}{\partial \phi} = 
+\frac{\partial x_t}{\partial \phi} = \frac{x_0}{2^t} t \left(\frac{\phi + \kappa }{\beta \kappa } + 1 -  \sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}} \right)^{t-1} \frac{1}{\beta \kappa} \left(1 - \frac{1}{\sqrt{\left(\frac{\phi + \kappa }{\beta \kappa } + 1 \right)^2 -\frac{4}{\beta}}} \right)
 \]
+
+Intuitively, as $\kappa$ increases, the adjustment cost increases, and thus the agent adjusts $x_t$ more slowly.
+Conversely, as $\phi$ increases, the marginal cost of holding $x_t$ increases, and thus the agent adjusts $x_t$ more quickly.
 
 
 \section*{Guess and Verify}
@@ -419,6 +472,8 @@ The figures below display the comparisons.
   \caption{Guess-and-Verify}
 \end{figure}
 
+
+\clearpage 
 \section*{2. Probability Theory}
 \subsection*{Exercise 2.1}
 In a stochastic environment of a fair dice, the filtered probability space is given by 

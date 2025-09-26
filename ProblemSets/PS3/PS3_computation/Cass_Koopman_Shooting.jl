@@ -2,38 +2,17 @@ cd("/Users/junbiao/Dropbox/PhD_lectures/GA1025_MacroTheory/ProblemSets/PS3/PS3_c
 
 using Optim, Distributions, Plots, Random, Parameters, LinearAlgebra
 
+# Parameters
 γ = 2 
 δ = 0.05
 β = 0.98
 α = 1/3
 A = 1 
 
-# compute the capital level in ss
-k_ss = ((1 - β + β * δ)/(β * A * α))^(1/(α - 1))
+# Compute the steady-state capital level
+k_ss = ((1 - β + β * δ) / (β * A * α))^(1 / (α - 1))
 
-# Helper functions 
-
-# Function to plot k_vec (entire time horizon)
-function plot_k_vec(k_vec_list, colors, alphas)
-    for (i, k_vec) in enumerate(k_vec_list)
-        plot!(1:length(k_vec), k_vec,
-            xlabel = "Time", ylabel = "Capital Stock",
-            legend = false, lw = 2, color = colors[i], alpha = alphas[i])
-    end
-end
-
-# Function to plot tvc_vec (last 50 periods with adjusted x-ticks)
-function plot_tvc_vec(tvc_vec_list, colors, alphas, total_time)
-    for (i, tvc_vec) in enumerate(tvc_vec_list)
-        # Generate x-ticks for the last 50 periods
-        x_ticks = (total_time - 49):total_time
-        plot!(x_ticks, tvc_vec[end-49:end],  # Only last 50 periods
-            xlabel = "Time", ylabel = "TVC",
-            legend = false, lw = 2, color = colors[i], alpha = alphas[i])
-    end
-end
-
-# Computation Functions
+# Compute the Transversality Condition (TVC)
 function tvc_compute(kt, ktp, t)
     tvc_term1 = ((1 - δ) * kt + A * (kt ^ α) - ktp) ^ (-γ)
     tvc_term2 = 1 - δ + A * α * (kt ^ (α - 1))
@@ -41,26 +20,27 @@ function tvc_compute(kt, ktp, t)
     return tvc 
 end
 
+# Compute the capital evolution starting from k0 and k1
 function k_end(k0, k1, T)
-    k_vec = zeros(T+1)
+    k_vec = zeros(T + 1)
     k_vec[1] = k0
     k_vec[2] = k1
 
     tvc_vec = zeros(T)
     tvc_vec[1] = tvc_compute(k0, k1, 1) # t = 1
     
-    for t in 3:(T+1)
-        term1 = (1 - δ) *  k_vec[t-1] + A * (k_vec[t-1]^α)
-        term2 = (β^(1/γ)) * (1 - δ + A * α * k_vec[t-1]^(α-1))^(1/γ) * ((1-δ) * k_vec[t-2] + A * (k_vec[t-2]^α) - k_vec[t-1])
+    for t in 3:(T + 1)
+        term1 = (1 - δ) * k_vec[t-1] + A * (k_vec[t-1]^α)
+        term2 = (β^(1 / γ)) * (1 - δ + A * α * k_vec[t-1]^(α-1))^(1 / γ) * ((1 - δ) * k_vec[t-2] + A * (k_vec[t-2]^α) - k_vec[t-1])
         k_next = term1 - term2
 
         kt = k_vec[t-1]
-        ktp = k_vec[t]
+        ktp = k_next
         tvc_vec[t-1] = tvc_compute(kt, ktp, (t-1))
 
-        # Capture k_next around the steady state
+        # Steady-state convergence condition
         if t > 90
-            ss_cond = abs(mean(k_vec[t-3:t]) - k_next) < 1e-4
+            ss_cond = abs(mean(k_vec[t-3:t-1]) - k_next) < 1e-4
             if ss_cond 
                 k_next = round(k_next, digits = 8)
             end
@@ -76,68 +56,120 @@ function k_end(k0, k1, T)
     return k_vec, tvc_vec
 end
 
-# Use a solver to find optimal k1 given k0 
+# Initial conditions
 k0 = k_ss / 4
 T = 250
 
-function wrapper(k1)
+# Wrapper for TVC minimization
+function tvc_wrapper(k1)
     k_vec_guess, tvc_vec = k_end(k0, k1, T)
-    return tvc_vec[end] 
+    return abs(tvc_vec[end]) * 1e-5
 end
 
+
+# Wrapper for capital steady-state minimization
+function kpr_wrapper(k1_u, k1_d, max_iter)
+    iter = 0     
+    tol = 1e-5
+    diff = 10 
+
+    while diff > tol
+
+        k1_guess = (k1_u + k1_d) / 2 
+        k_vec_u, _ = k_end(k0, k1_guess, T)
+
+        if k_vec_u[end] > k_ss # overshoot
+            k1_u = (k1_u + k1_d) / 2
+        else 
+            k1_d = (k1_u + k1_d) / 2
+        end
+        
+        diff = abs(k_vec_u[end] - k_ss)  * 1e-2
+        if mod(iter, 2) == 0
+            println("Current Diff in $iter: ", diff)
+        end
+
+        @assert iter <= max_iter "Error"
+        iter = iter + 1
+    end
+    println("Successful shooting")
+    return (k1_u + k1_d) / 2
+end
+
+k1_sol = kpr_wrapper(3, 2.8, 500)
+
+# bisection
+
+
 # undershoot:
-k_vec_us_1, tvc_vec_us_1 = k_end(k0, 3, T)
-
-k_vec_us_2, tvc_vec_us_2 = k_end(k0, 1.2932, T)
-k_vec_us_3, tvc_vec_us_3 = k_end(k0, 1.2934, T)
-k_vec_us_4, tvc_vec_us_4 = k_end(k0, 1.2936, T)
-
-
+k_vec_us, tvc_vec_us = k_end(k0, k1_sol * 0.9, T)
 
 # overshoot:
-k_vec_os_1, tvc_vec_os_1 = k_end(k0, 1.295, T)
-k_vec_os_2, tvc_vec_os_2 = k_end(k0, 1.296, T)
-k_vec_os_3, tvc_vec_os_3 = k_end(k0, 1.298, T)
+k_vec_os, tvc_vec_os = k_end(k0, k1_sol * 1.1, T)
 
-# overshoot:
-k_vec_optim, tvc_vec_optim = k_end(k0, 1.2938943267, T)
+k_vec_optim, tvc_vec_optim = k_end(k0, k1_sol, T)
 
-# Plotting k_vec
-plot(1:length(k_vec_us_1), k_vec_us_1, 
+# Plotting capital evolution
+plot(1:length(k_vec_us), k_vec_us, 
     xlabel = "Time", ylabel = "Capital Stock", 
-    legend = false, lw = 2, color = :blue, alpha = 0.9)
+    label = "Undershoot", lw = 3, color = :red, alpha = 0.7)
 
-plot_k_vec([k_vec_us_2, k_vec_us_3, k_vec_us_4], [:blue, :blue, :blue], [0.8, 0.6, 0.5])
-plot_k_vec([k_vec_os_1, k_vec_os_2, k_vec_os_3], [:red, :orange, :orange], [0.5, 1.0, 0.8])
-plot_k_vec([k_vec_optim], [:green], [1.0])
+plot!(1:length(k_vec_os), k_vec_os, label = "Overshoot", xlabel = "Time", color = :red, alpha = 0.5, ylabel = "Capital Stock", lw = 3)
+plot!(1:length(k_vec_optim), k_vec_optim, label = "Optimal Path", color = :blue, lw = 3)
 
-savefig("k_overtime.png")
+savefig("k_vec_paths.png")
 
-# Plotting tvc_vec with adjusted x-ticks
-plot((T - 49):T, tvc_vec_us_1[end-49:end],  # Adjust x-ticks
-    xlabel = "The Last 50 Periods", ylabel = "Transversality conditions", 
-    legend = false, lw = 2, color = :blue, alpha = 0.9)
 
-plot_tvc_vec([tvc_vec_us_2, tvc_vec_us_3, tvc_vec_us_4], [:blue, :blue, :blue], [0.8, 0.6, 0.5], T)
-plot_tvc_vec([tvc_vec_os_1, tvc_vec_os_2, tvc_vec_os_3], [:red, :orange, :orange], [0.5, 1.0, 0.8], T)
-plot_tvc_vec([tvc_vec_optim], [:green], [1.0], T)
+
+plot(1:length(tvc_vec_us), log.(tvc_vec_us), 
+    xlabel = "Time", ylabel = "log(TVC)", 
+    label = "Undershoot", lw = 3, color = :red, alpha = 0.7)
+
+plot!(1:length(tvc_vec_os), log.(tvc_vec_os), label = "Overshoot", xlabel = "Time", color = :red, alpha = 0.5, ylabel = "log(TVC)", lw = 3)
+plot!(1:length(tvc_vec_optim), log.(tvc_vec_optim), label = "Optimal Path", color = :blue, lw = 3)
 
 savefig("tvc_overtime.png")
 
 
+# Compare to the result obtained from VFI
+include("VFI_function.jl")
 
-# # Use BFGS to find the minimum, set tol = 1e-3
-# result = optimize(wrapper, 1.294, 1.3, BFGS(), 
-#     Optim.Options(g_tol = 1e-2, show_every = 50)
-# )
+computational_parameters = (I = 800, max_iter = 1200)
+model_param0 = (
+    γ = 2,
+    δ = 0.05,
+    β = 0.98,
+    α = 1/3,
+    A = 1
+)
 
-# println("Optimal k1: ", result.minimizer)
-# println("Minimum value: ", result.minimum)
+# Compare the Shooting solution to the VFI result
+## baseline 
+k_vec, v_sol, kpr_sol = VFI(model_param0, computational_parameters)
 
-# Fixed point iteration to obtain the ss-k 
-# function k_update(k)
-#     term1 = (1 - δ) *  k + A * (k^α)
-#     term2 = (β^(1/γ)) * (1 - δ + A * α * k^(α-1))^(1/γ) * ((1-δ) * k + A * (k^α) -k)
-#     k_imp = term1 - term2
-#     return k_imp
-# end
+# Derive optimal path based on kpr_sol_0
+k_path = zeros(T+1)
+k_path[1] = k_ss / 4
+for t in 2:(T+1)
+    idx = argmin(abs.(k_vec .- k_path[t-1]))
+    k_path[t] = kpr_sol[idx]
+end
+
+
+
+# Plotting capital evolution
+plot(1:length(k_path), k_path, 
+    xlabel = "Time", ylabel = "Capital Stock", 
+    label = "VFI", lw = 3, color = :red, alpha = 0.7)
+
+plot!(1:length(k_vec_optim), k_vec_optim, label = "Shooting Algorithm", xlabel = "Time", color = :blue, alpha = 0.8, ylabel = "Capital Stock", lw = 3)
+
+plot!(1:length(k_vec_optim), abs.(k_vec_optim .- k_path), label = "Abs Difference", xlabel = "Time", color = :black, alpha = 0.2, ylabel = "Capital Stock", lw = 3)
+
+plot!(legend = :right)
+
+
+savefig("k_vec_paths_comparison.png")
+
+
+

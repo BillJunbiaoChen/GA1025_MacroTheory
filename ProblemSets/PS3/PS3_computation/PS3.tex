@@ -525,23 +525,18 @@ the probability measure $P$ representing fair iid coin flips is given by
 
 \begin{align*}
     \mathcal{F}_1 = \{ & \emptyset, \\
-        & \{(H, H)\},
-        \{(H, T)\},
-        \{(T, H)\},
-        \{(T, T)\}, \\
-        & \{(H, H), (H, T) \}, \\
-        & \{(H, H), (T, H) \}, \\
-        & \{(H, H), (T, T) \}, \\
-        & \{(H, T), (T, H) \}, \\
-        & \{(H, T), (T, T) \}, \\
-        & \{(T, H), (T, T) \}, \\
-        & \{(H, H), (H, T), (T, H) \}, \\
-        & \{(H, H), (H, T), (T, T) \}, \\
-        & \{(H, H), (T, H), (T, T) \}, \\
-        & \{(H, T), (T, H), (T, T) \}, \\
-        & \{(H, H), (H, T), (T, H), (T, T) \} \}
+        & \{(H, H, H), (H, H, T), (H, T, H), (H, T, T)\}, \\ 
+        & \{(T, H, H), (T, H, T), (T, T, H), (T, T, T)\}, \\ 
+        & \{(H, H, H), (H, H, T), (H, T, H), (H, T, T)\}^c, \\ 
+        & \{(T, H, H), (T, H, T), (T, T, H), (T, T, T)\}^c, \\ 
+        & \{(H, H, H), (H, H, T), (H, T, H), (H, T, T), (T, H, H), (T, H, T), (T, T, H), (T, T, T)\} \}
 \end{align*}
 
+\noindent \textbf{Remark:}
+Since $(H, T, T)$ and $(H, H, T)$ doesn't include $H$ in the third period, 
+based on the information up to $t=2$, we cannot determine if they belong to $\mathcal{F}$.
+However, we can determine if ${(H, T, T), (H, T, H)}$ belongs to $\mathcal{F}$ 
+we know for sure about the realizations of $s_1$ and $s_2$, and it includes both $H$ and $T$ in the third period.
 
 \paragraph{Q6.}
 Consider two paths that share the same partial histories up to time $t$.

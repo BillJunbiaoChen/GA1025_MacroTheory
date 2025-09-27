@@ -7,6 +7,11 @@ ProblemSets/*/*.pdf
 ProblemSets/*/*/*.out
 ProblemSets/*/*/*.aux
 ProblemSets/*/*/*.log
-ProblemSets/*/*/PS3.*.gz
+ProblemSets/*/*/*.*.gz
 .DS_Store
 ProblemSets/.DS_Store
+ProblemSets/*/*/*.bbl
+ProblemSets/*/*/*.fdb_latexmk
+ProblemSets/*/*/*.fls
+ProblemSets/*/.DS_Store
+.DS_Store

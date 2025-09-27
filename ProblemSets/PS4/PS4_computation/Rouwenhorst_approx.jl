@@ -1,9 +1,8 @@
 
 
-function rouwenhorst(ρ, σ_ϵ, N)
+function rouwenhorst(ρ, N; σ_z = 1.0)
     p = (1 + ρ) / 2
     q = (1 + ρ) / 2
-    σ_z = σ_ϵ / (sqrt(1 - ρ^2))
     ψ = sqrt(N - 1) * σ_z
 
     mat_list = [] 

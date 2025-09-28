@@ -1,6 +1,7 @@
 
 
 function rouwenhorst(ρ, N; σ_z = 1.0)
+    println("σ_z :", σ_z)
     p = (1 + ρ) / 2
     q = (1 + ρ) / 2
     ψ = sqrt(N - 1) * σ_z

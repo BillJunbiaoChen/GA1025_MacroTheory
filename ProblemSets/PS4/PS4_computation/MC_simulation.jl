@@ -33,5 +33,5 @@ for (N, ρ) in all_models
 
     plot((T-1200):T, y_path[end-1200:end], label = "N = $N, ρ = $ρ", xlabel = "Time", ylabel = "y", legend = false)
     annotate!((T-1199), mean(y_path[end-1200:end]), text("Auto-corr: $(round(corr, digits=4))", :left, 10))
-    savefig("MC_N$(N)_rho$(Int(ρ*1000)).png")
+    savefig("images/MC_N$(N)_rho$(Int(ρ*1000)).png")
 end

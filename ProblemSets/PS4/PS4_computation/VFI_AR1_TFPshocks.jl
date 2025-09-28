@@ -49,8 +49,8 @@ computational_params = (
 #--------------------
 # Deterministic Case
 #--------------------
-# determin_model = merge(model_params, (σ_w = 0.0,))
-vf_sol, k_policy = VFI_stochastic(model_params, computational_params)
+determin_model = merge(model_params, (σ_w = 0.0,))
+vf_sol, k_policy = VFI_stochastic(determin_model, computational_params)
 
 
 
@@ -81,8 +81,8 @@ plot(k_vec, k_policy_zmin,
 plot!(k_vec, k_policy_zmax, 
     xlabel = "Current capital", ylabel = "Next period capital", 
     label = "z = $z_max", lw = 2, color = :black, alpha = 0.9)
-# plot!(k_vec, k_vec, 
-#     label = "45 degree line", lw = 2, color = :red, alpha = 0.9)
+plot!(k_vec, k_vec, 
+    label = "45 degree line", lw = 2, color = :red, alpha = 0.9)
 
 
 

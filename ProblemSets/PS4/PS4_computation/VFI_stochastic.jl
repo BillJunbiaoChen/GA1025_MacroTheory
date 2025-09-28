@@ -3,7 +3,7 @@ function VFI_stochastic(model_params, computational_params)
     iter = 0
     @unpack γ, δ, β, α, A, ρ, σ_w, P, z_vec, k_vec = model_params
     @unpack diff, tol, max_iter, damp = computational_params
-    σ_z = (σ_w)/(sqrt(1 - (ρ^2)))
+    σz_sqr = (σ_w^2)/(1 - (ρ^2))
     N = length(z_vec)
     K = length(k_vec)
 
@@ -15,7 +15,7 @@ function VFI_stochastic(model_params, computational_params)
         v_mat_old = reshape(v_old, N, K)
         EV_mat = P * v_mat_old
 
-        A_long_vec = kron(ones(K), A .* σ_z .* (exp.(z_vec)))
+        A_long_vec = kron(ones(K), A .* exp(-0.5 * σz_sqr) .* (exp.(z_vec)))
         k_long_vec = kron(((1 - δ) .* k_vec), ones(N))
         c_mat = A_long_vec .+ k_long_vec .- k_vec'
 

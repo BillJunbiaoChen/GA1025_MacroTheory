@@ -15,9 +15,9 @@ function VFI_stochastic(model_params, computational_params)
         v_mat_old = reshape(v_old, N, K)
         EV_mat = P * v_mat_old
 
-        A_long_vec = kron(ones(K), A .* exp(-0.5 * σz_sqr) .* (exp.(z_vec)))
-        k_long_vec = kron(((1 - δ) .* k_vec), ones(N))
-        c_mat = A_long_vec .+ k_long_vec .- k_vec'
+        k_prod = kron(k_vec .^ α, A .* exp(-0.5 * σz_sqr) .* (exp.(z_vec)))
+        k_remaining = kron(((1 - δ) .* k_vec), ones(N))
+        c_mat = k_prod .+ k_remaining .- k_vec'
 
         # identify negative consumption 
         infeasible_idx = c_mat .< 0.0

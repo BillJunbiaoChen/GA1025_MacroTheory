@@ -360,6 +360,70 @@ For $t = k+1$, we have
 \end{align*}
 \(\blacksquare\)
 
+\section*{Exercise 2.7 from RMT5}
+\subsection*{Solution to part (a)}
+Guess the stationary distribution has the following form
+\[
+\pi = 
+\left[
+\begin{matrix}
+    p/2  \\ p/2 \\ (1-p)/2 \\ (1-p)/2
+\end{matrix}
+\right]
+\]
+Now we verify if $\pi = \mathbf{P}' \pi$
+\[
+\left[
+\begin{matrix}
+    0.5 & 0.5 & 0 & 0  \\ 0.5 & 0.5 & 0 & 0 \\ 0 & 0 & 0.5 & 0.5 \\ 0 & 0 & 0.5 & 0.5 
+\end{matrix}
+\right]
+\left[
+\begin{matrix}
+    p/2  \\ p/2 \\ (1-p)/2 \\ (1-p)/2
+\end{matrix}
+\right]
+= \left[
+\begin{matrix}
+    p/2  \\ p/2 \\ (1-p)/2 \\ (1-p)/2
+\end{matrix}
+\right]
+\]
+
+\subsection*{Solution to part (b)}
+The stationary distributions for which this Markov Chain is ergodic are 
+\[
+\pi_1
+\left[
+\begin{matrix}
+    0.5 \\ 0.5 \\ 0 \\ 0 
+\end{matrix}
+\right],
+\quad 
+\pi_2 = 
+\left[
+\begin{matrix}
+    0 \\ 0 \\ 0.5 \\ 0.5
+\end{matrix}
+\right]
+\]
+
+\subsection*{Solution to part (c)}
+By the Birkhoff–Khinchin ergodic theorem, we have
+\[
+\lim_{T \rightarrow \infty} \frac{1}{T} \sum_{t=1}^{T} y_t = \pi^{\chi} \bar{y}
+\]
+where $\pi^{\chi}$ is either $\pi_1$ or $\pi_2$.
+If it is $\pi_1$, then the limit of sample mean is $\frac{1}{2} \bar{y} e_1 + \frac{1}{2} \bar{y} e_2$.
+Since we assume that $\bar{y} e_1 = \bar{y} e_2 = \bar{y}_1$, we have 
+\[
+\lim_{T \rightarrow \infty} \frac{1}{T} \sum_{t=1}^{T} y_t = \bar{y}_1 \text{ if the initial distribution is the stationary distribution of } [1/2, 1/2, 0, 0]'
+\]
+Similarly,
+\[
+\lim_{T \rightarrow \infty} \frac{1}{T} \sum_{t=1}^{T} y_t = \bar{y}_2 \text{ if the initial distribution is the stationary distribution of } [0, 0, 1/2, 1/2]'
+\]
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

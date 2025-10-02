@@ -160,7 +160,7 @@ random variable $y_t = \bar{y}' x_t$, where $\bar{y}' = [1,5]$.
 
 The likelihood function of the data is given by 
 \begin{itemize}
-    \item(a) $L = 0.5 P_{12}^2 P_{21}^2 = 0.5 \cdot 0.1^2 \codt 0.3^2$
+    \item(a) $L = 0.5 P_{12}^2 P_{21}^2 = 0.5 \cdot 0.1^2 \cdot 0.3^2$
     \item(b) $L = 0.5 P_{11}^4 = 0.5 \cdot 0.9^4$
     \item(c) $L = 0.5 P_{22}^4 = 0.5 \cdot 0.7^4$
 \end{itemize}
@@ -235,6 +235,35 @@ Since
 We can conclude that processes 1 and 2 yeild the same unconditional expected value for both 
 $\gamma = 2.5$ and $4$.
 
+\paragraph{Q3 Solution}
+The likelihood for observing this sequence of consumption given by process 1 and 2 are 
+\begin{align*}
+    L_1 = 0.5 \times 1^9 = 0.5 \\
+    L_2 = 0.5 \times (0.5)^9 = 0.5^{10},
+\end{align*}
+respectively.
+
+\paragraph{Q4 solution}
+Since the econometrician assigns equal `prior probability' to the two chains,
+$\text{Prob}(M_1) = \text{Prob}(M_2)$. 
+Based on the computation in Q3, we have 
+\begin{align*}
+    \text{Prob}(M_1|\text{Data}) & = \frac{0.5 \times 0.5}{0.5 \times 0.5 + 0.5 \times 0.5^{10}} \\
+    \text{Prob}(M_2|\text{Data}) & = \frac{0.5 \times 0.5 \times 0.5^{10}}{0.5 \times 0.5 + 0.5 \times 0.5^{10}} \\
+\end{align*}
+
+\paragraph{Q5 solution}
+Assume the observed data is given by $(1,5,5,1,5,5,1,5,1,5)$.
+The likelihood given models now become 
+\begin{align*}
+    L_1 & = 0.5 \times 0 = 0 \\
+    L_2 & = 0.5 \times 0.5^9 = 0.5^{10}
+\end{align*}
+It follows that 
+\begin{align*}
+    \text{Prob}(M_1|\text{Data}) & = \frac{0.5 \times 0}{0.5 \times 0 + 0.5 \times 0.5^{10}} = 0 \\
+    \text{Prob}(M_2|\text{Data}) & = \frac{0.5 \times 0.5 \times 0.5^{10}}{0.5 \times 0 + 0.5 \times 0.5^{10}} = 1 \\
+\end{align*}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

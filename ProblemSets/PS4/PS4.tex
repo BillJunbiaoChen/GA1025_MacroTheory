@@ -265,6 +265,102 @@ It follows that
     \text{Prob}(M_2|\text{Data}) & = \frac{0.5 \times 0.5 \times 0.5^{10}}{0.5 \times 0 + 0.5 \times 0.5^{10}} = 1 \\
 \end{align*}
 
+
+\section*{Exercise 2.4 from RMT5}
+\paragraph{Solution}
+Let $\pi_1, \pi_2$ be two distinct eigenvectors corresponding to the unit eigenvalue of $\mathbf{P}'$.
+Then we have 
+\begin{align*}
+    \pi_1 & = \mathbf{P}' \pi_1 \\
+    \pi_2 & = \mathbf{P}' \pi_2 \\
+\end{align*}
+Now consider the convex combinations of $\pi_1$ and $\pi_2$.
+Then we have 
+\begin{align*}
+    \alpha \pi_1 + (1-\alpha) \pi_2 & = \alpha \mathbf{P}'  \pi_1 + (1-\alpha) \mathbf{P}' \pi_2 \\
+    & = \mathbf{P}' \left(\alpha \pi_1 + (1-\alpha) \pi_2 \right)
+\end{align*}
+Therefore, $\left(\alpha \pi_1 + (1-\alpha) \pi_2 \right)$ is also a stationary distribution.
+
+
+\section*{Exercise 2.5 from RMT5}
+\paragraph{Solution} I prove the statement by induction.
+When $t=1$, we have 
+\[
+\pi_1 =
+\left[
+\begin{matrix}
+  1 & 0 & 0 \\ 0.2 & 0.5 & 0.3 \\ 0 & 0 & 1
+\end{matrix}
+\right]' 
+\left[
+\begin{matrix}
+  \pi_{1,0} \\ \pi_{2,0} \\ \pi_{3,0}
+\end{matrix}
+\right] = 
+\left[
+\begin{matrix}
+  \pi_{1,0} + 0.2 \pi_{2,0} \\ 0.5 \pi_{2,0} \\ 0.3 \pi_{2,0} + \pi_{3,0}
+\end{matrix}
+\right]
+\]
+which is consistent with the formula.
+
+Now suppose $\pi_t$ follows these equations. 
+We have 
+\[
+\pi_{t+1} =
+\left[
+\begin{matrix}
+  1 & 0 & 0 \\ 0.2 & 0.5 & 0.3 \\ 0 & 0 & 1
+\end{matrix}
+\right]' 
+\left[
+\begin{matrix}
+  \pi_{1,t} \\ \pi_{2,t} \\ \pi_{3,t}
+\end{matrix}
+\right] = 
+\left[
+\begin{matrix}
+  1 & 0 & 0 \\ 0.2 & 0.5 & 0.3 \\ 0 & 0 & 1
+\end{matrix}
+\right]' 
+\left[
+\begin{matrix}
+  \pi_{1,0} + 0.2 \times \frac{1 - 0.5^t}{1 - 0.5} \pi_{2,0} \\ 0.5^t \pi_{2,0} \\ 0.3 \times \frac{1 - 0.5^t}{1 - 0.5} \pi_{2,0} + \pi_{3,0}
+\end{matrix}
+\right] =
+\left[
+\begin{matrix}
+  \pi_{1,0} + 0.2 \times \frac{1 - 0.5^{t+1}}{1 - 0.5} \pi_{2,0} \\ 0.5^{t+1} \pi_{2,0} \\ 0.3 \times \frac{1 - 0.5^{t+1}}{1 - 0.5} \pi_{2,0} + \pi_{3,0}
+\end{matrix}
+\right]
+\]
+\(\blacksquare\)
+
+
+\section*{Exercise 2.6 from RMT5}
+\paragraph{Solution} Check $t=1$, the $j$'s column of $\mathbf{P}'$ is given by
+\[
+\pi_1 = 
+\left[
+\begin{matrix}
+    P_{j1}  \\ P_{j2} \\ \cdots \\ P_{jn}
+\end{matrix}
+\right]
+\].
+Intuitively, the is one round of re-distribution starting from state $j$.
+Now suppose the statement is true for $t=k$.
+Then we have
+\[\pi_k = (\mathbf{P}')^{k} e_j\]
+For $t = k+1$, we have 
+\begin{align*}
+\pi_{k+1} & = \mathbf{P}' \pi_t \\ 
+    & = (\mathbf{P}')^{k+1} e_j
+\end{align*}
+\(\blacksquare\)
+
+
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}
 

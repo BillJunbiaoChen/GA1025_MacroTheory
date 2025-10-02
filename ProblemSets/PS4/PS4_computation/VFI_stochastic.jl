@@ -7,15 +7,16 @@ function VFI_stochastic(model_params, computational_params)
     N = length(z_vec)
     K = length(k_vec)
 
-    v_old = zeros(K*N, 1) # k goes first b/c Julia is column-major
-    k_policy = zeros(K*N, 1)
+    v_old = zeros(N * K, 1) # The first col: v(1,1), v(1,2), ..., v(1,N)
+    k_policy = zeros(N * K, 1)
+    c_policy = zeros(N * K, 1)
 
     while diff > tol 
         # Matrix-tization for the Bellman operator
         v_mat_old = reshape(v_old, N, K)
-        EV_mat = P * v_mat_old
+        EV_mat = repeat(P, K, 1) * v_mat_old
 
-        k_prod = kron(k_vec .^ α, A .* exp(-0.5 * σz_sqr) .* (exp.(z_vec)))
+        k_prod = A .* exp(-0.5 * σz_sqr) .* kron(k_vec .^ α, exp.(z_vec))
         k_remaining = kron(((1 - δ) .* k_vec), ones(N))
         c_mat = k_prod .+ k_remaining .- k_vec'
 
@@ -27,9 +28,9 @@ function VFI_stochastic(model_params, computational_params)
         u_mat[infeasible_idx] .= -Inf
 
         # implement Bellman 
-        EV_mat_long = kron(EV_mat, ones(K))
-        v_imp = maximum(u_mat .+ β .* EV_mat_long, dims = 2)
-        k_policy = k_vec[getindex.(argmax(u_mat .+ β .* EV_mat_long, dims = 2), 2)]
+        v_imp = maximum(u_mat .+ β .* EV_mat, dims = 2)
+        k_policy = k_vec[getindex.(argmax(u_mat .+ β .* EV_mat, dims = 2), 2)]
+        c_policy = k_prod .+ k_remaining .- k_policy
 
         if iter < 20
             v_new = damp .* v_imp .+ (1 .- damp) .* v_old
@@ -48,6 +49,7 @@ function VFI_stochastic(model_params, computational_params)
 
         @assert iter <= max_iter "Error: Reached Maximum iteration"
     end
-    return v_old, k_policy
+    
+    return v_old, k_policy, c_policy
 end
 

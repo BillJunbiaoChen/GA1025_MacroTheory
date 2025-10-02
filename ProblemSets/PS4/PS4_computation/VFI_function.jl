@@ -11,6 +11,7 @@ function VFI(model_params, comp_params)
 
     v_old = zeros(I)
     k_policy = zeros(I)
+    c_policy = zeros(I)
 
     iter = 0 
     max_iter = 1000
@@ -32,6 +33,7 @@ function VFI(model_params, comp_params)
         # update VF 
         v_imp = maximum(util_mat .+ β .* v_old', dims = 2)
         k_policy = k_vec[getindex.(argmax(util_mat .+ β .* v_old', dims = 2), 2)]
+        c_policy = (1 - δ) .* k_vec + A * (k_vec .^ α) .- k_policy
 
         diff = maximum(abs.(v_imp .- v_old))
         v_old = copy(v_imp)
@@ -42,5 +44,5 @@ function VFI(model_params, comp_params)
         end
     end
 
-    return k_vec, v_old, k_policy
+    return k_vec, v_old, k_policy, c_policy
 end

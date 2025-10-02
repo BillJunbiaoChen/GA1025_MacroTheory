@@ -96,10 +96,10 @@ _, vf_deter, k_policy_deter, c_policy_deter = VFI(model_params, comp_params)
 
 # Visualize value functions for v(k, z_min) and v(k, z_max)
 plot(k_vec, vf_zmin_baseline, 
-    xlabel = "Current capital", ylabel = "Value function", 
+    xlabel = "k", ylabel = "v(k,z)", 
     label = "Min TFP = $z_min", lw = 3, color = :blue, alpha = 0.9)
 plot!(k_vec, vf_zmax_baseline, 
-    xlabel = "Current capital", ylabel = "Value function", 
+    xlabel = "k", ylabel = "v(k,z)", 
     label = "Max TFP = $z_max", lw = 3, color = :red, alpha = 0.9)
 savefig("VFI_AR1_TFPshocks_valuefunc_min_max.png")
 
@@ -141,6 +141,15 @@ savefig("VFI_AR1_TFPshocks_k_policy_deterministic.png")
 
 
 ## consumption policy 
+plot(k_vec, c_zmin_baseline, 
+    xlabel = "k", ylabel = "c(k,z)", 
+    label = "Min TFP = $z_min", lw = 3, color = :blue, alpha = 0.9)
+plot!(k_vec, c_zmax_baseline, 
+    xlabel = "k", ylabel = "c(k,z)", 
+    label = "Max TFP = $z_max", lw = 3, color = :red, alpha = 0.9)
+savefig("VFI_AR1_TFPshocks_c_policy_min_max.png")
+
+
 plot(k_vec, c_policy_deter, 
     xlabel = "k", ylabel = "c(k)", 
     label = "Deterministic", lw = 3, color = :blue, alpha = 0.9)
@@ -151,6 +160,16 @@ savefig("VFI_AR1_TFPshocks_c_policy_deterministic.png")
 
 
 ## change in capital 
+plot(k_vec, Δk_zmin_baseline, 
+    xlabel = "k", ylabel = "Δk(k,z) = g(k,z) - k", 
+    label = "Min TFP = $z_min", lw = 3, color = :blue, alpha = 0.9)
+plot!(k_vec, Δk_zmax_baseline, 
+    xlabel = "k", ylabel = "Δk(k,z) = g(k,z) - k", 
+    label = "Max TFP = $z_max", lw = 3, color = :red, alpha = 0.9)
+savefig("VFI_AR1_TFPshocks_delta_k_policy_min_max.png")
+
+
+
 plot(k_vec, Δk_deter, 
     xlabel = "k", ylabel = "g(k,z) - k", 
     label = "Deterministic", lw = 3, color = :blue, alpha = 0.9)

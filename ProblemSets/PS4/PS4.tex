@@ -513,6 +513,66 @@ function rouwenhorst(rho, N; sigma_z = 1.0)
 end
 \end{lstlisting}
 
+\subsection*{Solution to Question 3.2}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N2_rho950_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N2_rho990_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N2_rho999_theoretical_simulated.png}\\
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N5_rho950_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N5_rho990_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N5_rho999_theoretical_simulated.png}\\
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N10_rho950_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N10_rho990_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N10_rho999_theoretical_simulated.png}\\
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N20_rho950_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N20_rho990_theoretical_simulated.png}
+  \includegraphics[width=0.3\textwidth]{PS4_computation/images/MC_N20_rho999_theoretical_simulated.png}\\
+  \caption{Stationary Distributions}
+\end{figure}
+
+
+\subsection*{Solution to Question 3.3}
+As $\rho$ increases, the AR(1) process becomes more persistent, and the transition probability matrix
+becomes closer to the identity matrix.
+
+
+
+\section*{Value function iteration with an AR(1) productivity shock}
+\subsection*{Solution to Question 4.1}
+The steady state is given by 
+\[
+k_{ss} = \left(\frac{1 - \beta + \beta  \delta}{\beta A \alpha}\right)^{1 / (\alpha - 1)}
+\]
+
+
+\subsection*{Solution to Questions 4.2 and 4.3}
+The policy functions and value functions are plotted below.
+The deterministic cases are similar to the stochastic cases with $z = 0$.
+The reason for this is closely related to certainty equivalence of the linear-quadratic model.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_c_policy_deterministic.png}
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_delta_k_policy_deterministic.png} \\
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_delta_k_policy_deterministic.png}
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_valuefunc_deterministic.png}
+  \caption{Policy Functions and Value Functions under Deterministic Productivity}
+\end{figure}
+
+
+\subsection*{Solution to Question 4.4}
+The policy functions and value functions under the minimum and maximum TFP are plotted below.
+The capital policy function is increasing in TFP shock.
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_valuefunc_min_max.png}
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_policyfunc_min_max.png} \\
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_c_policy_min_max.png}
+  \includegraphics[width=0.45\textwidth]{PS4_computation/images/VFI_AR1_TFPshocks_delta_k_policy_min_max.png}
+  \caption{Policy Functions and Value Functions under Min and Max Productivity}
+\end{figure}
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

@@ -13,6 +13,7 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \usepackage{graphicx}
 \usepackage{grffile}
 \usepackage{tabularx}
+\usepackage{listings}
 \usepackage{setspace}
 \usepackage{amsmath,amsthm,amssymb}
 \usepackage[hyphens]{url}
@@ -423,6 +424,94 @@ Similarly,
 \[
 \lim_{T \rightarrow \infty} \frac{1}{T} \sum_{t=1}^{T} y_t = \bar{y}_2 \text{ if the initial distribution is the stationary distribution of } [0, 0, 1/2, 1/2]'
 \]
+
+\section*{Claim: Unique stationary distribution implies ergodicity}
+\paragraph{Proof}
+Suppose the Markov chain is not ergodic.
+Then there exist two distinct states $i$ and $j$ such that $i$ cannot be reached from $j$.
+Denote the set of states that can be reached from $i$ by $A$ and the set of states that can be reached from $j$ by $B$.
+Then we have $A \cap B = \emptyset$.
+Now consider the following two distributions
+\[\pi^A = 
+\left[
+\begin{matrix}  
+    \pi_1^A \\ \pi_2^A \\ \vdots \\ \pi_n^A
+\end{matrix}
+\right], \quad
+\pi^B = 
+\left[
+\begin{matrix}  
+    \pi_1^B \\ \pi_2^B \\ \vdots \\ \pi_n^B
+\end{matrix}
+\right]
+\]
+where
+\[\pi_k^A = 
+\begin{cases}
+    \frac{1}{|A|}, & k \in A \\
+    0, & k \notin A
+\end{cases}, \quad
+\pi_k^B = 
+\begin{cases}
+    \frac{1}{|B|}, & k \in B \\
+    0, & k \notin B
+\end{cases}
+\]
+It is easy to verify that $\pi^A$ and $\pi^B$ are two distinct stationary distributions.
+This contradicts the uniqueness of the stationary distribution. 
+
+
+\section*{Claim: Ergodicity DOES NOT imply unique stationary distribution}
+Consider the example 4.4 showed in the lecture note,
+where 
+\[
+\mathbb{P} = \left[
+\begin{matrix}
+    1 & 0 \\ 0 & 1
+\end{matrix}
+\right], \quad  \pi = \left[
+\begin{matrix}
+    p \\ 1-p
+\end{matrix}
+\right], \quad p \in [0,1]
+\]
+As the random variable $y_t = \bar{y}' x_t$, would stay in the same state forever, the Markov chain is ergodic.
+However, there are infinitely many stationary distributions as $p$ can take any value in $[0,1]$.
+
+\section*{Approximation of an AR(1) process using a Markov chain}
+\subsection*{Solution to Question 3.1}
+I implement the Rouwenhorst method using the following Julia code:
+\begin{lstlisting}
+function rouwenhorst(rho, N; sigma_z = 1.0)
+    println("sigma_z :", sigma_z)
+    p = (1 + rho) / 2
+    q = (1 + rho) / 2
+    psi = sqrt(N - 1) * sigma_z
+
+    mat_list = [] 
+    push!(mat_list, [p (1-p); (1 - q) q])
+
+
+    for i in 2:(N-1)
+        mat_prev = mat_list[i-1]
+        n = size(mat_prev)[1]
+        part1 = [mat_prev Int.(zeros(n, 1)); Int.(zeros(1, n+1))]
+        part2 = [Int.(zeros(n, 1)) mat_prev; Int.(zeros(1, n+1))]
+        part3 = [Int.(zeros(1, n+1)); mat_prev Int.(zeros(n, 1))]
+        part4 = [Int.(zeros(1, n+1)); Int.(zeros(n, 1)) mat_prev]
+        mat_update = p .* part1 .+ (1-p) .* part2 .+ (1-q) .* part3 .+ q .* part4
+        mat_update = mat_update ./ sum(mat_update, dims = 2)
+        push!(mat_list, mat_update)
+    end
+
+    trans_mat = mat_list[end]
+    states = -psi:(2 * psi/(N-1)): psi
+
+    @assert size(trans_mat) == (length(states), length(states))
+    
+    return trans_mat, states 
+end
+\end{lstlisting}
 
 
 %% =========== %% ========= %%

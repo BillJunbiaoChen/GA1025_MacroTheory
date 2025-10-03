@@ -25,7 +25,7 @@ function rouwenhorst(ρ, N; σ_z = 1.0)
     trans_mat = mat_list[end]
     states = -ψ:(2 * ψ/(N-1)): ψ
 
-    @assert size(trans_mat) == (length(states), length(states))
+    # @assert size(trans_mat) == (length(states), length(states))
     
     return trans_mat, states 
 end

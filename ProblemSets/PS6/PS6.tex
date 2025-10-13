@@ -1,0 +1,287 @@
+\documentclass[11pt]{article}
+
+%%METADATA
+\title{GA1025 Macro Theory \\Solution to Problem Set 6}
+\author{
+Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
+}
+\date{\today}
+
+
+%%PACKAGES
+\usepackage{mdframed} % For boxed environments
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{tabularx}
+\usepackage{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage[hyphens]{url}
+\usepackage{natbib}
+\usepackage[font=normalsize,labelfont=bf]{caption}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,urlcolor=blue,citecolor=blue}
+\usepackage{stmaryrd}  %Package with \boxast command
+\usepackage{enumerate}% http://ctan.org/pkg/enumerate %Supports lowercase Roman-letter enumeration
+\usepackage{verbatim} %Package with \begin{comment} environment
+%\usepackage{enumitem}
+\usepackage{physics}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{upquote}
+\usepackage{booktabs} %Package with \toprule and \bottomrule
+\usepackage{etoc}     %Package with \localtableofcontents
+\usepackage{placeins}    %Package that prevent repositioning the tables
+\usepackage{multicol}
+\usepackage{bm}
+\usepackage{subfig}
+\usepackage{csquotes}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{language=bash,
+  frame=tb,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=3
+}
+
+\lstset{language=C,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=4
+}
+
+\definecolor{lightblue}{rgb}{0.68, 0.85, 0.9} %
+
+%CUSTOM DEFINITIONS
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem*{remark}{Remark}
+\setcounter{secnumdepth}{3}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{automata, positioning, arrows, calc}
+
+\tikzset{
+	->,  % makes the edges directed
+	>=stealth, % makes the arrow heads bold
+	shorten >=2pt, shorten <=2pt, % shorten the arrow
+	node distance=3cm, % specifies the minimum distance between two nodes. Change if n
+	every state/.style={draw=blue!55,very thick,fill=blue!20}, % sets the properties for each ’state’ n
+	initial text=$ $, % sets the text that appears on the start arrow
+ }
+
+%% PROPOSITION
+% Define the Proposition environment
+\newmdenv[
+  innerleftmargin=10pt, 
+  innerrightmargin=10pt,
+  innertopmargin=10pt,
+  innerbottommargin=10pt,
+  linecolor=black, 
+  linewidth=1pt,
+  backgroundcolor=white, 
+  roundcorner=5pt
+]{propositionbox}
+
+\newtheoremstyle{boldtitle} % Define a new theorem style
+  {10pt} % Space above
+  {10pt} % Space below
+  {\itshape} % Body font
+  {} % Indent amount
+  {\bfseries} % Theorem head font
+  {.} % Punctuation after theorem head
+  { } % Space after theorem head
+  {} % Theorem head spec
+
+\theoremstyle{boldtitle} % Use the custom style
+\newtheorem{proposition}{Proposition} % Define the proposition environment
+
+% Redefine the proposition environment to use the box
+\newenvironment{boxedproposition}[1][]
+{\begin{propositionbox}\begin{proposition}[#1]}
+{\end{proposition}\end{propositionbox}}
+
+%%FORMATTING
+\usepackage[bottom]{footmisc}
+\onehalfspacing
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\bibliographystyle{../bib/aeanobold-oxford}
+
+
+%main text
+\begin{document}
+
+\maketitle
+
+
+\section{Permanent income model}
+The household maximizes the present value of utility from consumption
+\[
+E_0 \left[ \sum_{t=0}^\infty \beta^t u(c_t) \right]
+\]
+where $\beta \in (0,1)$ and $u(c) = -\frac{1}{2}(c - c^*)^2$ is a quadratic utility function. The consumer chooses a plan for consumption and borrowing $\{c_t, b_{t+1}\}_{t=0}^\infty$ subject to a sequence of budget constraints
+\[
+c_t + b_t = R^{-1} b_{t+1} + y_t
+\]
+and a no-Ponzi scheme restriction
+\[
+E_0 \left[ \sum_{t=0}^\infty \beta^t b_t^2 \right] < \infty.
+\]
+
+The exogenous income process satisfies $y_t = z_{1,t} + z_{2,t}$ with $z_t = (z_{1,t}, z_{2,t})'$ given by
+\[
+\begin{bmatrix}
+z_{1,t+1} \\
+z_{2,t+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+\rho_1 & 0 \\
+0 & \rho_2
+\end{bmatrix}
+\begin{bmatrix}
+z_{1,t} \\
+z_{2,t}
+\end{bmatrix}
++
+\begin{bmatrix}
+\sigma_1 & 0 \\
+0 & \sigma_2
+\end{bmatrix}
+\begin{bmatrix}
+w_{1,t+1} \\
+w_{2,t+1}
+\end{bmatrix}
+\]
+where $w_{t+1} \sim N(0, I_2)$ is an i.i.d. shock.
+
+We consider two information structures. In the full information case, the household observes components of $z_t$ and hence the structural shocks $w_{1,t}$ and $w_{2,t}$. In the incomplete information case, the household only observes income $y_t$ and needs to filter the contribution of both income components $z_{1,t}$ and $z_{2,t}$ to income.
+
+\textbf{Question 1:}
+$\rho_1 = \rho$ and $\rho_2 = 0$. 
+Find analytical expressions for the impulse responses of consumption and debt 
+to unit shocks $w_{1,t}$ and $w_{2,t}$ in the full information case, 
+and to a unit innovation in income in the incomplete information case.
+
+\subsection*{Solution to Q1}
+Following the derivation in the lecture note, we can express this linear quadratic permanent income model in the following state space:
+\begin{align*}
+    z_{t+1} & = A_{22} z_t + C_2 w_t \\
+    y_t & = U_y z_t \\ 
+    b_{t+1} &= b_t - U_y \left(I - \beta A_{22} \right)^{-1} \left( I - A_{22}\right) z_t \\
+    c_t &= (1 - \beta) \left(U_y (I - \beta A_{22})^{-1} z_t - b_t \right)
+\end{align*}
+where 
+\[
+y_{t+1} = \begin{bmatrix}
+y_{1,t+1} \\
+y_{2,t+1} 
+\end{bmatrix}, \quad 
+A_{22} = \begin{bmatrix}
+\rho_1 & 0 \\
+0 & \rho_2
+\end{bmatrix}, \quad 
+C_2 = \begin{bmatrix}
+\sigma_1 & 0 \\
+0 & \sigma_2
+\end{bmatrix}, \quad 
+U_y = \begin{bmatrix}
+1 & 1
+\end{bmatrix}
+\]
+
+Define $A_{12} = - U_y \left(I - \beta A_{22} \right)^{-1} \left( I - A_{22}\right)$, 
+we have 
+\begin{align*}
+    h_t(b) & = A_{12} \left( I - A_{22}^{t} \right) \left( I - A_{22} \right)^{-1} C_2 \\ 
+        & =  - U_y \left(I - \beta A_{22} \right)^{-1} \left( I - A_{22}^{t} \right) C_2 \\
+        & = - \begin{bmatrix} 1 & 1 \end{bmatrix} \begin{bmatrix} \frac{1}{1 - \beta \rho} & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} 1 - \rho^t & 0 \\ 0 & 1 \end{bmatrix} \begin{bmatrix} \sigma_1 & 0 \\ 0 & \sigma_2 \end{bmatrix} \\ 
+        & = - \begin{bmatrix} \sigma_1 \left( \frac{1 - \rho^t}{1 - \beta \rho} \right) & \sigma_2 \end{bmatrix}
+\end{align*}
+
+After similar derivation, the impulse response for consumption is given by 
+\begin{align*}
+h_t(c) & = (1 - \beta) U_y \left(I - \beta A_{22} \right)^{-1} C_2 \\
+& =  [\begin{matrix} (1 - \beta) & (1 - \beta) \end{matrix}] \left[\begin{matrix} \frac{1}{1 - \beta \rho} & 0 \\ 0 & 1 \end{matrix} \right] \left[\begin{matrix} \sigma_1 & 0 \\ 0 & \sigma_2 \end{matrix} \right] \\ 
+& = \begin{bmatrix} \left(\frac{1 - \beta}{1 - \beta \rho} \right)\sigma_1 & (1-\beta)\sigma_2 \end{bmatrix}
+\end{align*}
+
+Given $\rho = 0.5, \beta = 0.95, \sigma_1 = \sigma_2 =1$, 
+the impulse responses of debt to unit shocks $w_{1,t}$ and $w_{2,t}$ are given by:
+\begin{align*}
+    \tilde{b}_{t+1} - b_{t+1} & = - \sigma_1 \left( \frac{1 - \rho^t}{1 - \beta \rho} \right)  \\
+    \tilde{b}_{t+1} - b_{t+1} & = - \sigma_2,
+\end{align*}
+respectively.
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{images/debt_impulse_response_functions.png}
+  \includegraphics[width=0.45\textwidth]{images/consumption_impulse_response_functions.png}
+  \caption{Impulse Responses}
+\end{figure}
+
+
+In a setting with unobservable states, 
+the agent needs to apply ``Kalman Filter'' to obtain information from the data.
+Since $z_{2,t}$ represents the transitory shock, 
+the system is given by the following state-space representation:
+\begin{align*}
+    a_t & = y_t - \hat{z}_{1, t} = y_t - E[y_t | y^{t-1}] \\
+    K_1 & = \frac{\Sigma_{11}}{\Sigma_{11} + \Sigma_{22}} \\ 
+    \hat{z}_{1, t+1} & = \hat{z}_{1, t} + K_1 a_t \\ 
+    \hat{z}_{2, t+1} & = 0 \\ 
+    \Sigma & =   \left[ \begin{matrix}
+        \Sigma_{11} & 0 \\ 0 & \Sigma_{22}
+    \end{matrix}  \right], \quad  \Sigma_{11}  = \frac{K_1^2 \sigma_2^2 + \sigma_1^2}{1 - (1 - K)^2}, \quad  \Sigma_{22} = \sigma_2^2 
+\end{align*} 
+Since the agent cannot observe the shocks directly, 
+I formulate the problem using ``the innovation'' from the Kalman filter ($a_t$) and 
+the observed data ($y_t$) as states.
+
+% \begin{enumerate}
+
+% \item 
+
+%     Plot the impulse responses for the case $\rho = 0.5$, $\beta = 0.95$, $\sigma_1 = \sigma_2 = 1$.
+
+% \item As $\rho \to 1$, do the impulse responses in the full information model associated with the persistent shock converge to those obtained for the case $\rho = 1$? Explain the economic mechanism.
+
+% \item Derive equations that the solution for general values $\rho_1$ and $\rho_2$ must satisfy. Plot the impulse responses for the case $\rho_1 = 0.99$, $\rho_2 = 0.5$, $\beta = 0.95$, $\sigma_1 = \sigma_2 = 1$.
+
+% \end{enumerate}
+
+
+
+\section{Value functions and consumption growth}
+
+%% =========== %% ========= %%
+\bibliography{../bib/references.bib}
+
+\end{document}

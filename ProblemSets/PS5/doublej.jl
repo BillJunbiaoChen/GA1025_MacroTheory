@@ -43,12 +43,12 @@ function doublej(β, A, Y)
     return v1
 end
 
-# Testing
-A = [0.5 0.1; 0.2 0.4]
-Y = [1.0 0.0; 0.0 1.0]
-β = 0.9 
+# # Testing
+# A = [0.5 0.1; 0.2 0.4]
+# Y = [1.0 0.0; 0.0 1.0]
+# β = 0.9 
 
-# Compute V
-V = doublej(β, A, Y)
-println("Solution V:")
-println(V)
+# # Compute V
+# V = doublej(β, A, Y)
+# println("Solution V:")
+# println(V)

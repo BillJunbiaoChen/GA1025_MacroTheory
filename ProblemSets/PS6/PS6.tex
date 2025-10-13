@@ -255,7 +255,7 @@ the system is given by the following state-space representation:
 \begin{align*}
     a_t & = y_t - \hat{z}_{1, t} = y_t - E[y_t | y^{t-1}] \\
     K_1 & = \frac{\Sigma_{11}}{\Sigma_{11} + \Sigma_{22}} \\ 
-    \hat{z}_{1, t+1} & = \hat{z}_{1, t} + K_1 a_t \\ 
+    \hat{z}_{1, t+1} & = \rho \hat{z}_{1, t} + K_1 a_t \\ 
     \hat{z}_{2, t+1} & = 0 \\ 
     \Sigma & =   \left[ \begin{matrix}
         \Sigma_{11} & 0 \\ 0 & \Sigma_{22}
@@ -264,6 +264,22 @@ the system is given by the following state-space representation:
 Since the agent cannot observe the shocks directly, 
 I formulate the problem using ``the innovation'' from the Kalman filter ($a_t$) and 
 the observed data ($y_t$) as states.
+\begin{align*} 
+    \begin{bmatrix} y_{t+1} \\ a_{t+1} \end{bmatrix} & = 
+    \begin{bmatrix} \rho & K_1 - \rho \\ 0 & 0 \end{bmatrix} \begin{bmatrix} y_t \\ a_t \end{bmatrix} + \begin{bmatrix} 1 \\ 1 \end{bmatrix} a_{t+1} \\
+    y_t & = \begin{bmatrix} 1 & 0 \end{bmatrix}  \begin{bmatrix} y_t \\ a_t \end{bmatrix}  
+\end{align*}
+Define 
+\[
+\tilde{A}_{22} = \begin{bmatrix} \rho & K_1 - \rho \\ 0 & 0 \end{bmatrix}  
+\]
+Then, following the derivation under the complete information structure, we have 
+\[
+h_t(c) = \begin{bmatrix} (1 - \beta) & 0 \end{bmatrix}  
+         \begin{bmatrix} \frac{1}{1 - \beta \rho} & \frac{\beta (K_1 - \rho)}{1 - \beta \rho} \\ 0 & 0 \end{bmatrix} 
+         \begin{bmatrix} 1 \\ 1 \end{bmatrix}
+        = \frac{(1 - \beta) \left[1 + \beta (K_1 - \rho)\right]}{1 - \beta \rho}
+\]
 
 % \begin{enumerate}
 

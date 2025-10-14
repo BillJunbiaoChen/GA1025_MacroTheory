@@ -280,6 +280,15 @@ h_t(c) = \begin{bmatrix} (1 - \beta) & 0 \end{bmatrix}
          \begin{bmatrix} 1 \\ 1 \end{bmatrix}
         = \frac{(1 - \beta) \left[1 + \beta (K_1 - \rho)\right]}{1 - \beta \rho}
 \]
+Similarily, we have 
+\begin{align*}
+h_t(b) & = - \tilde{U}_y \left(I - \beta \tilde{A}_{22} \right)^{-1} \left( I - \tilde{A}_{22}^t \right) \tilde{C}_2 \\ 
+    & = - \begin{bmatrix} 1 & 0 \end{bmatrix} 
+    \begin{bmatrix} \frac{1}{1 - \beta \rho} & \frac{\beta (K_1 - \rho)}{1 - \beta \rho} \\ 0 & 1 \end{bmatrix} 
+    \begin{bmatrix} (1 - \rho^t) & \quad - \rho^{t-1} (K_1 - \rho) \\ 0 & 1 \end{bmatrix} 
+    \begin{bmatrix} 1 \\ 1 \end{bmatrix} \\ 
+    & = - \bm{1}_{t \geq 1} \left(1 + \frac{K_1 \left( \beta - \rho^{t-1} \right)}{1 - \beta \rho} \right)
+\end{align*}
 
 % \begin{enumerate}
 
@@ -296,6 +305,113 @@ h_t(c) = \begin{bmatrix} (1 - \beta) & 0 \end{bmatrix}
 
 
 \section{Value functions and consumption growth}
+\subsection*{Solution to Question 3.1}
+The Bellman equation is given by 
+\[
+V(c_t, g_t) = u(c_t) + \beta \sum_{j} \mathbb{P}\left( g_{t+1} = g_j | g_t \right) V(g_j c_t, g_j),
+\]
+where $c_t$ and $g_t$ are currect level of consumption and the previous growth rate, respectively.
+
+\subsection*{Solution to Question 3.2}
+Guess: $V(c, g) = u(c)w(g)$ and plug it in the Bellman equation above, then we have
+\[
+u(c)w(g) = u(c) + \beta \sum_{j} \mathbb{P}\left( g' = g_j | g \right) u(g_jc) w(g_j)
+\]
+Given $u(c) = \frac{c^{1 - \gamma}}{1 - \gamma}$, and denote $w(g_i) = w_i$, we have 
+\[
+\frac{c^{1 - \gamma}}{1 - \gamma} w_i = \frac{c^{1 - \gamma}}{1 - \gamma} + \beta \sum_j \mathbb{P}_{ij} \frac{(g_jc)^{1 - \gamma}}{1 - \gamma} w_j 
+\]
+Deviding both sides by $\frac{c^{1 - \gamma}}{1 - \gamma}$, we have 
+\[
+w_i = 1 + \beta \sum_j \mathbb{P}_{ij}(g_j)^{1 - \gamma} w_j.
+\]
+
+\subsection*{Solution to Question 3.3}
+% To find a sufficient condition on the parameters to ensure that 
+% By Jensen's inequality and the fact that $u(c)$ is concave, we have 
+% \begin{align*}
+%     \mathbb{E}_t \bigg[ \sum_{s=0}^\infty \beta^s \frac{c_{t+s}^{1 - \gamma}}{1 - \gamma} \bigg] & \leq 
+%     \sum_{s=0}^\infty \beta^s \frac{\mathbb{E}_t[c_{t+s}]^{1 - \gamma}}{1 - \gamma} \\ 
+%     & = \sum_{s=0}^\infty \beta^s \frac{\bigg(x_t' \mathbb{P}^s \bar{c}\bigg)^{1- \gamma}}{1 - \gamma}
+% \end{align*}
+
+
+
+\subsection*{Solution to Question 3.4}
+Using the guess that $V(c, g) = \log c + v(g)$, the preference recursion becomes 
+\[
+\log c + v(g) = (1 - \beta) \log c + 
+\beta \frac{2}{\sigma} \log \mathbb{E}_t \left[ \exp \left(\frac{\sigma}{2} (\log c' + v(g')) \right) \right]
+\]
+
+
+\section{Industry equilibrium with investment}
+\subsection*{Answer to question 4.1}
+The sequence problem for the firm at time $t = 0$ is given by 
+\begin{align*}
+v^* = \max_{k_{t+1}, k_t} \quad &  \sum_{t=0}^{\infty} \beta^t R_t \\ 
+    \text{subject to } \quad k_{t+1} & = (1 - \delta)k_t + i_t \\ 
+    y_t & = A k_t \\ 
+    y_t & = i_t + s_t \\ 
+    \text{given } & k_0 \\ 
+    & p_t = \alpha_0 - \alpha_1 S_t, \quad \alpha_0, \alpha_1 > 0 \\
+    & S_{t+1} = H_0 + H_1 S_t
+\end{align*}
+
+\subsection*{Answer to question 4.2}
+After plugging in the budget constraint, the sequence problem becomes 
+\[
+v^* = \max_{\{k_{t+1}, k_t\}} \sum_{t=0}^{\infty} \beta^t 
+    \bigg\{ (\alpha_0 - \alpha_1 S_t) [(A+1 - \delta) k_t - k_{t+1}] - \frac{b}{2}(k_{t+1} - k_t)^2
+    \bigg\}
+\]
+\noindent F.O.C are given by 
+\begin{align*}
+    [k_t] \quad & \beta^t \bigg[(\alpha_0 - \alpha_1 S_t) (A + 1 - \delta) + b(k_{t+1} - k_t) \bigg] = 0 \\ 
+    [k_{t+1}] \quad & - \beta^t \bigg[(\alpha_0 - \alpha_1 S_t) - b(k_{t+1} - k_t) \bigg]+ \beta^{t+1} \bigg[ (\alpha_0 - \alpha_1 S_{t+1}) \left[(A+1 -\delta) + b(k_{t+2} - k_{t+1})\right]\bigg] = 0
+\end{align*}
+After simplications, the optimal conditions are given by 
+\begin{align*}
+    & (\alpha_0 - \alpha_1 S_t) (A + 1 - \delta) + b(k_{t+1} - k_t) = 0 \\
+    & \alpha_0 - \alpha_1 S_t + b(k_{t+1} - k_t)  =  \beta \bigg[(\alpha_0 - \alpha_1 S_{t+1}) (A+1 -\delta) + b(k_{t+2} - k_{t+1})\bigg]
+\end{align*}
+
+\subsection*{Answer to question 4.3}
+The specification follows the struture of the ``little-k-big-K'' problem.
+As $s = y - i = Ak - (k' - (1 - \delta)k)$, 
+the recursive form of the firm's problem is given by
+\begin{equation}
+    \label{eqn:equilibrium_firm_bellman}
+    \begin{aligned}
+        & V(k, S) = \max_{k'} \quad (\alpha_0 - \alpha_1 S) \bigg[(A + 1 - \delta)k - k'\bigg] - \frac{b}{2} \left(k' - k \right)^2 + \beta V(k', S') \\
+        \text{subject to } \quad & S' = H_0 + H_1 S
+    \end{aligned}
+\end{equation}
+
+
+\subsection*{Answer to question 4.4}
+The first order conditions are 
+\begin{align*}
+[k']&: \quad (\alpha_0 - \alpha_1 S) + b (k' - k) = \beta V_k (k', S')\\ 
+\text{(By Envelope Theorem) } \quad [k]&: V_y(k, S) = (\alpha_0 - \alpha_1 S) (A + 1 - \delta) + b(k' - k)
+\end{align*}
+Combining these two conditions together, we have 
+\[
+(\alpha_0 - \alpha_1 S) + b (k' - k) = \beta \bigg[  (\alpha_0 - \alpha_1 S') (A + 1 - \delta) + b(k''- k')\bigg]
+\]
+Notice that we require the optimal path in the original sequence problem satisfies the transversality condition:
+
+
+\subsection*{Answer to question 4.5}
+Denote the optimal policy of the \textbf{representative} firm by $k_{t+1} = h(k_t, S_t)$.
+The recursive competitive equilibrium of the model is given by 
+a value function $V(k, S)$, an optimal policy function $h(k, S)$, and an aggregate law of motion $H(S)$,
+such that 
+\begin{enumerate}
+    \item Given $H$, $V(k, S)$ satisfies the firm's Bellman equation and optimal policy fuction in (\ref{eqn:equilibrium_firm_bellman});
+    \item The law of motion $H$ satisfies $H(S) = h(S, S$)$.
+\end{enumerate}
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

@@ -33,3 +33,47 @@ plot!(t_vec, ((1 - β) * σ2 ).* ones(length(t_vec)),
 plot!(legend = :right)
 
 savefig("../images/consumption_impulse_response_functions.png") 
+
+# Parameters
+t_vec = 1:20
+σ1 = 1.0
+β = 0.95
+
+# Evolution of hb as rho approaches 1
+I = 30
+hb_mat = ones(length(t_vec), I)  # Initialize `hb_mat`
+rho_vec = 0.5:0.01:0.79          # Values of `rho`
+
+
+for (i, rho) in enumerate(rho_vec)
+    hb_mat[:, i] .= -σ1 .* (1 .- (rho .^ t_vec)) ./ (1 - β * rho)
+end
+
+# Generate colors using the color gradient
+colors = cgrad(:viridis, size(hb_mat, 2))
+
+# Base plot
+plot(
+    t_vec,
+    hb_mat[:, 1],
+    xlabel = "Time",
+    ylabel = "Debt's impulse response",
+    guidefontsize = 8,
+    tickfontsize = 6,
+    legend = false
+)
+
+
+for t in 2:size(hb_mat, 2)
+    plot!(t_vec, hb_mat[:, t], color = colors[t], label = "") 
+end
+
+# Add annotations
+x_anno = 10
+y_anno_start = hb_mat[x_anno, 1]  # Corresponding y-coordinate
+annotate!(x_anno, y_anno_start, text("ρ = $(round(rho_vec[1], digits=2))", 8, :blue, :left))
+y_anno_end = hb_mat[x_anno, end]
+annotate!(x_anno, y_anno_end * 1.001, text("ρ = $(round(rho_vec[end], digits=2))", 8, :blue, :left))
+
+# Save the figure
+savefig("../images/convergence_of_debt_impulse_response_functions.png")

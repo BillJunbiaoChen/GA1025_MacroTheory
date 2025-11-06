@@ -199,9 +199,9 @@ Following the derivation in the lecture note, we can express this linear quadrat
 \end{align*}
 where 
 \[
-y_{t+1} = \begin{bmatrix}
-y_{1,t+1} \\
-y_{2,t+1} 
+z_{t+1} = \begin{bmatrix}
+z_{1,t+1} \\
+z_{2,t+1} 
 \end{bmatrix}, \quad 
 A_{22} = \begin{bmatrix}
 \rho_1 & 0 \\
@@ -302,7 +302,85 @@ h_t(b) & = - \tilde{U}_y \left(I - \beta \tilde{A}_{22} \right)^{-1} \left( I - 
 
 % \end{enumerate}
 
+\paragraph{Solution to Q2}
+As $rho$ increases, the persistency of a positive income shock lasts longer.
+Hence, we see the impulse response function shifts downward for each period. 
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.45\textwidth]{images/convergence_of_debt_impulse_response_functions.png}
+  \caption{Impulse Responses}
+\end{figure}
 
+\subsection*{Solution to Q3}
+Following the derivation in the lecture note, we can express this linear quadratic permanent income model in the following state space:
+\begin{align*}
+    z_{t+1} & = A_{22} z_t + C_2 w_t \\
+    y_t & = U_y z_t \\ 
+    b_{t+1} &= b_t - U_y \left(I - \beta A_{22} \right)^{-1} \left( I - A_{22}\right) z_t \\
+    c_t &= (1 - \beta) \left(U_y (I - \beta A_{22})^{-1} z_t - b_t \right)
+\end{align*}
+
+\section{Learning about match quality}
+\paragraph{Solution to Problem 2.1}
+The Kalman filter characterization of the problem is given by 
+\begin{align*}
+    a_t & = y_t - m_{t-1} \\ 
+    K_t & = \frac{\Sigma_t}{\Sigma_t + R} \\ 
+    m_t & = m_{t-1} + K_t a_t = (1 - K_t) a_t + K_t y_t \\ 
+    \Sigma_{t+1} = \frac{\Sigma_t R}{\Sigma_t + R}
+\end{align*}
+
+\paragraph{Solution to Question 2.2}
+As the true productivity (match quality) is revealed at $T+1$, the worker will earn $\theta$ forever if she chooses to stay.
+Note that she won't leave in the future if she chooses to stay at $T+1$ because the outside option remains the same.
+Since the worker won't receive any wage income if she chooses to leave, the Bellman equation is given by 
+\begin{align*}
+v_{T+1} = \max_{\{\text{Stay, leave}\}} \bigg\{ \frac{\theta}{1 - \beta}, \beta Q \bigg\},
+\end{align*}
+where $Q$ is the beginning-of-period value of joining a new firm.
+
+\paragraph{Solution to Question 2.3}
+Since both the firm and the worker predict the distribution of match quality in the future based on the new information,
+we can formulate the the following Bellman equation 
+\[
+V_{T}(m_T) = \max_{\{\text{Stay, leave} \}} \bigg\{m_T + \beta \int V_{T+1}(\theta) dF(\theta | m_T, \Sigma_{T+1}) d\theta , \beta Q \bigg\}
+\]
+
+\paragraph{Solution to Question 2.4}
+Continuing backward, we can write down the Bellman equation as follows
+\[
+V_{t-1}(m) = \max_{\{\text{Stay, leave} \}} \bigg\{m + \beta \int V_{t}(\theta) dF(\theta | m, K_t\Sigma_{t}) d\theta , \beta Q \bigg\}
+\]
+
+\paragraph{Solution to Question 2.5}
+The ex ante value of the job $Q$ right before $y_0$ has been observed is given by 
+\[
+Q = \int V_0(m) dF(m|\mu, K_0\Sigma_0)d\theta 
+\]
+
+\paragraph{Solution to Question 2.6}
+At $t=T$, the reservation wage is given by $\bar{w}_T = (1- \beta)\beta Q$.
+\\
+At $t=T-1$, the reservation wage is given
+\[
+\bar{w}_t = \beta \left( Q - \int V_{t+1}(\theta)dF(\theta| m_t, K_t\Sigma_t) d\theta \right)
+\]
+
+\paragraph{Solution to Question 2.7}
+We can apply an iterative algorithm with damping parameters:
+\\
+\noindent For iteration $j$
+\begin{enumerate}
+    \item Guess: $Q(j)$
+    \item Compute $V_T(j) = \max \{\frac{\theta}{1 - \beta}, \beta Q(j) \}$
+    \item Solve for $V_0$ using backward induction.
+    \item Compute the implied new-jobg value $Q$ according to 
+    \begin{align*}
+        Q(j)^{\text{implied}} = \int V_0(m) dF(m|\mu, K_0\Sigma_0)d\theta 
+    \end{align*}
+    \item Update the guess for $Q$ according to $Q(j+1) = 0.9 Q(j) + 0.1 \times Q(j)^{\text{implied}}$
+    \item Iterate till convergence in terms of $Q$.
+\end{enumerate}
 
 \section{Value functions and consumption growth}
 \subsection*{Solution to Question 3.1}
@@ -327,24 +405,37 @@ w_i = 1 + \beta \sum_j \mathbb{P}_{ij}(g_j)^{1 - \gamma} w_j.
 \]
 
 \subsection*{Solution to Question 3.3}
-% To find a sufficient condition on the parameters to ensure that 
-% By Jensen's inequality and the fact that $u(c)$ is concave, we have 
-% \begin{align*}
-%     \mathbb{E}_t \bigg[ \sum_{s=0}^\infty \beta^s \frac{c_{t+s}^{1 - \gamma}}{1 - \gamma} \bigg] & \leq 
-%     \sum_{s=0}^\infty \beta^s \frac{\mathbb{E}_t[c_{t+s}]^{1 - \gamma}}{1 - \gamma} \\ 
-%     & = \sum_{s=0}^\infty \beta^s \frac{\bigg(x_t' \mathbb{P}^s \bar{c}\bigg)^{1- \gamma}}{1 - \gamma}
-% \end{align*}
-
+Note that we can express $w_i = 1 + \beta \sum_j \mathbb{P}_{ij}(g_j)^{1 - \gamma} w_j$ in the following matrix form:
+\[
+w = \bm{1}_n + \beta \mathbb{P} \text{diag}(g^{1-\gamma}) w,
+\]
+where 
+\[
+\text{diag}(g^{1-\gamma}) = \begin{bmatrix}
+    g_1^{1-\gamma} & 0 & \dots & 0 \\ 
+    0 & g_2^{1-\gamma} & \dots & 0 \\ 
+    \vdots & & \dots & \vdots \\
+    0 & 0 & \dots & g_n^{1-\gamma} 
+\end{bmatrix}.
+\]
+Therefore, 
+\[
+w = \left( I - \beta \mathbb{P}\text{diag}(g^{1-\gamma})\right)^{-1}
+\]
+As a result, $v^* < \infty$ if $ \left( I - \beta \mathbb{P}\text{diag}(g^{1-\gamma})\right)^{-1}$ is stable.
 
 
 \subsection*{Solution to Question 3.4}
 Using the guess that $V(c, g) = \log c + v(g)$, the preference recursion becomes 
 \[
-\log c + v(g) = (1 - \beta) \log c + 
-\beta \frac{2}{\sigma} \log \mathbb{E}_t \left[ \exp \left(\frac{\sigma}{2} (\log c' + v(g')) \right) \right]
+\log c_t + v(g_t) = (1 - \beta) \log c_t + 
+\beta \frac{2}{\sigma} \log \mathbb{E}_t \left[ \exp \left(\frac{\sigma}{2} (\log c_{t+1} + v(g_{t+1})) \right) \right]
 \]
-
-
+After simplification, we have 
+\[
+v(g_t) = \frac{2\beta}{\sigma} \log \mathbb{E}_t \bigg[g_{t+1}^{\sigma/2} \exp(\frac{\sigma}{2}v(g_{t+1})) \bigg],
+\]
+which can be solved via Value Function Iteration.
 \section{Industry equilibrium with investment}
 \subsection*{Answer to question 4.1}
 The sequence problem for the firm at time $t = 0$ is given by 
@@ -361,21 +452,22 @@ v^* = \max_{k_{t+1}, k_t} \quad &  \sum_{t=0}^{\infty} \beta^t R_t \\
 \subsection*{Answer to question 4.2}
 After plugging in the budget constraint, the sequence problem becomes 
 \[
-v^* = \max_{\{k_{t+1}, k_t\}} \sum_{t=0}^{\infty} \beta^t 
+v^* = \max_{k_{t+1}} \sum_{t=0}^{\infty} \beta^t 
     \bigg\{ (\alpha_0 - \alpha_1 S_t) [(A+1 - \delta) k_t - k_{t+1}] - \frac{b}{2}(k_{t+1} - k_t)^2
     \bigg\}
 \]
 \noindent F.O.C are given by 
 \begin{align*}
-    [k_t] \quad & \beta^t \bigg[(\alpha_0 - \alpha_1 S_t) (A + 1 - \delta) + b(k_{t+1} - k_t) \bigg] = 0 \\ 
     [k_{t+1}] \quad & - \beta^t \bigg[(\alpha_0 - \alpha_1 S_t) - b(k_{t+1} - k_t) \bigg]+ \beta^{t+1} \bigg[ (\alpha_0 - \alpha_1 S_{t+1}) \left[(A+1 -\delta) + b(k_{t+2} - k_{t+1})\right]\bigg] = 0
 \end{align*}
 After simplications, the optimal conditions are given by 
 \begin{align*}
-    & (\alpha_0 - \alpha_1 S_t) (A + 1 - \delta) + b(k_{t+1} - k_t) = 0 \\
     & \alpha_0 - \alpha_1 S_t + b(k_{t+1} - k_t)  =  \beta \bigg[(\alpha_0 - \alpha_1 S_{t+1}) (A+1 -\delta) + b(k_{t+2} - k_{t+1})\bigg]
 \end{align*}
-
+% We also need the transversality condition to complete the optimality conditions:
+% \[
+% \lim_{t\rightarrow \infty} \beta^t v_k(k) = 0
+% \]
 \subsection*{Answer to question 4.3}
 The specification follows the struture of the ``little-k-big-K'' problem.
 As $s = y - i = Ak - (k' - (1 - \delta)k)$, 
@@ -383,7 +475,7 @@ the recursive form of the firm's problem is given by
 \begin{equation}
     \label{eqn:equilibrium_firm_bellman}
     \begin{aligned}
-        & V(k, S) = \max_{k'} \quad (\alpha_0 - \alpha_1 S) \bigg[(A + 1 - \delta)k - k'\bigg] - \frac{b}{2} \left(k' - k \right)^2 + \beta V(k', S') \\
+        & v(k, S) = \max_{k'} \quad (\alpha_0 - \alpha_1 S) \bigg[(A + 1 - \delta)k - k'\bigg] - \frac{b}{2} \left(k' - k \right)^2 + \beta v(k', S') \\
         \text{subject to } \quad & S' = H_0 + H_1 S
     \end{aligned}
 \end{equation}
@@ -393,14 +485,16 @@ the recursive form of the firm's problem is given by
 The first order conditions are 
 \begin{align*}
 [k']&: \quad (\alpha_0 - \alpha_1 S) + b (k' - k) = \beta V_k (k', S')\\ 
-\text{(By Envelope Theorem) } \quad [k]&: V_y(k, S) = (\alpha_0 - \alpha_1 S) (A + 1 - \delta) + b(k' - k)
+\text{(By Envelope Theorem) } \quad [k]&: V_k(k, S) = (\alpha_0 - \alpha_1 S) (A + 1 - \delta) + b(k' - k)
 \end{align*}
 Combining these two conditions together, we have 
 \[
 (\alpha_0 - \alpha_1 S) + b (k' - k) = \beta \bigg[  (\alpha_0 - \alpha_1 S') (A + 1 - \delta) + b(k''- k')\bigg]
 \]
 Notice that we require the optimal path in the original sequence problem satisfies the transversality condition:
-
+\[
+\lim_{t\rightarrow \infty} \beta^t v_k(k, S)k = 0
+\]
 
 \subsection*{Answer to question 4.5}
 Denote the optimal policy of the \textbf{representative} firm by $k_{t+1} = h(k_t, S_t)$.
@@ -409,8 +503,61 @@ a value function $V(k, S)$, an optimal policy function $h(k, S)$, and an aggrega
 such that 
 \begin{enumerate}
     \item Given $H$, $V(k, S)$ satisfies the firm's Bellman equation and optimal policy fuction in (\ref{eqn:equilibrium_firm_bellman});
-    \item The law of motion $H$ satisfies $H(S) = h(S, S$)$.
+    \item The law of motion $H$ satisfies $H(S) = h(S, S)$.
 \end{enumerate}
+
+\subsection*{Answer to questions 4.6 and 4.7}
+To solve for the unique capital level, I recast the model in terms of the state of $K$.
+I can do so by replacing $S$ with $K$ and $K'$ because
+\[
+S = Y - I = AK - (K' - (1 - \delta)K)
+\]
+
+I construct the following planner problem:
+\[
+V(K) = \max_{K'} \quad \alpha_0 \bigg[(A+1 -\delta)K - K' \bigg] - \alpha_1 \bigg[(A+1 -\delta)K - K' \bigg]^2 - \frac{b}{2}(K' - K)^2 + \beta V(K')
+\]
+It follows that the Euler equation and the Envelope Conditions are 
+\begin{align*}
+    &  \beta V_K(K') = b(K' - K) + \alpha_0 - 2 \alpha_1 \bigg((A + 1 - \delta)K - K' \bigg) \\ 
+    &  V_K(K) = \alpha_0 (A + 1 - \delta) - 2 \alpha_1 \bigg((A + 1 - \delta)K - K' \bigg)(A + 1 - \delta) + b(K'-K)
+\end{align*}
+Combining these two, we have 
+\[
+b(K' - K) + \alpha_0 - 2 \alpha_1 \bigg((A + 1 - \delta)K - K' \bigg) = \beta \bigg[ \alpha_0 (A + 1 - \delta) - 2 \alpha_1 \bigg((A + 1 - \delta)K' - K'' \bigg)(A+1 - \delta) + b(K''-K')\bigg]
+\]
+After collecting terms, we have 
+\begin{align*}
+0 = \alpha_0 & - \beta \alpha_0 (A+1 - \delta) \\ 
+    & - \left[ b + 2 \alpha_1 (A+1 - \delta) \right]K_t \\ 
+    & + \left[ b + 2 \alpha_1 + 2 \alpha_1 \beta (A+1 - \delta)^2 + b \beta \right]K_{t+1} \\ 
+    & - \left[ \beta b + 2 \alpha_1 \beta (A+1 - \delta) \right]K_{t+2} 
+\end{align*}
+It follows that
+\begin{align*}
+K_{t+2}
+    - \left[ \frac{b + 2 \alpha_1 + 2 \alpha_1 \beta (A+1 - \delta)^2 + b \beta}{\beta b + 2 \alpha_1 \beta (A+1 - \delta)} \right] K_{t+1} 
+    + \left[  \frac{b + 2 \alpha_1 (A+1 - \delta)}{\beta b + 2 \alpha_1 \beta (A+1 - \delta)} \right]K_t 
+= \left[\frac{\alpha_0 + \beta \alpha_0 (A+1 - \delta)}{\beta b + 2 \alpha_1 \beta (A+1 - \delta)}\right] 
+\end{align*}
+Denote 
+\[
+a = - \left[ \frac{b + 2 \alpha_1 + 2 \alpha_1 \beta (A+1 - \delta)^2 + b \beta}{\beta b + 2 \alpha_1 \beta (A+1 - \delta)} \right], \quad b = \left[  \frac{b + 2 \alpha_1 (A+1 - \delta)}{\beta b + 2 \alpha_1 \beta (A+1 - \delta)} \right]
+\]
+we can solve this second-order difference equation using the standard technique with the characteristics function.
+
+\subsection*{Answer to questions 4.8}
+In the specification of monopoly, the so-called ``perceived law of motion'' for the price no longer exists.
+As the firm fully controls the sales today and tomorrow, its Bellman equation is given by 
+\[
+v^M(k_t) = \max_{k_{t+1}}\quad (\alpha_0 - \alpha_1)\left[ (A+1 - \delta)k_t - k_{t+1} \right] + \frac{1}{2}(k_{t+1} - k_t)^2 + \beta v^M(k_{t+1})
+\]
+As monopolist lowers product every period due to profit maximization, 
+$s_t$ is lower and thus $k_{t+1}$ is higher given $k_t$.
+As a result,
+$v^M > v$,
+$k^{ss, M} > k^{ss}$, and 
+$y^{ss, M} > y^{ss}$.
 
 
 %% =========== %% ========= %%

@@ -245,11 +245,95 @@ and the allocation is given by
 c_t(s^t) = c_0 \prod_{j=1}^t \lambda_j(s_j).
 \]
 
-\noindent \textbf{Remark:} This model is beautiful as prices and allocations arise endogenously and are of closed-formed.
+\noindent \textbf{Remark:} This dynamic model is beautiful because prices and allocations arise in closed-form endogenously in the equilibrium.
+
+
+For the remainder of this problem, suppose that 
+$p_{11} = 0.8, p_{22} = 0.85, \pi_0 = 0.5, \beta = 0.96$, and 
+$\gamma = 2$.
+Suppose that the economy begins with $\lambda_0 = .98$ and $y_0 = 1$.
 
 
 
+\subsection{c. solution}
+The conditional growth rate of consumption is given by 
+\begin{align*}
+g_{c}(s_t) &= \frac{c_t - c_{t-1}}{c_{t-1}} \\ 
+  & = \frac{c_0 \prod_{j=1}^t \lambda_j(s_j) - c_0 \prod_{j=1}^{t-1} \lambda_j(s_j)}{c_0 \prod_{j=1}^{t-1} \lambda_j(s_j)} \\ 
+  & = \frac{ \prod_{j=1}^t \lambda_j(s_j) -  \prod_{j=1}^{t-1} \lambda_j(s_j)}{\prod_{j=1}^{t-1} \lambda_j(s_j)} \\
+  & = \lambda_t(s_t) - 1.
+\end{align*}
 
+The stationary distribution of this Markov chain is given by%
+\footnote{
+  Assuming $\pi = [p \quad (1-p)]'$, and plugging it into $\pi' = \pi' P$,
+  we have $p = p p_{11} + (1-p)(1 - p_{22})$,
+  which gives $p = \frac{1 - p_{22}}{2 - p_{11} - p_{22}}$.
+}
+\[
+\pi = \left[\frac{1 - p_{22}}{2 - p_{11} - p_{22}}, \frac{p_{11}}{2 - p_{11} - p_{22}} \right]
+\]
+Plugging in the numbers, we have
+\[
+\pi = 0.4286\quad 0.5714
+\]
+Therefore, the unconditional average growth rate of consumption is given by
+\begin{align*}
+\sum_{s_t} \pi(s_t) g_c(s_t) & = \sum_{s_t} \pi(s_t) \left(\lambda_t(s_t) - 1\right) \\ 
+& = 0.4286 \times (0.97 - 1) + 0.5714 \times (1.03 - 1) \\
+& = 0.0029
+\end{align*}
+
+
+\subsection{d. solution}
+We can invoke the No-arbitrage condition to price the risk free bond at time $t = 0, 1, 2$.
+The no-arbitrage condition is given by
+\begin{align*}
+p_t & = \sum_{s^t} q^0_t(s^t) \\
+& = \sum_{s^t} \beta^t \pi(s^t) \left( \prod_{j=1}^t \lambda_j(s_j) \right)^{- \gamma} \\
+& = \beta^t \sum_{s^t}  \pi(s^t) \left( \prod_{j=1}^t \lambda_j(s_j) \right)^{- \gamma},
+\end{align*}
+where $p_t$ is the price of the risk-free bond at time $t$.
+
+Since we apply the normalization of $ q^0_0(s^0) = 1$, 
+we have $p_0 = q^0_0(s^0) = 1$.
+
+At time $t=1$, there are two possible paths of $s^1$ given the assumption that $s_0 = 1$:
+\begin{align*}
+  (s_0, s_1) & = (1, 2) \\ 
+  (s_0, s_1) & = (1, 1)
+\end{align*}
+It follows that 
+\begin{align*}
+  p_1 & = q_1^0|_{s^1 = (1, 2)} + q_1^0|_{s^1 = (1, 1)}  \\
+    & = \beta (p_{12} \bar{\lambda}_2^{-\gamma} + p_{11} \bar{\lambda}_1^{-\gamma}) \\ 
+    & = 0.96 \times (0.2 \times 1.03^{-2} + 0.8 \times 0.98^{-2}) \\ 
+    & = 0.9806
+\end{align*}
+
+Similarly, at time $t=2$, the possible paths of $s^2$ include
+\begin{align*}
+  (s_0, s_1, s_2) & = (1, 1, 2) \\ 
+  (s_0, s_1, s_2) & = (1, 1, 1) \\
+  (s_0, s_1, s_2) & = (1, 2, 1) \\
+  (s_0, s_1, s_2) & = (1, 2, 2)
+\end{align*}
+
+It follows that 
+\begin{align*}
+  p_2 & = q_2^0|_{s^2 = (1, 1, 2)} + q_2^0|_{s^2 = (1, 1, 1)} + q_2^0|_{s^2 = (1, 2, 1)} + q_2^0|_{s^2 = (1, 2, 2)} \\
+    & = \beta^2 \bigg[
+      p_{11} p_{12} \left(\bar{\lambda}_1 \bar{\lambda}_2\right)^{-\gamma} +
+      p_{11} p_{11} \left(\bar{\lambda}_1 \bar{\lambda}_1\right)^{-\gamma} +
+      p_{12} p_{21} \left(\bar{\lambda}_2 \bar{\lambda}_1\right)^{-\gamma} +
+      p_{12} p_{22} \left(\bar{\lambda}_2 \bar{\lambda}_2\right)^{-\gamma}
+      \bigg] \\ 
+    & = 0.96^2 \times (
+      0.8 \times 0.2 \times (0.98 \times 1.03)^{-2} + \qquad 0.8 \times 0.8 \times (0.98 \times 0.98)^{-2} + \\
+      & \qquad 0.2 \times 0.15 \times (0.98 \times 1.03)^{-2} + 
+      \qquad 0.2 \times 0.85 \times (1.03 \times 1.03)^{-2}) \\
+    & = 0.9505
+\end{align*}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

@@ -275,7 +275,7 @@ The stationary distribution of this Markov chain is given by%
 \]
 Plugging in the numbers, we have
 \[
-\pi = 0.4286\quad 0.5714
+\pi = [0.4286\quad 0.5714]
 \]
 Therefore, the unconditional average growth rate of consumption is given by
 \begin{align*}
@@ -329,11 +329,143 @@ It follows that
       p_{12} p_{22} \left(\bar{\lambda}_2 \bar{\lambda}_2\right)^{-\gamma}
       \bigg] \\ 
     & = 0.96^2 \times (
-      0.8 \times 0.2 \times (0.98 \times 1.03)^{-2} + \qquad 0.8 \times 0.8 \times (0.98 \times 0.98)^{-2} + \\
-      & \qquad 0.2 \times 0.15 \times (0.98 \times 1.03)^{-2} + 
-      \qquad 0.2 \times 0.85 \times (1.03 \times 1.03)^{-2}) \\
+      0.8 \times 0.2 \times (0.98 \times 1.03)^{-2} + 0.8 \times 0.8 \times (0.98 \times 0.98)^{-2} + \\
+      & 0.2 \times 0.15 \times (0.98 \times 1.03)^{-2} + 
+      0.2 \times 0.85 \times (1.03 \times 1.03)^{-2}) \\
     & = 0.9505
 \end{align*}
+
+
+\subsection{e. solution}
+Again, by No-arbitrage condition, one can price a contingent bond using
+\[
+p_t|_{s_t = s1} = \sum_{s^{t-1}} q^0_t((s_{t-1}, s_1))
+\]
+As a result, given $s_0 = 1$ and the normalization ($q^0_0 = 1$), we have
+\[
+p_0|_{s_0 = s1} = q^0_0 = 1
+\]
+
+At $t=1$, we have 
+\[
+p_1|_{s_1 = s1} = q^0_1(1, 1) = 0.96 \times (0.8 \times 0.98^{-2}) = 0.7997
+\]
+
+
+At $t=2$, we have 
+\begin{align*}
+p_2|_{s_2 = s1} & = q^0_2(1, 1, 1) + q^0_2(1, 2, 1) \\
+  & = 0.96^2 \times (0.8 \times 0.8 \times (0.98 \times 0.98)^{-2} + 
+      0.2 \times 0.15 \times (0.98 \times 1.03)^{-2}) \\
+  & = 0.6666
+\end{align*}
+
+
+\subsection{f. solution}
+Again, by No-arbitrage condition, one can price an alternative contingent bond using
+\[
+p_t|_{s_t = s2} = \sum_{s^{t-1}} q^0_t((s_{t-1}, s_2))
+\]
+
+Given $s_0 = 1$, the state of $s2$ doesn't occur at time 0, and thus,
+\[
+p_0|_{s_0 = s2} = 0
+\]
+
+At $t=1$, we have 
+\[
+p_1|_{s_1 = s2} = q^0_1(1, 2) = 0.96 \times (0.2 \times 1.03^{-2}) = 0.1810
+\]
+
+
+At $t=2$, we have 
+\begin{align*}
+p_2|_{s_2 = s2} & = q^0_2(1, 1, 2) + q^0_2(1, 2, 2) \\
+  & = 0.96^2 \times (0.8 \times 0.15 \times (0.98 \times 1.03)^{-2} + 
+      0.2 \times 0.85 \times (1.03 \times 1.03)^{-2}) \\
+  & = 0.2477
+\end{align*}
+
+
+
+\subsection{g. solution}
+\begin{table}[h!]
+\centering
+\caption{Summary of bond prices under different settings}
+\begin{tabular}{cccc}
+\hline
+Time $t$ & Risk-Free Bond & Contingent Bond & Contingent Bond \\ 
+         &  $p_t$         &  $p_t|_{s_t = s1}$ & $p_t|_{s_t = s2}$ \\ \hline
+0        & 1.0000               & 1.0000                           & 0.0000                           \\ 
+1        & 0.9806               & 0.7997                           & 0.1810                           \\ 
+2        & 0.9505               & 0.6666                           & 0.2477                           \\ \hline
+\end{tabular}
+\end{table}
+\noindent \textbf{Remarks}
+\begin{enumerate}
+  % \item The No-arbitrage condition guarantees that the price of a bond increases with the probability of the contingency.
+  \item $p_t|_{s_t = s1} > p_t|_{s_t = s2}$ for both $t = 1, 2$ because the marginal utility is higher when $s_t = 1$.
+  \item As time goes by, the prices of risky bonds decrease as more information reveals.
+  \item $p_t = p_t|_{s_t = s1} + p_t|_{s_t = s2}$.
+\end{enumerate}
+
+
+\section{Exercise 9.5}
+\subsection{a. Solution}
+A competitive equilibrium is given by an allocation and a price system such that 
+\begin{itemize}
+  \item both consumers $1,2$ solve their utility maximization problem, and
+  \item the market clears.
+\end{itemize}
+
+\subsection{b. Solution}
+
+Given the structure of the economy, we have formulate a Lagrangian as follows.
+\[
+\mathcal{L} = \left(\sum_{t=0}^{\infty} \beta^t u^i(c^i_t) \right) + \mu^i \left(\sum_{t=0}^\infty q^0_t (y^i_t - c^i_t) \right)
+\]
+The F.O.C with respect to $c^i_t$ is given by 
+\[
+\beta^t {u^i}'(c^i_t) = \mu^i q^0_t
+\]
+
+
+Furthermore, we have
+\[
+y_t^1 + y_t^2 = 1, \quad \forall t
+\]
+
+Since a competitive equilibrium is only a function of aggregate endowment (i.e., Proposition 2), 
+and the aggregate endowment is a constant for every $t$, 
+the CE is characterized by two constant consumption paths of consumers $1$ and $2$.
+Therefore, using consumer 1's FOC, we have 
+\[
+{u^i}'(c^i_t) = \text{constant } \forall t
+\]
+
+Therefore, the F.O.C becomes
+\[
+\frac{\beta^t}{\beta^0} \frac{{u^i}'(c^i_t)}{{u^i}'(c^i_0)} = \frac{\mu^i}{\mu^i} \frac{q^0_t}{q^0_0}
+\Rightarrow \beta^t = \frac{q^0_t}{q^0_0}
+\]
+Normalizing $q^0_0 =1$, we have 
+\[
+\beta^t = q^0_t
+\]
+
+Thus, the budget constraints for consumer 1 becomes:
+\[
+\sum_{t=0}^{\infty} \beta^t \bar{c}^1 = \sum_{t=0}^{\infty} \beta^t y_t^1 = \frac{1}{1 - \beta^3}
+\]
+
+The budget constraints for consumer 2 becomes:
+\[
+\sum_{t=0}^{\infty} \beta^t \bar{c}^2 = \sum_{t=0}^{\infty} \beta^t y_t^2 = \frac{\beta}{1 - \beta^3} + \frac{\beta^2}{1 - \beta^3}
+\]
+Therefore, 
+\[
+\bar{c}^1 = \frac{1 - \beta}{1 - \beta^3} \quad, \bar{c}^2 = \frac{\beta(1 - \beta^2)}{1 - \beta^3} 
+\]
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

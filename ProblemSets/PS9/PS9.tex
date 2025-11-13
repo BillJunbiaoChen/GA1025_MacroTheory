@@ -175,9 +175,9 @@ Therefore, the solution is given by
 
 \subsection{c. Answer} 
 The competitive equilibrium with time-0 trading is given by 
-an allocation $\{c_t^1, c_t^2\}$ and a price system $q_t^0$, such that 
+an allocation $\{c_t^1(s^t), c_t^2(s^t)\}$ and a price system $q_t^0(s^t)$, such that 
 \begin{enumerate}
-    \item the allocation maximizes each consumer's utility,
+    \item the allocation solves each consumer's problem,
     \item market clears: ${c_t(s^t)}^1 + {c_t(s^t)}^2 = {y_t(s^t)}^1 + {y_t(s^t)}^2 = Y_t, \quad \forall t, s^t$. 
 \end{enumerate}
 
@@ -217,6 +217,75 @@ c_t^1(s^t) = \frac{1}{\mu^1 (1 + s_0)} (1 + s_t),
 which coincides with the Pareto solution if $\theta = \frac{1}{\mu^1 (1 + s_0)}$.
 
 \noindent \textbf{Remark:} The First Welfare Theorem implies that C.E. is Pareto optimal if there is no externalities.
+
+
+\subsection{f. Answer} 
+In the competitive equilibrium, a price system is determined by inidividuals' MRS (up to some normalization and proper discounting.)
+
+
+\subsection{g. (Recursive competitive equlibrium) Answer} 
+Let $v^i(a,s)$ be the optimal value of agent $i$ with states $a$ (wealth) and $s$ (aggregate state).
+The optimal value function satisfies the Bellman equation
+\begin{align*}
+v^i(a, s) & = \max_{s',a'(s')}\quad \ln c^i(s) + \beta \sum_{s'} \pi(s'|s) v^i(a'(s'),s') \\
+\text{subject to } \quad & c^i(s) + \sum_{s'} Q(s'|s) a'(s') \leq y^i(s) + a \\ 
+& -a'(s') \leq A^i (s'), \forall s' \in S
+\end{align*}
+where $A^i(s')$ is state-by-state debt limits given by the following recursive:
+\[
+A^i(s) = y^i(s) + \sum_{s'} Q(s'|s)  A^i(s'), \quad i = 1, 2
+\]
+
+\noindent \textbf{Definition}
+A recursive competitive equilibrium is given by 
+an initial distribution of wealth $\{a_0^i\}$, a set of borrowing limits 
+$A^i(s)$, a pricing kernel $Q(s'|s)$, 
+a set of value functions $\{v^i(a, s) \}$, and 
+decision rules $\{c^i(s), {a'}^i(s) \}$ such that 
+\begin{enumerate}
+    \item The state-by-state borrowing constraints satisfy the recursion: $  A^i(s) = y^i(s) + \sum_{s'} Q(s'|s)  A^i(s')$.
+    \item For all $i = 1, 2$, given $a^i_0$, $A^i(s)$, and $Q(s'|s)$, the value function and decision rules solve the consumers' problems.
+    \item For all realizations of $\{s_t \}_{t=0}^\infty$, the consumption and asset portfolios $\{ \{c^i_t, \{{{a_{t+1}'}^i}(s')\}_{s'} \}_i\}_t$ 
+    satisfy 
+    \begin{align*}
+        c^1_t + c^2_t & = y^1(s_t) + y^2(s_t) \\
+        {a'_{t+1}}^1 + {a'_{t+1}}^2 & = 0
+    \end{align*}
+    for all $t$ and $s'$.
+    \item The initial wealth distribution satisfies $a_0^1 + a_0^2 = 0$.
+\end{enumerate}
+
+
+\subsection{h. Answer} 
+Using the FOCs of the problem and a Benveniste-Scheinkman formula, we have 
+\[
+Q(s_{t+1}|s_t) = \frac{\beta [c^i_{t+1}(s_{t+1})]^{-1} \pi(s_{t+1} | s_t)
+    }{ [c^i(s_t)]^{-1}}
+\]
+Given the parameterization of $\beta = 0.95$ and 
+$P = \begin{bmatrix}
+    0.8 & 0.2 \\ 0.3 & 0.7
+\end{bmatrix} $, we have 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ccc}
+\hline
+$s_t$ & $s_{t+1}$ & $Q(s_{t+1} | s_t)$ \\ \hline
+0     & 0         & $0.95 \cdot 0.8$ \\ 
+0     & 1         & $0.95 \cdot \frac{c^1(0)}{c^1(1)} \cdot 0.2$ \\  
+1     & 0         & $0.95 \cdot \frac{c^1(1)}{c^1(0)} \cdot 0.3$ \\  
+1     & 1         & $0.95 \cdot 0.7$ \\ \hline
+\end{tabular}
+\caption{Transition probabilities and corresponding Q-values.}
+\label{tab:q_values}
+\end{table}
+
+Therefore, using No-Arbitrage condition, 
+the prices of one-period Arrow securities are given by 
+\[
+p(s) = \sum_{s_{t+1}} Q(s_{t+1}|s_t = s)
+\]
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

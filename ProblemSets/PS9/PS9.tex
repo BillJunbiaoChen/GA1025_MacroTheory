@@ -140,7 +140,7 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \maketitle
 
 
-\section{Exercise 9.7 Two agents}
+\section{Exercise 9.7 Log utility}
 \subsection{a. Answer} 
 Denote the transition matrix $P$, we have 
 \[
@@ -260,7 +260,15 @@ decision rules $\{c^i(s), {a'}^i(s) \}$ such that
 Using the FOCs of the problem and a Benveniste-Scheinkman formula, we have 
 \[
 Q(s_{t+1}|s_t) = \frac{\beta [c^i_{t+1}(s_{t+1})]^{-1} \pi(s_{t+1} | s_t)
-    }{ [c^i(s_t)]^{-1}}
+    }{ [c^i(s_t)]^{-1}}, \quad \forall i = 1, 2
+\]
+It follows that 
+\[
+\frac{c^1(s_t)}{c^1_{t+1}(s_{t+1})} = \frac{c^2(s_t)}{c^2_{t+1}(s_{t+1})} = \frac{c^1(s_t) + c^2(s_t)}{c^1_{t+1}(s_{t+1}) + c^2_{t+1}(s_{t+1})}
+\]
+Therefore, we have 
+\[
+Q(s_{t+1}|s_t) = \frac{\beta Y(s_t) \pi(s_{t+1} | s_t)}{ Y(s_{t+1})}
 \]
 Given the parameterization of $\beta = 0.95$ and 
 $P = \begin{bmatrix}
@@ -273,19 +281,175 @@ $P = \begin{bmatrix}
 \hline
 $s_t$ & $s_{t+1}$ & $Q(s_{t+1} | s_t)$ \\ \hline
 0     & 0         & $0.95 \cdot 0.8$ \\ 
-0     & 1         & $0.95 \cdot \frac{c^1(0)}{c^1(1)} \cdot 0.2$ \\  
-1     & 0         & $0.95 \cdot \frac{c^1(1)}{c^1(0)} \cdot 0.3$ \\  
+0     & 1         & $0.95 \cdot \frac{1}{2} \cdot 0.2$ \\  
+1     & 0         & $0.95 \cdot \frac{2}{1} \cdot 0.3$ \\  
 1     & 1         & $0.95 \cdot 0.7$ \\ \hline
 \end{tabular}
 \caption{Transition probabilities and corresponding Q-values.}
 \label{tab:q_values}
 \end{table}
 
+\subsection{i. Answer} 
 Therefore, using No-Arbitrage condition, 
-the prices of one-period Arrow securities are given by 
+the prices of one-period risk-free bond are given by 
 \[
 p(s) = \sum_{s_{t+1}} Q(s_{t+1}|s_t = s)
 \]
+where $s = 0$ or $1$.
+
+\subsection{j and k. Answers} 
+The $j$-periods ahead Arrow securities satisfy the following recursion 
+\[
+Q_j(s_{t+j}|s_t) = \sum_{s_{t+1}} Q_{j-1}(s_{t+j}|s_{t+1}) Q_1(s_{t+1}|s_t)
+\]
+where $Q_1(s_{t+1}|s_t) := Q(s_{t+1}|s_t)$.
+
+Using No-arbitrage condition, the price of j-period-ahead risk-free bond is 
+\[
+p^j(s) = \sum_{s_{t+j}} Q_j(s_{t+j}|s_t = s)
+\]
+Due to symmetry, we have 
+\[
+c^1_t(s^t) = c^2_t(s^t) = 1/2, \forall s^t
+\]
+
+
+\section{Exercise 9.17 Diverse Beliefs, III}
+\subsection{a. Answer} 
+The probability is given by 
+\[
+{\pi_t^i}' = \pi_0' P
+\]
+
+\subsection{b. Answer} 
+A competitive equilibrium with sequential trading is of one-period Arrow securities 
+is given by
+an initial distribution of wealth $\{a_0^i\}$, 
+a set of borrowing limits $A^i(s)$, 
+a pricing kernel $Q(s'|s)$, 
+such that 
+\begin{enumerate}
+    \item For all $i = 1, 2$, given $a^i_0$, $A^i(s)$, and $Q(s'|s)$, the consumption allocation and implied portfolios solve the consumers' problems.
+    \item For all realizations of $\{s_t \}_{t=0}^\infty$, the consumption and asset portfolios $\{ \{c^i_t, \{{{a_{t+1}'}^i}(s')\}_{s'} \}_i\}_t$ 
+    satisfy 
+    \begin{align*}
+        c^1_t + c^2_t & = y^1(s_t) + y^2(s_t) \\
+        {a'_{t+1}}^1 + {a'_{t+1}}^2 & = 0
+    \end{align*}
+    for all $t$ and $s'$.
+    \item The initial wealth distribution satisfies $a_0^1 + a_0^2 = 0$.
+\end{enumerate}
+
+\subsection{c and d. Answers:} 
+Since the environment is similar to the one in the previous exercise, we can apply Benveniste-Scheinkman formular to obtain 
+\[
+Q(s_{t+1}|s_t) = \frac{\beta Y(s_t) \pi(s_{t+1} | s_t)}{ Y(s_{t+1})}
+\]
+
+Since $Y_t$ is constant, we have 
+\begin{align*}
+a^i_t(s^t) & = c_t^i(s^t) - y_t^i(s^t) + \beta \sum_{s_{t+1}} \pi (s_{t+1}|s_t) [c_{t+1}^i(s^{t+1}) - y_{t+1}^i(s^{t+1})] + \cdots
+\end{align*}
+Therefore, if 
+$s_1 = 0$, we have 
+
+\begin{align*}
+a^1_t(s^t) & = \frac{1}{2} + \frac{\beta}{2} + \frac{\beta^2}{2} +  \cdots \\
+    & = \frac{1}{2} + \frac{1}{2} (\frac{\beta}{1-\beta})
+\end{align*}
+
+\[
+a^2_t(s^t) = - \frac{1}{2(1-\beta)}
+\]
+
+$s_1 = 2$, we have 
+\[
+a^1_t(s^t) = -\frac{1}{2(1-\beta)}, \quad a^2_t(s^t) = \frac{1}{2(1-\beta)}
+\]
+
+
+\subsection{Part II: e. Answer} 
+Under the assumption of diverse beliefs, we have 
+\[
+\pi^2_t(s^t)' = \pi_0 \hat{P}^t
+\]
+
+\subsection{f. Answer} 
+Denote the Pareto weights by 
+$\lambda_1 := \theta$ and $\lambda_2 := 1 - \theta$.
+Then, we have 
+\[
+\mathcal{L} = \sum_i \lambda_i \sum_{t=0}^\infty \sum_t \beta^t \ln [c_t^i(s^t)] \pi^i_t(s^t) 
+- \mu \bigg(\sum_i \sum_{t=0}^\infty \sum_t y_t^i(s^t) - c_t^i(s^t) \bigg)
+\]
+The FOCs are 
+\begin{align*}
+    \lambda_1 \beta^t \pi^1_t(s^t) [c_t^1(s^t)]^{-1} & = \mu \\
+    \lambda_2 \beta^t \pi^2_t(s^t) [c_t^2(s^t)]^{-1} & = \mu
+\end{align*}
+It follows that 
+\[
+\frac{\pi^1_t(s^t) c_t^2(s^t)
+    }{
+        \pi^t_t(s^t) c_t^1(s^t)
+    } = \frac{\lambda_2}{\lambda_1}
+\]
+Since $c_t^1(s^t) + c_t^2(s^t) = 1$, we have 
+\[
+\frac{\pi^1_t(s^t) (1 - c_t^1(s^t))
+    }{
+        \pi^2_t(s^t) c_t^1(s^t)
+    } = \frac{\lambda_2}{\lambda_1}
+\]
+Then, 
+\[
+c_t^1(s^t) = \frac{\theta \pi^1_t(s^t)}{\theta \pi^1_t(s^t) + (1- \theta) \pi^2_t(s^t)}, \qquad
+c_t^2(s^t) = \frac{(1- \theta) \pi^2_t(s^t)}{\theta \pi^1_t(s^t) + (1- \theta) \pi^2_t(s^t)}
+\]
+
+\subsection{g. Answer} 
+\noindent \textbf{Definition}
+An equilibrium with time-0 trading of a complete set of Arrow-Debreu $s^t$-contingent securities is given by 
+an allocation, and a price system such that 
+\begin{enumerate}
+    \item Given the price system, the allocation solves consumers 1 and 2's problems,
+    \item Market clears $c^1_t(s^t) + c^2_t(s^t) = y^1_t(s^t) + y^2_t(s^t), \quad \forall s^t$.
+\end{enumerate}
+
+
+\subsection{h. Answer} 
+The Largrangian is given by 
+\[
+\mathcal{L}^i = \sum_{t=0}^\infty \sum_t \beta^t \ln [c_t^i(s^t)] \pi^i_t(s^t) 
+- \mu^i \bigg[\sum_{t=0}^\infty \sum_t q^0_t(s^t) \bigg(y_t^i(s^t) - c_t^i(s^t) \bigg) \bigg]
+\]
+The FOCs are 
+\begin{align*}
+   \beta^t \pi^i_t(s^t) [c_t^i(s^t)]^{-1} & = \mu^i q_t^0(s^t) \\
+   [c_0^i(s_0)]^{-1} & = \mu^i
+\end{align*}
+It follows that 
+\[
+\beta^t \pi^i_t(s^t) c_0^i(s_0) = q_t^0(s^t) c_t^i(s^t)
+\]
+\noindent $\Rightarrow$
+\[
+\beta^t \bigg(\pi^1_t(s^t) c_0^1(s_0) + \pi^2_t(s^t) c_0^2(s_0) \bigg) = q_t^0(s^t)
+\]
+Notice that after period 1, the states become deterministic.
+That is, $s_t = 0$ or $2$ for $t \geq 2$.
+Therefore, we have 
+\[
+\frac{q^0_{t+1}(s^{t+1})
+}{q^0_{t}(s^{t})} = \frac{\beta \pi^i (s_{t+1}| s_t) c^i_t(s^t)}{c^i_{t+1}(s^{t+1})}
+\]
+As I said previously, there is no diverse beliefs and uncertainty after period 1.
+Hence, $\pi^1(s_{t+1}|s_t) = \pi^2(s_{t+1}|s_t) = 1$.
+Then, we have 
+\[
+q^0_{t+1}(s^{t+1}) = \beta q^0_{t}(s^{t}) = \beta^t q^0_{1}(s^1)
+\]
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

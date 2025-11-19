@@ -139,6 +139,116 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 
 \maketitle
 
+\section{Exercise 9.6 CRRA utility}
+\subsection{a. Answer}
+\noindent \textbf{Definition} A competitive equilibrium is given by 
+an allocation, and a price system such that 
+\begin{enumerate}
+    \item The allocation solves the consumer's problem.
+    \item Market clears: $c_t = d_t$.
+\end{enumerate}
+
+\subsection{b. Answer}
+With time-0 trading, we have the FOCs as follows.
+\[
+\beta^t \pi_t(s^t) c_t(s^t)^{-\gamma} = q_t^0(s^t)
+\]
+Using market clearing condition, we have 
+\[
+\beta^t \pi_t(s^t) d_t(s^t)^{-\gamma} = q_t^0(s^t)
+\]
+Therefore, given 
+$\tilde{s}^5 = (\lambda_1, ..., \lambda_5) = 
+(0.97, 0.97, 1.03, 0.97, 1.03)$, 
+we have 
+\[
+q_5^0(s^t = \tilde{s}^5) = 0.95^5 \times 
+(0.97 \times  0.97 \times  1.03 \times  0.97 \times 1.03)^{-2} \times 
+(0.8 \times 0.8 \times 0.2 \times 0.1 \times 0.2) = 2.11 \times 10^{-3}
+\]
+
+\subsection{c. Answer}
+\[
+q_5^0(s^t = \tilde{s}^5) = 0.95^5 \times 
+(1.03^4 \times 0.97)^{-2} \times 
+(0.2 \times 0.9 \times 0.9 \times 0.9 \times 0.1) = 2.11 \times 10^{-3} = 9.47\times 10^{-3}
+\]
+
+\subsection{d. Answer}
+Since $q^0_t(s^t) = \beta^t \pi_t(s^t) d_t(s^t)^{-\gamma}$, the price at time 0 
+of a claim on the entire endowment sequence is given by 
+\begin{align*}
+p & = \sum_{t=0}^\infty \sum_{s^t} \beta^t \pi_t(s^t) d_t(s^t)^{-\gamma} d_t(s^t) \\ 
+    & = \sum_{t=0}^\infty \sum_{s^t} \beta^t \pi_t(s^t) d_t(s^t)^{1-\gamma} 
+\end{align*}
+
+\subsection{e. Answer}
+To facilitate the following computation, let's Bellmanize the 
+the formula for the price of a claim on the entire endowment.
+Define 
+\[
+P(s_0) := \sum_{t=0}^\infty \sum_{s^t} \beta^t \pi_t(s^t) d_t(s^t)^{1-\gamma} = \sum_{t=0}^\infty \sum_{s^t|s_0} \beta^t \pi(s^t|s_0) d_t(s^t)^{1-\gamma},
+\]
+
+Also, we can separate the time-0 term as follows 
+\begin{align*}
+    P(s_0) & = \sum_{t=0}^\infty \sum_{s^t} \beta^t \pi(s^t) d_t(s^t)^{1-\gamma} \\
+    & = \pi(s_0) d_0^{1 - \gamma} + \sum_{t=1}^\infty \sum_{s^t} \beta^t \pi(s^t) d_t(s^t)^{1-\gamma} \\
+    & = \pi(s_0) d_0^{1 - \gamma} + \sum_{s_1}\sum_{t=1}^\infty \sum_{s^t|s_1} \beta^t \pi(s^t|s_1) \pi(s_1|s_0) d_t(s^t)^{1-\gamma} \\ 
+    & = 1 + \beta \sum_{s_1} \pi(s_1|s_0) \sum_{t=1}^\infty \sum_{s^t|s_1} \beta^{t-1} \pi(s^t|s_1)  d_t(s^t)^{1-\gamma} \\
+    & = 1 + \beta \sum_{s_1} \pi(s_1|s_0) P(s_1)
+\end{align*}
+Therefore, we have 
+\begin{align*}
+    P_L & = 1 + 0.95 \times (0.8 P_L + 0.1 P_H) \\
+    P_H & = 1 + 0.95 \times (0.9 P_H + 0.2 P_L)
+\end{align*}
+
+\subsection{f. Answer}
+
+\noindent \textbf{Definition}
+A recursive competitive equilibrium is given by 
+an initial wealth $a_0$, a set of borrowing limits 
+$A(s)$, a pricing kernel $Q(s'|s)$, 
+a set of value functions $\{V(a, s) \}$, and 
+decision rules $\{c^i(s), {a'}(s) \}$ such that 
+\begin{enumerate}
+    \item The state-by-state borrowing constraints satisfy the recursion: $  A(s) = y(s) + \sum_{s'} Q(s'|s)  A(s')$.
+    \item Given $a^1_0$, $A^1(s)$, and $Q(s'|s)$, the value function and decision rules solve the consumers' problems.
+    \item For all realizations of $\{s_t \}_{t=0}^\infty$, the consumption and asset portfolios $\{ c^i_t, \{{{a_{t+1}'}}(s')\}_{s'}\}_t$ 
+    satisfy 
+    \begin{align*}
+        c_t & = d(s_t)  \\
+        {a'_{t+1}} & = 0
+    \end{align*}
+    for all $t$ and $s'$.
+\end{enumerate}
+
+\subsection{g. Answer}
+The state-by-state borrowing constraints is given by 
+\[
+A(s) = y(s) + \sum_{s'} Q(s'|s)  A(s')
+\]
+
+\subsection{h. Answer}
+Per the Benveniste-Scheinkman formula, we have 
+\[
+Q(s_{t+1}|s_t) = \frac{\beta \pi(s_{t+1}| s_t) \left[c_{t+1}(s^{t+1})\right]^{-\gamma}}{c_{t}(s^t)^{-\gamma}}
+\]
+Plugging in the market clearing condition, we have 
+\begin{align*}
+    Q(s_{t+1}|s_t) & = \frac{\beta \pi(s_{t+1}| s_t) \left[d_{t+1}(s^{t+1})\right]^{-\gamma}}{d_{t}(s^t)^{-\gamma}} \\ 
+    & = \beta \pi(s_{t+1}| s_t) \lambda_{t+1}^{-\gamma}
+\end{align*}
+
+\subsection{i. Answer}
+Using No-Arbitrage condition and the recursion of the pricing kernel, we have 
+\begin{align*}
+    p & = \sum_{s_{t+1}} \sum_{s_t} Q(s_{t+2}|s_{t+1}) Q(s_{t+1}|s_t) \\ 
+        & = \sum_{s_{t+1}} \sum_{s_t} \beta^2 \pi(s_{t+2}| s_t) ( \lambda_{t+2} \lambda_{t+1})^{-\gamma}
+\end{align*}
+
+
 
 \section{Exercise 9.7 Log utility}
 \subsection{a. Answer} 

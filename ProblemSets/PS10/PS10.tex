@@ -1,7 +1,7 @@
 \documentclass[11pt]{article}
 
 %%METADATA
-\title{GA1025 Macro Theory \\Solution to Problem Set 9}
+\title{GA1025 Macro Theory \\Solution to Problem Set 10}
 \author{
 Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 }
@@ -140,34 +140,84 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \maketitle
 
 \section{Exercise RMT5 10.1 Equilibrium with valued fiat money}
-\subsection{(a)}
-Under CRRA utility and $beta = 1$, 
-the optimal consumptions satisfy 
-\[
-{c^i_i}^{-\gamma} = {c^i_{i+1}}^{-\gamma}
-\]
-Therefore, using budget constraint, we have 
-\[
-c^i_i = c^i_{i+1} = \frac{1}{2}(\omega_1 + \frac{p_{i+1} \omega_2}{p_i})
-\]
-It follows that the saving function for a young generation is given by 
-\begin{align*}
-s(\omega_1, \omega_2, p_i, p_{i+1}) & = \omega_1 - \frac{1}{2}(\omega_1 + \frac{p_{i+1} \omega_2}{p_i}) \\ 
-    & = \frac{1}{2}(\omega_1 - \frac{p_{i+1} \omega_2}{p_i}) 
-\end{align*}
-
-
-\subsection{(b)}
-\textbf{Definition}
-An equilibrium with valued fiat money is given by an allocation and a price sequence $p_t$,
-such that, 
-given the price sequence, the allocation solves the utility maximization problem for each agent $i \geq 1$.
+\subsection{(a) Answer}
+The agent's problem is given by 
 \begin{align*}
     \max_{c_i^i, c_{i+1}^i} \quad \frac{{c^i_i}^{1-\gamma}}{1 - \gamma} & + \frac{{c^i_{i+1}}^{1-\gamma}}{1 - \gamma} \\ 
     \text{subject to: } \quad c_i^i + \frac{m_i}{p_i} & = \omega_1 \\ 
     c_i^{i+1}  & = \omega_2 + \frac{m_i}{p_{i+1}} \\ 
     m_i & \geq 0
 \end{align*}
+Combining the first and the second constraints to 
+$c_i^i + \frac{p_{i+1} c^i_{i+1}}{p_i} = \omega_1 + \frac{p_{i+1} \omega_2}{p_i} $, 
+the Lagragian is given by 
+\[
+\mathcal{L} = \frac{{c^i_i}^{1-\gamma}}{1 - \gamma} + \frac{{c^i_{i+1}}^{1-\gamma}}{1 - \gamma} 
++ \lambda \left(\omega_1 + \frac{p_{i+1} \omega_2}{p_i} - c_i^i + \frac{p_{i+1} c^i_{i+1}}{p_i} \right)
+\]
+The FOCs are
+\begin{align*}
+    [{c^i_i}]: \quad & {c^i_i}^{-\gamma} = \lambda \\
+    [c^i_{i+1}] \quad & {c^i_{i+1}}^{-\gamma} = \lambda \frac{p_{i+1}}{p_i} 
+\end{align*}
+Therefore, we have 
+\[
+\frac{p_{i+1} c^i_{i+1}}{p_i} = {c^i_{i}} \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}
+\]
+Using budget constraint, we have 
+\[
+c^i_i = \frac{\omega_1 + \frac{p_{i+1}^i}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}}
+\]
+It follows that the saving function for a young generation is given by 
+\begin{align*}
+s(R_i) = \omega_1 - \frac{\omega_1 + \frac{p_{i+1}^i}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}} 
+= \frac{\omega_1 - \omega_2 R_i^{-\frac{1}{\gamma}}}{1 + R_i^{1 - \frac{1}{\gamma}}}
+\end{align*}
+
+
+\subsection{(b) Answer}
+\textbf{Definition}
+An equilibrium with valued fiat money is given by an allocation and a price sequence $p_t$,
+such that, 
+given the price sequence, the allocation solves the utility maximization problem for each agent $i \geq 1$.
+
+
+\subsection{(c) Answer}
+\textbf{Definition}
+A \textbf{startionary} equilibrium with valued fiat money is given by an allocation and a real interest rate $R$,
+such that, 
+given the price sequence, the allocation solves the utility maximization problem for each agent $i \geq 1$.
+\begin{align*}
+    \max_{c_i^i, c_{i+1}^i} \quad \frac{{c^i_i}^{1-\gamma}}{1 - \gamma} & + \frac{{c^i_{i+1}}^{1-\gamma}}{1 - \gamma} \\ 
+    \text{subject to: } \quad c_i^i + \frac{c_{i+1}^i }{R} & = \omega_1 + \frac{\omega_2 }{R} 
+\end{align*}
+
+
+\subsection{(d) Answer}
+At the equilibrium, we have 
+\[
+s(R_t) = \frac{M}{p_t} = \frac{\omega_1 - \omega_2 R_i^{-\frac{1}{\gamma}}}{1 + R_i^{1 - \frac{1}{\gamma}}}
+\]
+The stationary equilibrium satisfies $p_{t+1} =p_t = p$, therefore, 
+$R_t = \frac{p_t}{p_{t+1}} = 1$. 
+Hence, 
+the saving function becomes
+\[
+ \frac{M}{p} = \frac{\omega_1 - \omega_2}{2}
+\]
+Therefore, the price level in the stationary equilibrium is given by 
+\[
+p = \frac{2M}{\omega_1 - \omega_2}.
+\]
+It follows that 
+\begin{align*}
+    c_i^i & = c^i_{i+1} = \frac{1}{2} \left(\omega_1 + \omega_2 \right).
+\end{align*}
+
+
+\subsection{(e) Answer}
+
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

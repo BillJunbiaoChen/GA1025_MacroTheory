@@ -241,7 +241,7 @@ c_i^i = \frac{w_1}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}
 \]
 It follows that the saving function is given by 
 \begin{align*}
-    s(R_i) = \frac{w_1 \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}  
+    s(R_i)^\text{Type I} = \frac{w_1 \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}  
     = \frac{w_1 R_i^{\frac{1}{\gamma} - 1}}{1 + R_i^{\frac{1}{\gamma} - 1}} 
     \stackrel{\gamma = 1}{=} \frac{w_1}{2}
 \end{align*}
@@ -254,9 +254,58 @@ s(R_i) = w_1 - \frac{w_1 + \frac{p_{i+1}}{p_i} w_2}{1 + \left(\frac{p_{i+1}}{p_i
 \end{align*}
 Plugging in $\gamma = 1, w_1 = 0, w_2 = w_2$, we have 
 \[
-s(R_t) = - \frac{w_2 R_t^{-1}}{2}.
+s(R_t)^\text{Type II} = - \frac{w_2 R_t^{-1}}{2}.
 \]
 
+The aggregate saving function is given by 
+\[
+s(R_t) = \frac{1}{2} (w_1- w_2 R_t^{-1})
+\]
+
+
+\subsection{(b) Answer}
+\textbf{Definition} An equilibrium without fiat money is given by an allocation such that 
+\begin{itemize}
+    \item The allocation solves consumers' problems.
+    \item Market clears.
+\end{itemize}
+
+\noindent \textbf{Computing equilibrium} 
+\[
+c_i^i = \frac{w_1}{2} \Rightarrow c_{i+1}^i = \frac{w_1}{2}
+\]
+It follows that 
+\[
+R_i = \frac{u'(c^i_{i})}{u'(c^i_{i+1})} = 1
+\]
+
+\subsection{(c) and (d) Answers}
+\textbf{Definition} An equilibrium with fiat money is given by an allocation such that 
+\begin{itemize}
+    \item Given the price sequence the allocation solves consumers' problems.
+    \item The goods market clears.
+    \item Money market clears.
+\end{itemize}
+
+\noindent \textbf{Computing equilibrium} 
+Using the aggregate saving function, we have 
+\[
+s(R_t) = \frac{2M}{P_t} \Rightarrow p_t w_1 - p_{t+1} w_2 = 4M
+\]
+Solving the difference equation above, we have 
+\[
+p_t = \frac{4M}{w_1 - w_2} + \kappa \left(\frac{w_1}{w_2}\right)^t
+\]
+
+The non-stochastic equilibria include
+
+\subsection{(e) Answer}
+The stationary equilibrium is achieved when $\kappa = 1$.
+As such, we have 
+\[
+p_t = \frac{4M}{w_1 - w_2} \text{ and } R_t = 1 , \forall t, \quad 
+\]
+Otherwise, $p_t$ is a function of $t$ and converges to $\infty$, which is not stationary.
 
 \section{Exercise 10.5 Computing the Monetary equilibrium with population growth}
 \subsection{(a) Answer}
@@ -370,7 +419,21 @@ Now, we discuss the equation above case by case:
     which is the \textbf{only} monetary equilibrium.
 \end{itemize}
 
+\subsection{(d) Answer}
+Given $\frac{w_2}{w_1 n} < 1$, the return rate of money is given by 
+\begin{align*}
+R_t & = \frac{p_t}{p_{t+1}} \\ 
+    & = \frac{\frac{2}{n^t w_1 - n^{t-1}w_2} + K \left( \frac{w_1}{w_2}\right)^t}
+    {
+        \frac{2}{n^{t+1} w_1 - n^{t}w_2} + K \left( \frac{w_1}{w_2}\right)^{t+1}
+    }
+\end{align*}
+Under stationary equilibrium with $K = 0$, we have 
+\[
+R_t = n.
+\]
 
+\subsection{(e) Answer}
 
 
 

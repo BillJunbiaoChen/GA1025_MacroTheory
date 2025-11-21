@@ -139,7 +139,7 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 
 \maketitle
 
-\section{Exercise RMT5 10.1 Equilibrium with valued fiat money}
+\section{Exercise 10.1 Equilibrium with valued fiat money}
 \subsection{(a) Answer}
 The agent's problem is given by 
 \begin{align*}
@@ -153,7 +153,7 @@ $c_i^i + \frac{p_{i+1} c^i_{i+1}}{p_i} = \omega_1 + \frac{p_{i+1} \omega_2}{p_i}
 the Lagragian is given by 
 \[
 \mathcal{L} = \frac{{c^i_i}^{1-\gamma}}{1 - \gamma} + \frac{{c^i_{i+1}}^{1-\gamma}}{1 - \gamma} 
-+ \lambda \left(\omega_1 + \frac{p_{i+1} \omega_2}{p_i} - c_i^i + \frac{p_{i+1} c^i_{i+1}}{p_i} \right)
++ \lambda \left(\omega_1 + \frac{p_{i+1} \omega_2}{p_i} - c_i^i - \frac{p_{i+1} c^i_{i+1}}{p_i} \right)
 \]
 The FOCs are
 \begin{align*}
@@ -166,11 +166,11 @@ Therefore, we have
 \]
 Using budget constraint, we have 
 \[
-c^i_i = \frac{\omega_1 + \frac{p_{i+1}^i}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}}
+c^i_i = \frac{\omega_1 + \frac{p_{i+1}}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}}
 \]
 It follows that the saving function for a young generation is given by 
 \begin{align*}
-s(R_i) = \omega_1 - \frac{\omega_1 + \frac{p_{i+1}^i}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}} 
+s(R_i) = \omega_1 - \frac{\omega_1 + \frac{p_{i+1}}{p_i} \omega_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}} 
 = \frac{\omega_1 - \omega_2 R_i^{-\frac{1}{\gamma}}}{1 + R_i^{1 - \frac{1}{\gamma}}}
 \end{align*}
 
@@ -216,6 +216,162 @@ It follows that
 
 
 \subsection{(e) Answer}
+Using the equilibrium condition $s(p_t/p_{t+1}) = M/p_t$ and the expression of saving function, 
+we can derive the following non-linear difference equation for the price level:
+\[
+\frac{\omega_1 - \omega_2 \left(\frac{p_{t}}{p_{t+1}}\right)^{- 1/\gamma}}{1 + \left(\frac{p_{t}}{p_{t+1}}\right)^{1 - 1/\gamma}} = \frac{M}{p_t} 
+\]
+
+\section{Exercise 10.2 Equilibrium with valued fiat money}
+\subsection{(a) Answer} 
+\paragraph{Type I Young}
+For the young with endownments $(w_1, 0)$, the Lagragian is given by 
+\[
+\mathcal{L} = \frac{{c^i_i}^{1-\gamma}}{1 - \gamma} + \frac{{c^i_{i+1}}^{1-\gamma}}{1 - \gamma} 
++ \lambda \left(\omega_1 - c_i^i - \frac{p_{i+1} c^i_{i+1}}{p_i} \right)
+\]
+The FOCs are
+\begin{align*}
+    [{c^i_i}]: \quad & {c^i_i}^{-\gamma} = \lambda \\
+    [c^i_{i+1}] \quad & {c^i_{i+1}}^{-\gamma} = \lambda \frac{p_{i+1}}{p_i} 
+\end{align*}
+Combinting the budget constraint, we have 
+\[
+c_i^i = \frac{w_1}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}
+\]
+It follows that the saving function is given by 
+\begin{align*}
+    s(R_i) = \frac{w_1 \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1 -\frac{1}{\gamma}}}  
+    = \frac{w_1 R_i^{\frac{1}{\gamma} - 1}}{1 + R_i^{\frac{1}{\gamma} - 1}} 
+    \stackrel{\gamma = 1}{=} \frac{w_1}{2}
+\end{align*}
+
+\paragraph{Type II Young}
+Similar to the derivation above, we have 
+\begin{align*}
+s(R_i) = w_1 - \frac{w_1 + \frac{p_{i+1}}{p_i} w_2}{1 + \left(\frac{p_{i+1}}{p_i} \right)^{1-\frac{1}{\gamma}}} 
+= \frac{w_1 - w_2 R_i^{-\frac{1}{\gamma}}}{1 + R_i^{1 - \frac{1}{\gamma}}}
+\end{align*}
+Plugging in $\gamma = 1, w_1 = 0, w_2 = w_2$, we have 
+\[
+s(R_t) = - \frac{w_2 R_t^{-1}}{2}.
+\]
+
+
+\section{Exercise 10.5 Computing the Monetary equilibrium with population growth}
+\subsection{(a) Answer}
+\noindent \textbf{Definition}
+The consumer's problem is given by 
+\begin{align*}
+    \max_{c_i^i, c_{i+1}^i, b} &  \quad \log c_i^i + \log c_{i+1}^i \\ 
+    \text{ subject to :} \quad & c_i^i + b \leq  w_1  \\
+    & c_{i+1}^i \leq w_2 + b R_{i}
+\end{align*}
+An equilibrium \textbf{without} valued fiat money is 
+an allocation, such that, 
+\begin{enumerate}
+    \item Given the sequence of interest rate $R_t$, the allocation solves the consumer's problem.
+    \item Market clears for all $i$:
+    \[
+        N(i-1) c_i^{i-1} +  N(i) c_i^{i} = N(i-1) w_2 +  N(i) w_1
+    \]
+\end{enumerate}
+Since the economy is characterized by log utilities, and there is \textbf{no vehicle for saving} and the goods are not storable,
+there is no trade at equilibrium.
+Therefore, we have 
+\[
+c^i_{i} = w_1, \quad c^i_{i+1} = w_2
+\]
+Since $c^{i-1}_i = w_2$, the second equilibrium condition holds as well.
+
+Note that at equilibrium, we have 
+\[
+R_i = \frac{u'(c^i_{i+1})}{u'(c^i_{i})} = \frac{u'(w_2)}{u'(w_1)} = \frac{w_1}{w_2}.
+\]
+
+
+\subsection{(b) Answers}
+\noindent \textbf{Definition}
+The consumer's problem is given by 
+\begin{align*}
+    \max_{\{c_i^i, c_{i+1}^i, M^i\}} &  \quad \log c_i^i + \log c_{i+1}^i \\ 
+    \text{ subject to :} \quad & c_i^i + \frac{M^i}{p_{i}} \leq w_1 \\ 
+        & c_{i+1}^i  \leq w_2 + \frac{M^i}{p_{i+1}}
+\end{align*}
+An equilibrium \textbf{with} valued fiat money is 
+an allocation, such that, 
+\begin{enumerate}
+    \item Given the price sequence $p_t$ and the growth rate of population $n$, the allocation solves the consumer's problem.
+    \item The goods market clears for all $i$:
+    \[
+        \underbrace{N(i-1) c_i^{i-1} +  N(i) c_i^{i}}_{\text{Demand}} = \underbrace{N(i-1) y_i^{i-1} +  N(i) y_i^{i}}_{\text{Supply}}
+    \]
+    \item The money market clears:
+    \[
+        \underbrace{N(i) M^i}_{\text{Demand}} = \underbrace{N(i-1) M^{i-1}}_{\text{Supply}} \Leftrightarrow M^i = n^{-1} M^{i-1} = n^{-i} M^0
+    \]
+\end{enumerate}
+
+
+\subsection{(c) Answers}
+After consolidating these two budget constraint, we can formulate the Lagrangian as follows
+\[
+\mathcal{L} = \log c^i_i + \log c^{i}_{i+1} + \lambda ( w_1 + \frac{p_{i+1}}{p_i} w_2 - c^i_i - \frac{p_{i+1}}{p_i} c^{i}_{i+1})
+\]
+The FOCs are 
+\begin{align*}
+    [c^i_i] & = {(c^i_i)}^{-1} = \lambda \\ 
+    [c^i_{i+1}] & = {(c^i_{i+1})}^{-1} = \lambda \frac{p_{i+1}}{p_i} \\ 
+\end{align*}
+Then, we have 
+\[
+\frac{p_{i+1}}{p_i} c^{i}_{i+1} = c_i^i 
+\]
+Substituting $c_{i+1}^i$ into the budget constraint, we have 
+\[
+c_i^i = \frac{1}{2} \left( w_1 + \frac{p_{i+1}}{p_i} w_2 \right) = \frac{1}{2} \left( w_1 + \frac{w_2}{R_i} \right)
+\]
+It follows that the saving function is 
+\[
+s(R_i) = w_1 - c_i^i = \frac{1}{2} \left( w_1 - \frac{w_2}{R_i} \right)
+\]
+Again, using the the equality $s(R_t) = \frac{M_t}{p_t}$ and the fact that $M_t = n^{-t}M^0$, we have%
+\footnote{Here I use $R_i$ and $R_t$ interchangably.}
+\[
+\frac{1}{2} \left( w_1 - \frac{w_2}{R_t} \right) = \frac{M_t}{p_t} = \frac{M^0}{n^t p_t} 
+\]
+Normalizing $M^0 = 1$, we have the following difference equation for $p_t$:
+\[
+p_t w_1 - p_{t+1} w_2 = 2n^{-t}
+\]
+Using Lag operator, and rearranging terms, we have 
+\[
+p_t  - \frac{w_2}{w_1} L^{-1}  p_t = \frac{2n^{-t}}{w_1} \Rightarrow p_t = \left(1 - \frac{w_2}{w_1} L^{-1}\right)^{-1} \frac{2n^{-t}}{w_1} + K \left( \frac{w_1}{w_2}\right)^t
+\]
+Then, applying the geometric sum formula $(1 - A)^{-1} = \sum_{j = 0}^\infty A^j$, we have 
+\begin{align*}
+    p_t & = \left(1 - \frac{w_2}{w_1} L^{-1}\right)^{-1} \frac{2n^{-t}}{w_1} + K \left( \frac{w_1}{w_2}\right)^t\\ 
+        & = \bigg[\sum_{j=0}^\infty \left(\frac{w_2}{w_1} L^{-1} \right)^j \frac{2n^{-t}}{w_1} \bigg] + K \left( \frac{w_1}{w_2}\right)^t\\
+        & = \bigg[\sum_{j=0}^\infty \left(\frac{w_2}{w_1}\right)^j L^{-j}  \frac{2n^{-t}}{w_1} \bigg] + K \left( \frac{w_1}{w_2}\right)^t
+\end{align*}
+Since $L^{-j} n^{-t} = n^{-(t+j)}$, we have 
+\begin{align*}
+    p_t & = \bigg[\sum_{j=0}^\infty \left(\frac{w_2}{w_1}\right)^j \frac{2n^{-(t+j)}}{w_1} \bigg] + K \left( \frac{w_1}{w_2}\right)^t \\
+        & = \bigg[\frac{2n^{-t}}{w_1}  \sum_{j=0}^\infty \left(\frac{w_2}{w_1 n}\right)^j \bigg] + K \left( \frac{w_1}{w_2}\right)^t
+\end{align*}
+Now, we discuss the equation above case by case:
+\begin{itemize}
+    \item If $\frac{w_2}{w_1 n} \geq 1$, then $p_t = \infty$ for any fixed $t$. 
+    Therefore, the value of fiat money $\frac{1}{p_t} = 0$; hence, the \textbf{monetary equilibrium} doesn't exist.
+    \item If $\frac{w_2}{w_1 n} < 1$, then we have 
+    \[
+        p_t = \frac{2}{n^t w_1 - n^{t-1}w_2} + K \left( \frac{w_1}{w_2}\right)^t, \forall t, \quad \text{with } K \geq 0
+    \]
+    which is the \textbf{only} monetary equilibrium.
+\end{itemize}
+
+
+
 
 
 

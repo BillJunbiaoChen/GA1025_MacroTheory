@@ -297,7 +297,7 @@ Solving the difference equation above, we have
 p_t = \frac{4M}{w_1 - w_2} + \kappa \left(\frac{w_1}{w_2}\right)^t
 \]
 
-The non-stochastic equilibria include
+The non-stochastic equilibria include all $\kappa \geq 0$.
 
 \subsection{(e) Answer}
 The stationary equilibrium is achieved when $\kappa = 1$.
@@ -306,6 +306,17 @@ As such, we have
 p_t = \frac{4M}{w_1 - w_2} \text{ and } R_t = 1 , \forall t, \quad 
 \]
 Otherwise, $p_t$ is a function of $t$ and converges to $\infty$, which is not stationary.
+
+\subsection{(f) Answer}
+To evaluate Pareto efficiency under different the return rate of money at the monetary equilibrium, 
+we need to compute the utility for different types of consumers:
+\begin{align*}
+    u^\text{Type I} & = \log(\frac{w_1}{2}) + \log(\frac{w_1 R}{2}) \\
+    u^\text{Type II} & = \log(\frac{w_2}{2R}) + \log(\frac{w_2}{2})
+\end{align*}
+Since $R$ affects type I and II differently, and both types of consumers have the same weights,
+there is no clear ranking in terms PE.
+
 
 \section{Exercise 10.5 Computing the Monetary equilibrium with population growth}
 \subsection{(a) Answer}

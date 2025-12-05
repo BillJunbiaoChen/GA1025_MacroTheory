@@ -217,11 +217,50 @@ Since we assume that $L_g p_t = M_I$, the equation above is exactly the same as 
 Therefore, the equilibrium interest rate remains the same. 
 (Namely, there is no inflation with inside money).
 
-\noindent \textbf{Remark:} The inside money is not inflatory because assets are identical and thus 
-by issuing the same amount of inside money as government purchse doesn't change the net supply of money.
+\noindent \textbf{Remark:} The inside money is not inflatory because assets are identical (in particular in terms of liquidity) 
+and thus issuing the same amount of inside money as government purchse doesn't change the net supply of money.
 See Kiyotaki-Moore (2018) for the discussion of Inside Money and Liquidity.
 
 \section{Exercise 10.9}
+\subsection{(a) - (b) Answers.}
+\textbf{Definition}
+The equilibrium with valued fiat money is given by prices ${p_t}$, and quantities 
+$c^0_1, \{c_t^t \}, \{c_{t+1}^t \}$, such that 
+\begin{enumerate}
+    \item given by prices, the quanties solves all agents problem:
+    that is, 
+    for the initial old generation, $c^0_1$ solves 
+    \begin{align*}
+    \max_{c^0_1} \quad & \log u(c^0_1) \\ 
+    \text{ subject to } \qquad & c^0_1 =  \frac{H}{p_1}
+    \end{align*}
+    For generation $t \geq 1$, $\{c^t_t\}, \{c^t_{t+1}\}, m_t$ solve 
+    \begin{align*}
+    \max_{c^t_t, c^t_{t+1}} \quad & \log u(c^t_t) +  \log u(c^t_{t+1}) \\ 
+    \text{ subject to } \qquad & c^t_t + \frac{m_t}{p_t} =  y \\
+    & c^t_{t+1}  =  \frac{m_t}{p_{t+1}}
+    \end{align*}
+    \item Market clears 
+    \[
+    \underbrace{N(y - c^t_t)}_{\text{saving from the young}} = \underbrace{\frac{H}{p_t}}_{\text{de-saving from the old}}.
+    \]
+\end{enumerate}
+In equilibrium, the consumption is given by 
+\[
+c_t^t = \frac{y}{2},
+\]
+then the saving function is $s = \frac{y}{2}$,
+therefore, using the market clearing condition, we have 
+\[
+N \frac{y}{2} = \frac{H}{p}
+\]
+As a result, the equilibrium price level is given by 
+\[
+p = \frac{2H}{Ny}.
+\]
+
+
+
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

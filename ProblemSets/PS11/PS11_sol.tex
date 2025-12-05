@@ -188,14 +188,40 @@ Plugging in the aggregate saving function derived in (a), we have
     \frac{y}{2} N_1 - \frac{Y p_{t+1}}{2 p_t} N_2 & = \frac{1}{q} \\ 
     \Rightarrow \frac{y}{2} N_1 - \frac{Y }{2 R_t } N_2 & = \frac{1}{q}
 \end{align*}
-Therefore, we have 
+Now imposing $R_t = 1$, we have 
 \[
-q = \frac{2  }{yN_1 R_t - Y N_2} = \frac{2}{0},
+q = \frac{2  }{yN_1 - Y N_2},
 \]
-which is an undefined object, and is a contradiction.
+which is negative due to the assumption of $1 + r_t > 1 \Rightarrow y N_1 > Y N_2$.
+It contradicts to the requirement of positive $q$.
 Therefore, there is no quantity-theory- style equilibrium where fiat currency is valued.
 
 \subsection{(c) Answer.}
+Using the same equation as (b), but now we assume $1 + r_t < 1$,
+then we have a quantity-theory- style equilibrium where fiat currency is valued and 
+the $q$ is positive. 
+
+\noindent \textbf{Remark:} Now, we examine the distributional effects under valued fiat money.
+Since type 1 and type 2 agents are lenders and borrowers, respectively.
+A change in the interest rate would have oppositve effects on them.
+Therefore, the equilibrium with valued currency is not Pareto superior 
+to the nonvalued- currency equilibrium.
+
+\subsection{(d) Answer.}
+After introducing government purchase ($L_g$) and ``inside money'' ($M_I$), 
+the loan market clearing condition is given by 
+\[
+\frac{y}{2} N_1 - \frac{Y}{2 R_t} N_2 + L_g = \frac{H_0}{p_t} + \frac{M_I}{p_t}
+\]
+Since we assume that $L_g p_t = M_I$, the equation above is exactly the same as the one in (c).
+Therefore, the equilibrium interest rate remains the same. 
+(Namely, there is no inflation with inside money).
+
+\noindent \textbf{Remark:} The inside money is not inflatory because assets are identical and thus 
+by issuing the same amount of inside money as government purchse doesn't change the net supply of money.
+See Kiyotaki-Moore (2018) for the discussion of Inside Money and Liquidity.
+
+\section{Exercise 10.9}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

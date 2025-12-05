@@ -236,7 +236,7 @@ $c^0_1, \{c_t^t \}, \{c_{t+1}^t \}$, such that
     \end{align*}
     For generation $t \geq 1$, $\{c^t_t\}, \{c^t_{t+1}\}, m_t$ solve 
     \begin{align*}
-    \max_{c^t_t, c^t_{t+1}} \quad & \log u(c^t_t) +  \log u(c^t_{t+1}) \\ 
+    \max_{c^t_t, c^t_{t+1}, m_t } \quad & \log u(c^t_t) +  \log u(c^t_{t+1}) \\ 
     \text{ subject to } \qquad & c^t_t + \frac{m_t}{p_t} =  y \\
     & c^t_{t+1}  =  \frac{m_t}{p_{t+1}}
     \end{align*}
@@ -259,7 +259,38 @@ As a result, the equilibrium price level is given by
 p = \frac{2H}{Ny}.
 \]
 
+Now, let's introduce taxations. Then, the problem above becomes 
+\begin{align*}
+    \max_{c^t_t, c^t_{t+1}, m_t} \quad & \log u(c^t_t) +  \log u(c^t_{t+1}) \\ 
+    \text{ subject to } \qquad & c^t_t + \frac{m_t}{p_t} =  y - \tau  \\
+    & c^t_{t+1} = \frac{m_t}{p_{t+1}} +  \tau
+\end{align*}
+Then the Lagragian formulation is given by 
+\[
+\mathcal{L} = \log u(c^t_t) +  \log u(c^t_{t+1}) + \lambda \left[y - \tau - c_t^t - \frac{p_{t+1}}{p_t}(c_{t+1}^t - \tau )\right]
+\]
+Then the FOC implies $c^t_{t+1} = \frac{p_t}{p_{t+1}} c_t$.
+Using the budget constraint, then we have 
+\[
+c_t^t + \frac{p_{t+1}}{p_t}(\frac{p_t}{p_{t+1}} c_t - \tau) = y - \tau
+\]
+It follows that 
+\[
+c_t^t = \frac{1 }{2}(y - \tau + \frac{p_{t+1}}{p_t} \tau) = \frac{1 }{2}(y - \tau + \frac{\tau}{R_t})
+\]
+Therefore, the aggregate saving is given by 
+\[
+N (y - \tau - c_t^t) = \frac{N}{2}(y - \tau - \frac{\tau}{R_t})
+\]
+Then using the market clearing condition and assuming a stationary price system, we have 
+\[
+\frac{N}{2}(y - 2 \tau) = \frac{H}{p} \Rightarrow p = \frac{2H}{N(y - 2 \tau)}.
+\]
+Notice that the equilibrium exists iff $\tau < \frac{y}{2}$.
 
+
+It follows that $\frac{\partial p}{\partial \tau} > 0 $, namely, 
+increasing tax burden will increase price level.
 
 
 %% =========== %% ========= %%

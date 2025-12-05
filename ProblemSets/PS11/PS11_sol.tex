@@ -143,13 +143,13 @@ Junbiao Chen\thanks{E-mail: jc14076@nyu.edu.}
 \subsection{(a) Answer.}
 The Lagrangian of type 1 and 2 agents are the following, respectively.
 \begin{align*}
-    \mathcal{L}^1 & = \log c^t_t + \log c^t_{t+1} + \lambda ( y - c^t_t - \frac{p_{t+1} c^t_{t+1}}{p_t c^t_t}) \\ 
-    \mathcal{L}^2 & = \log c^t_t + \log c^t_{t+1} + \lambda ( \frac{p_{t+1} Y}{p_t c^t_t} - c^t_t - \frac{p_{t+1} c^t_{t+1}}{p_t c^t_t})
+    \mathcal{L}^1 & = \log c^t_t + \log c^t_{t+1} + \lambda ( y - c^t_t - \frac{p_{t+1} c^t_{t+1}}{p_t}) \\ 
+    \mathcal{L}^2 & = \log c^t_t + \log c^t_{t+1} + \lambda ( \frac{p_{t+1} Y}{p_t} - c^t_t - \frac{p_{t+1} c^t_{t+1}}{p_t})
 \end{align*}
 The FOCs for Type 1 Youth are 
 \begin{align*}
     [c^t_t] \quad & \frac{1}{c^t_t} = \lambda \\ 
-    [c^t_{t+1}] \quad & \frac{1}{c^t_{t+1}} = \lambda \frac{p_{t+1}}{p_t c^t_t}
+    [c^t_{t+1}] \quad & \frac{1}{c^t_{t+1}} = \lambda \frac{p_{t+1}}{p_t}
 \end{align*}
 Combining the budget constraint, we have 
 \[
@@ -157,26 +157,45 @@ Combining the budget constraint, we have
 \]
 Similarly, we have 
 \[
-{c_t^t}^{, \text{type 2}} = \frac{Y p^t_{t+1}}{2 p^t_t}
+{c_t^t}^{, \text{type 2}} = \frac{Y p_{t+1}}{2 p_t}
 \]
 As a result, the their saving functions are given by 
 \[
 {s_t^t}^{, \text{type 1}} = y - \frac{y}{2} = \frac{y}{2}
 \]
 \[
-{s_t^t}^{, \text{type 2}} = 0 - \frac{Y p^t_{t+1}}{2 p^t_t} = - \frac{Y p^t_{t+1}}{2 p^t_t}
+{s_t^t}^{, \text{type 2}} = 0 - \frac{Y p_{t+1}}{2 p_t} = - \frac{Y p_{t+1}}{2 p_t}
 \]
 
 \textbf{Since there is no trade between generations}, the consumption loan market clears within generations.
 Thus, we have 
 \[
-\frac{y}{2} N_1 - \frac{Y p^t_{t+1}}{2 p^t_t} N_2 = 0 \Rightarrow y N_1 - \frac{Y N_2}{1 + r_t} = 0,
+\frac{y}{2} N_1 - \frac{Y p_{t+1}}{2 p_t} N_2 = 0 \Rightarrow y N_1 - \frac{Y N_2}{1 + r_t} = 0,
 \]
 which gives us the formula for the return as 
 \[
 1 + r(t) = \frac{Y N_2}{y N_1}.
 \]
 
+
+\subsection{(b) Answer.}
+Assuming $p_t = q H_0$, then we have
+\[
+s(R_t) = \frac{H_0}{p_t} = \frac{H_0}{q H_0} = \frac{1}{q}
+\]
+Plugging in the aggregate saving function derived in (a), we have 
+\begin{align*}
+    \frac{y}{2} N_1 - \frac{Y p_{t+1}}{2 p_t} N_2 & = \frac{1}{q} \\ 
+    \Rightarrow \frac{y}{2} N_1 - \frac{Y }{2 R_t } N_2 & = \frac{1}{q}
+\end{align*}
+Therefore, we have 
+\[
+q = \frac{2  }{yN_1 R_t - Y N_2} = \frac{2}{0},
+\]
+which is an undefined object, and is a contradiction.
+Therefore, there is no quantity-theory- style equilibrium where fiat currency is valued.
+
+\subsection{(c) Answer.}
 
 %% =========== %% ========= %%
 \bibliography{../bib/references.bib}

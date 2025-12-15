@@ -164,7 +164,7 @@ As a result, the their saving functions are given by
 {s_t^t}^{, \text{type 1}} = y - \frac{y}{2} = \frac{y}{2}
 \]
 \[
-{s_t^t}^{, \text{type 2}} = 0 - \frac{Y p_{t+1}}{2 p_t} = - \frac{Y p_{t+1}}{2 p_t}
+{s_t^t}^{, \text{type 2}} = 0 - \frac{Y p_{t+1}}{2 p_t} = - \frac{Y p_{t+1}}{2 p_t} = - \frac{Y}{2 R_t}
 \]
 
 \textbf{Since there is no trade between generations}, the consumption loan market clears within generations.
@@ -286,11 +286,50 @@ Then using the market clearing condition and assuming a stationary price system,
 \[
 \frac{N}{2}(y - 2 \tau) = \frac{H}{p} \Rightarrow p = \frac{2H}{N(y - 2 \tau)}.
 \]
-Notice that the equilibrium exists iff $\tau < \frac{y}{2}$.
 
+\subsection{(c) - (d) Answers.}
+Notice that the equilibrium exists iff $\tau < \frac{y}{2}$.
 
 It follows that $\frac{\partial p}{\partial \tau} > 0 $, namely, 
 increasing tax burden will increase price level.
+
+
+\section{Exercise 10.10}
+\subsection{(a) Answer.}
+Using the same setup as in Exercise 10.8 (a), we can derive the interest rate in the equilibrium without fiat money as
+\[
+1 + r_t = R_t = \frac{\beta N_2}{\alpha N_1}.
+\]
+
+\subsection{(b) Answer.}
+Due to the lack of inter-generational trade, this equilibirum is not Pareto Optimal. (Yes?)
+
+
+\subsection{(c) Answer.}
+Using the saving function and the money market clearing condition, we can derive a first-order difference 
+equation for the price level.
+Concretely, it is given by 
+\[
+\frac{\alpha}{2} N_1 - \frac{\beta p_{t+1}}{2 p_t} N_2 = \frac{H_t}{p_t} \Rightarrow \alpha N_1 p_t - \beta N_2 p_{t+1} = 2 H_t
+\]
+Using Lag-operation, we have 
+\[
+\alpha N_1 p_t - \beta N_2 L^{-1} p_{t} = 2 H_t
+\]
+Then, we have 
+\begin{align*}
+p_t & = \left(1 - \frac{\beta N_2}{\alpha N_1} L^{-1}\right)^{-1} \frac{2H_t}{\alpha N_1} + \kappa \left(\frac{\alpha N_1}{\beta N_2}\right)^t \\ 
+    & = \bigg[\frac{2H_0 }{\alpha N_1} \sum_{j = 0}^{\infty} \left(\frac{\beta N_2}{\alpha N_1}\right)^j L^{-j} z_t \bigg] + \kappa \left(\frac{\alpha N_1}{\beta N_2}\right)^t \\
+    & = \bigg[\frac{2H_0 }{\alpha N_1} \sum_{j = 0}^{\infty} \left(\frac{\beta N_2}{\alpha N_1}\right)^j z_{t + j} \bigg] + \kappa \left(\frac{\alpha N_1}{\beta N_2}\right)^t \\
+    & = \frac{2H_0 z^t }{\alpha N_1 - \beta N_2} + \kappa \left(\frac{\alpha N_1}{\beta N_2}\right)^t
+\end{align*}
+Therefore, there exists a continuum of equilibria parameterized by $\kappa$.
+
+\subsection{(d) Answer.}
+Let $\kappa = 0$, then we have ``quantity theory'' equation:
+\[
+p_t = \frac{2H_0 z^t }{\alpha N_1 - \beta N_2} = \frac{2H_t }{\alpha N_1 - \beta N_2}
+\]
 
 
 %% =========== %% ========= %%
